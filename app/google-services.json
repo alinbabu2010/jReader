@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "579941398984",
+    "project_id": "jreader-2ea22",
+    "storage_bucket": "jreader-2ea22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579941398984:android:a0c52f74ec1ee3d762a8fd",
+        "android_client_info": {
+          "package_name": "com.compose.jreader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579941398984-44audmsn14ohrrtal4mvnrtv9evclhfb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsB37i4pyXmcoQ9eskvzKlSHgkCXMjgsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579941398984-44audmsn14ohrrtal4mvnrtv9evclhfb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
