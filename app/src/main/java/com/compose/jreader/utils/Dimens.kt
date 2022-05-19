@@ -20,5 +20,8 @@ val formColumnHeight = 250.dp
 val inputFontSize = 18.sp
 val inputPadding = 10.dp
 
-
-
+// Submit Button dimensions
+val submitButtonPadding = 3.dp
+val submitButtonProgressSize = 20.dp
+val submitButtonProgressStrokeWidth = 4.dp
+val submitButtonTextPadding = 5.dp
