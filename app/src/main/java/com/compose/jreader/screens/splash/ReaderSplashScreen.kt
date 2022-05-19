@@ -38,7 +38,11 @@ fun ReaderSplashScreen(navController: NavHostController) {
             })
         )
         delay(1500L)
-        navController.navigate(ReaderScreens.LoginScreen.name)
+        navController.navigate(ReaderScreens.LoginScreen.name) {
+            popUpTo(ReaderScreens.SplashScreen.name) {
+                inclusive = true
+            }
+        }
     }
 
     Surface(
