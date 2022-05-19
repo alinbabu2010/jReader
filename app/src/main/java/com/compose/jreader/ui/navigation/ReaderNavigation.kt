@@ -1,22 +1,43 @@
 package com.compose.jreader.ui.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.compose.jreader.screens.details.BookDetailsScreen
 import com.compose.jreader.screens.home.ReaderHomeScreen
 import com.compose.jreader.screens.login.ReaderLoginScreen
 import com.compose.jreader.screens.search.ReaderBookSearchScreen
 import com.compose.jreader.screens.splash.ReaderSplashScreen
 import com.compose.jreader.screens.update.ReaderBookUpdateScreen
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
+@ExperimentalAnimationApi
 @Composable
 fun ReaderNavigation() {
 
-    val navController = rememberNavController()
+    val navController = rememberAnimatedNavController()
+    val animationTime = 1000
 
-    NavHost(navController, startDestination = ReaderScreens.SplashScreen.name) {
+    AnimatedNavHost(
+        navController = navController,
+        startDestination = ReaderScreens.SplashScreen.name,
+        enterTransition = {
+            slideInHorizontally(
+                initialOffsetX = { it },
+                animationSpec = tween(durationMillis = animationTime)
+            )
+        },
+        exitTransition = {
+            slideOutHorizontally(
+                targetOffsetX = { it },
+                animationSpec = tween(durationMillis = animationTime)
+            )
+        }
+    ) {
 
 
         // Splash screen navigation
