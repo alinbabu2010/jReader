@@ -15,6 +15,7 @@ val logoTextBottomPadding = 16.dp
 
 // User Form dimensions
 val formColumnHeight = 250.dp
+val formInputCriteriaTextPadding = 4.dp
 
 // Input filed dimensions
 val inputFontSize = 18.sp
@@ -25,3 +26,8 @@ val submitButtonPadding = 3.dp
 val submitButtonProgressSize = 20.dp
 val submitButtonProgressStrokeWidth = 4.dp
 val submitButtonTextPadding = 5.dp
+
+// Login screen dimensions
+val spacerHeight = 15.dp
+val loginRowPadding = 15.dp
+val loginRowTextStartPadding = 5.dp

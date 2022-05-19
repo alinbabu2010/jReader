@@ -1,6 +1,7 @@
 package com.compose.jreader.ui.screens.login
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -17,6 +18,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
@@ -29,13 +31,48 @@ import com.compose.jreader.utils.*
 @Composable
 fun ReaderLoginScreen(navController: NavHostController) {
 
+    val showLoginForm = rememberSaveable {
+        mutableStateOf(false)
+    }
+
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
             ReaderLogo()
-            UserForm()
+            UserForm(isCreateAccount = showLoginForm.value) { email, password ->
+
+            }
+            Spacer(modifier = Modifier.height(spacerHeight))
+            Row(
+                modifier = Modifier.padding(loginRowPadding),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Text(
+                    text = stringResource(
+                        if (showLoginForm.value) R.string.new_user
+                        else R.string.already_user
+                    )
+                )
+                Text(
+                    stringResource(
+                        if (showLoginForm.value) R.string.sign_up
+                        else R.string.login
+                    ),
+                    modifier = Modifier
+                        .padding(start = loginRowTextStartPadding)
+                        .clickable {
+                            showLoginForm.value = !showLoginForm.value
+                        },
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colors.secondaryVariant
+                )
+
+            }
+
         }
     }
 
@@ -76,6 +113,12 @@ fun UserForm(
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val infoText = if (isCreateAccount)
+            stringResource(R.string.input_criteria_message) else ""
+        Text(
+            text = infoText,
+            modifier = Modifier.padding(formInputCriteriaTextPadding)
+        )
         EmailInput(
             emailState = emailState,
             onKeyboardAction = KeyboardActions {
@@ -92,6 +135,7 @@ fun UserForm(
             onKeyboardAction = KeyboardActions {
                 if (!validInputState) return@KeyboardActions
                 onDone(emailState.trimValue(), passwordState.trimValue())
+                focusManager.clearFocus()
             }
         )
         SubmitButton(

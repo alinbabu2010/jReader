@@ -5,4 +5,8 @@
     <string name="password">Password</string>
     <string name="create_account">Create Account</string>
     <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="new_user">New User?</string>
+    <string name="already_user">Already a user?</string>
+    <string name="input_criteria_message">Please enter a valid email and password</string>
 </resources>
