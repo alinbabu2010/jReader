@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.JReader" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+    <style name="Theme.JReader" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:colorPrimaryDark">@android:color/white</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@android:color/white
+        </item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@android:color/white
+        </item>
+        <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">100</item>
+        <item name="android:windowBackground">@android:color/white</item>
     </style>
+
 </resources>
