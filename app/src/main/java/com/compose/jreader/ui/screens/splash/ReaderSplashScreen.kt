@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.compose.jreader.R
 import com.compose.jreader.ui.navigation.ReaderScreens
+import com.compose.jreader.ui.widgets.ReaderLogo
 import com.compose.jreader.utils.*
 import kotlinx.coroutines.delay
 
@@ -61,11 +62,7 @@ fun ReaderSplashScreen(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text(
-                stringResource(R.string.app_name),
-                style = MaterialTheme.typography.h3,
-                color = Color.Red.copy(alpha = 0.5f)
-            )
+            ReaderLogo()
             Spacer(modifier = Modifier.height(surfaceSpacerHeight))
             Text(
                 text = stringResource(R.string.app_tagline),

@@ -9,4 +9,7 @@ val splashBorderWidth = 2.dp
 val splashColumnPadding = 1.dp
 val surfaceSpacerHeight = 15.dp
 
+// Reader Logo dimensions
+val logoTextBottomPadding = 16.dp
+
 
