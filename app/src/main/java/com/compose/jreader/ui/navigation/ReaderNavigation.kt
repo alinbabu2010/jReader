@@ -3,7 +3,6 @@ package com.compose.jreader.ui.navigation
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import com.compose.jreader.ui.screens.details.BookDetailsScreen
 import com.compose.jreader.ui.screens.home.ReaderHomeScreen
@@ -28,12 +27,6 @@ fun ReaderNavigation() {
         enterTransition = {
             slideInHorizontally(
                 initialOffsetX = { it },
-                animationSpec = tween(durationMillis = animationTime)
-            )
-        },
-        exitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { it },
                 animationSpec = tween(durationMillis = animationTime)
             )
         }
