@@ -67,5 +67,11 @@ class ReaderLoginViewModel @Inject constructor(
 
     }
 
+    /**
+     * To check a user is already logged in
+     * @return True if already logged else false
+     */
+    fun isLoggedIn() = loginRepository.isUserLoggedIn()
+
 
 }

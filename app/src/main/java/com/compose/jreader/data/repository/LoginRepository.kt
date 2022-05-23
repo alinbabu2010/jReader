@@ -63,5 +63,13 @@ class LoginRepository @Inject constructor(
         return task.result.user?.email?.substringBefore("@")
     }
 
+    /**
+     * To check a user is already logged based on user email
+     * @return True if already logged else false
+     */
+    fun isUserLoggedIn(): Boolean {
+        return !firebaseAuth.currentUser?.email.isNullOrBlank()
+    }
+
 
 }
