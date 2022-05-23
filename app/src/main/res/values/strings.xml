@@ -15,4 +15,8 @@
     <string name="not_applicable">N/A</string>
     <string name="desc_profile_icon">Profile Icon</string>
     <string name="home_reading_title">"Your reading \nactivity right now…"</string>
+    <string name="desc_fav_icon">Favorite Icon</string>
+    <string name="desc_book_image">Book image</string>
+    <string name="reading_list">Reading List</string>
+    <string name="desc_star_icon">Star Icon</string>
 </resources>

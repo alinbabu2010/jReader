@@ -48,3 +48,35 @@ val homeContentColumnPadding = 2.dp
 val accountNameTextPadding = 2.dp
 val accountNameTextSize = 15.sp
 val accountIconSize = 45.dp
+
+// List card dimensions
+val listCardCorner = 29.dp
+val listCardElevation = 6.dp
+val listCardPadding = 16.dp
+val listCardHeight = 242.dp
+val listCardWidth = 202.dp
+val spacing = 10.dp
+val bookImageHeight = 140.dp
+val bookImageWidth = 100.dp
+val bookImagePadding = 4.dp
+val bookImageSpacerWidth = 50.dp
+val bookColumnTopPadding = 25.dp
+val bookFavoriteIconBottomPadding = 1.dp
+val listCardTextPadding = 4.dp
+
+// BookRating dimensions
+val ratingSurfaceHeight = 70.dp
+val ratingSurfacePadding = 4.dp
+val ratingSurfaceElevation = 6.dp
+val ratingColumnPadding = 4.dp
+val ratingIconPadding = 3.dp
+
+// RoundedButton Dimensions
+val roundedButtonWidth = 90.dp
+val roundedButtonHeightIn = 40.dp
+val roundedButtonTextSize = 15.sp
+val roundedButtonContentPadding = 0.dp
+val roundedButtonElevation = 0.dp
+
+// HorizontalScrollContainer dimensions
+val hScrollContainerHeight = 280.dp
