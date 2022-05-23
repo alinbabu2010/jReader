@@ -39,8 +39,8 @@ val appBarSpacerWidth = 150.dp
 val appBarElevation = 0.dp
 
 // TitleSection dimensions
-val titleSecSurfaceStartPadding = 5.dp
-val titleSecSurfaceTopPadding = 1.dp
+val titleSecSurfaceStartPadding = 16.dp
+val titleSecSurfaceTopPadding = 8.dp
 val titleSecFontSize = 19.sp
 
 // HomeContent dimensions
