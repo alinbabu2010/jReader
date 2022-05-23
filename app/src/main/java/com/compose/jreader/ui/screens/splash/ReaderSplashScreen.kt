@@ -17,15 +17,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.compose.jreader.R
 import com.compose.jreader.ui.navigation.ReaderScreens
+import com.compose.jreader.ui.screens.login.ReaderLoginViewModel
 import com.compose.jreader.ui.widgets.ReaderLogo
 import com.compose.jreader.utils.*
 import kotlinx.coroutines.delay
 
 @Composable
-fun ReaderSplashScreen(navController: NavHostController) {
+fun ReaderSplashScreen(
+    navController: NavHostController,
+    viewModel: ReaderLoginViewModel = hiltViewModel()
+) {
 
     val scale = remember {
         Animatable(0F)
@@ -39,7 +44,9 @@ fun ReaderSplashScreen(navController: NavHostController) {
             })
         )
         delay(1500L)
-        navController.navigate(ReaderScreens.LoginScreen.name) {
+        val route = if (viewModel.isLoggedIn()) ReaderScreens.HomeScreen.name
+        else ReaderScreens.LoginScreen.name
+        navController.navigate(route) {
             popUpTo(ReaderScreens.SplashScreen.name) {
                 inclusive = true
             }
