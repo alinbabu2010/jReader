@@ -76,5 +76,12 @@ class LoginRepository @Inject constructor(
      */
     fun signOutUser() = firebaseAuth.signOut()
 
+    /**
+     * To get display name to show from fireStore
+     */
+    fun displayName(): String? {
+        return firebaseAuth.currentUser?.email?.substringBefore("@")
+    }
+
 
 }

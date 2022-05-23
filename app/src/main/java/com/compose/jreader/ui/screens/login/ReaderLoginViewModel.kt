@@ -20,6 +20,8 @@ class ReaderLoginViewModel @Inject constructor(
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
+    val displayName = loginRepository.displayName()
+
     /**
      * To login user using email and password
      * @param email Email id of the user
