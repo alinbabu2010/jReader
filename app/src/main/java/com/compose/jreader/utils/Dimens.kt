@@ -31,3 +31,20 @@ val submitButtonTextPadding = 5.dp
 val spacerHeight = 15.dp
 val loginRowPadding = 15.dp
 val loginRowTextStartPadding = 5.dp
+
+// ReaderAppBar dimensions
+val appBarIconCorner = 12.dp
+val appBarTitleFontSize = 20.sp
+val appBarSpacerWidth = 150.dp
+val appBarElevation = 0.dp
+
+// TitleSection dimensions
+val titleSecSurfaceStartPadding = 5.dp
+val titleSecSurfaceTopPadding = 1.dp
+val titleSecFontSize = 19.sp
+
+// HomeContent dimensions
+val homeContentColumnPadding = 2.dp
+val accountNameTextPadding = 2.dp
+val accountNameTextSize = 15.sp
+val accountIconSize = 45.dp
