@@ -9,4 +9,10 @@
     <string name="new_user">New User?</string>
     <string name="already_user">Already a user?</string>
     <string name="input_criteria_message">Please enter a valid email and password</string>
+    <string name="desc_icon_add">Add a book</string>
+    <string name="desc_reader_logo">Reader Logo</string>
+    <string name="desc_logout_icon">Logout Icon</string>
+    <string name="not_applicable">N/A</string>
+    <string name="desc_profile_icon">Profile Icon</string>
+    <string name="home_reading_title">"Your reading \nactivity right now…"</string>
 </resources>
