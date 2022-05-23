@@ -103,4 +103,7 @@ dependencies {
     // Navigation animation
     implementation "com.google.accompanist:accompanist-navigation-animation:0.23.0"
 
+    // Material Icons
+    implementation "androidx.compose.material:material-icons-extended:1.1.1"
+
 }
