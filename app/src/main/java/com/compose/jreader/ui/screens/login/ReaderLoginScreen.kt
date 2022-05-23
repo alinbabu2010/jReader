@@ -21,18 +21,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.compose.jreader.R
+import com.compose.jreader.ui.navigation.ReaderScreens
 import com.compose.jreader.ui.widgets.EmailInput
 import com.compose.jreader.ui.widgets.PasswordInput
 import com.compose.jreader.ui.widgets.ReaderLogo
 import com.compose.jreader.utils.*
 
 @Composable
-fun ReaderLoginScreen(navController: NavHostController) {
+fun ReaderLoginScreen(
+    navController: NavHostController,
+    loginViewModel: ReaderLoginViewModel = hiltViewModel()
+) {
 
     val showLoginForm = rememberSaveable {
-        mutableStateOf(false)
+        mutableStateOf(true)
     }
 
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -41,8 +46,16 @@ fun ReaderLoginScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.Top
         ) {
             ReaderLogo()
-            UserForm(isCreateAccount = showLoginForm.value) { email, password ->
-
+            UserForm(isCreateAccount = !showLoginForm.value) { email, password ->
+                if (showLoginForm.value) {
+                    loginViewModel.loginUser(email, password) {
+                        navController.navigate(ReaderScreens.HomeScreen.name)
+                    }
+                } else {
+                    loginViewModel.createUser(email, password) {
+                        navController.navigate(ReaderScreens.HomeScreen.name)
+                    }
+                }
             }
             Spacer(modifier = Modifier.height(spacerHeight))
             Row(
