@@ -71,5 +71,10 @@ class LoginRepository @Inject constructor(
         return !firebaseAuth.currentUser?.email.isNullOrBlank()
     }
 
+    /**
+     * To sign out user from firebase
+     */
+    fun signOutUser() = firebaseAuth.signOut()
+
 
 }

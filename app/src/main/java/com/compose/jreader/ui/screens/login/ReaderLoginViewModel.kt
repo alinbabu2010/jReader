@@ -73,5 +73,10 @@ class ReaderLoginViewModel @Inject constructor(
      */
     fun isLoggedIn() = loginRepository.isUserLoggedIn()
 
+    /**
+     * To sign out user
+     */
+    fun signOut() = loginRepository.signOutUser()
+
 
 }
