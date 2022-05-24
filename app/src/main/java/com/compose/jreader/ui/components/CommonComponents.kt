@@ -157,7 +157,7 @@ fun ReaderAppBar(
                 if (icon != null) {
                     Icon(
                         imageVector = icon,
-                        contentDescription = "Back Arrow Icon",
+                        contentDescription = stringResource(R.string.desc_back_icon),
                         tint = Red700
                     )
                 }

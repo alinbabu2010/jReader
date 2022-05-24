@@ -102,7 +102,7 @@ fun ListCard(
                     Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.End
                 ) {
-                    RoundedButton(label = "Reading", radius = 70) {
+                    RoundedButton(label = stringResource(R.string.reading), radius = 70) {
 
                     }
                 }

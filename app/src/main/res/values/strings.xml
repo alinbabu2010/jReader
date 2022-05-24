@@ -23,4 +23,6 @@
     <string name="published_date">Date: %s</string>
     <string name="search">Search</string>
     <string name="search_books">Search Books</string>
+    <string name="desc_back_icon">Back Arrow Icon</string>
+    <string name="reading">Reading</string>
 </resources>
