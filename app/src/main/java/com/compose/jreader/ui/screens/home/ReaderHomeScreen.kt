@@ -5,6 +5,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -24,6 +25,7 @@ import com.compose.jreader.data.model.Book
 import com.compose.jreader.ui.components.ListCard
 import com.compose.jreader.ui.components.ReaderAppBar
 import com.compose.jreader.ui.components.TitleSection
+import com.compose.jreader.ui.navigation.ReaderScreens
 import com.compose.jreader.ui.screens.login.ReaderLoginViewModel
 import com.compose.jreader.ui.theme.Cyan200
 import com.compose.jreader.utils.*
@@ -43,11 +45,17 @@ fun ReaderHomeScreen(
         )
     }, floatingActionButton = {
         FabContent {
-
+            navController.navigate(ReaderScreens.SearchScreen.name)
         }
     }) {
 
-        Surface(modifier = Modifier.fillMaxWidth()) {
+        val scrollState = rememberScrollState()
+
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(scrollState)
+        ) {
             HomeContent(navController, loginViewModel)
         }
 
