@@ -35,8 +35,8 @@ val loginRowTextStartPadding = 5.dp
 // ReaderAppBar dimensions
 val appBarIconCorner = 12.dp
 val appBarTitleFontSize = 20.sp
-val appBarSpacerWidth = 150.dp
 val appBarElevation = 0.dp
+val appBarTitleMarginStart = (-48).dp
 
 // TitleSection dimensions
 val titleSecSurfaceStartPadding = 16.dp
