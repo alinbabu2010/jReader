@@ -80,3 +80,13 @@ val roundedButtonElevation = 0.dp
 
 // HorizontalScrollContainer dimensions
 val hScrollContainerHeight = 280.dp
+
+// SearchScreen dimensions
+val searchBarPadding = 16.dp
+val searchLazyColumnPadding = 16.dp
+
+// BookRow dimensions
+val bookRowPadding = 8.dp
+val bookRowBottomPadding = 12.dp
+val bookColumnStartEndMargin = 8.dp
+val bookRowElevation = 3.dp

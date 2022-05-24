@@ -19,4 +19,8 @@
     <string name="desc_book_image">Book image</string>
     <string name="reading_list">Reading List</string>
     <string name="desc_star_icon">Star Icon</string>
+    <string name="author_name">Authors: %s</string>
+    <string name="published_date">Date: %s</string>
+    <string name="search">Search</string>
+    <string name="search_books">Search Books</string>
 </resources>
