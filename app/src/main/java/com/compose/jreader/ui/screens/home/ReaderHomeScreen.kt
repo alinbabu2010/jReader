@@ -21,11 +21,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.compose.jreader.R
 import com.compose.jreader.data.model.Book
+import com.compose.jreader.ui.components.ListCard
+import com.compose.jreader.ui.components.ReaderAppBar
+import com.compose.jreader.ui.components.TitleSection
 import com.compose.jreader.ui.screens.login.ReaderLoginViewModel
 import com.compose.jreader.ui.theme.Cyan200
-import com.compose.jreader.ui.widgets.ListCard
-import com.compose.jreader.ui.widgets.ReaderAppBar
-import com.compose.jreader.ui.widgets.TitleSection
 import com.compose.jreader.utils.*
 
 @Preview

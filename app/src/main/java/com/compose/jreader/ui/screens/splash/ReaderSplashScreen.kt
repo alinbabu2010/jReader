@@ -20,9 +20,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.compose.jreader.R
+import com.compose.jreader.ui.components.ReaderLogo
 import com.compose.jreader.ui.navigation.ReaderScreens
 import com.compose.jreader.ui.screens.login.ReaderLoginViewModel
-import com.compose.jreader.ui.widgets.ReaderLogo
 import com.compose.jreader.utils.*
 import kotlinx.coroutines.delay
 

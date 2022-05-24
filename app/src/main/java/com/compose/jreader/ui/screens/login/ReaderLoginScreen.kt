@@ -24,10 +24,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.compose.jreader.R
+import com.compose.jreader.ui.components.EmailInput
+import com.compose.jreader.ui.components.PasswordInput
+import com.compose.jreader.ui.components.ReaderLogo
 import com.compose.jreader.ui.navigation.ReaderScreens
-import com.compose.jreader.ui.widgets.EmailInput
-import com.compose.jreader.ui.widgets.PasswordInput
-import com.compose.jreader.ui.widgets.ReaderLogo
 import com.compose.jreader.utils.*
 
 @Composable

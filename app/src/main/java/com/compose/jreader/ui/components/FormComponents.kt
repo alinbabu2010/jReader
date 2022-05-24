@@ -1,4 +1,4 @@
-package com.compose.jreader.ui.widgets
+package com.compose.jreader.ui.components
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.IconButton
