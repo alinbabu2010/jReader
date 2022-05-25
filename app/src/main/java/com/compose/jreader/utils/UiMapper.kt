@@ -13,12 +13,12 @@ class UiMapper @Inject constructor() {
     fun getBookUi(book: Book): BookUi {
         val bookInfo = book.volumeInfo
         return BookUi(
-            id = book.id,
-            bookInfo.title,
-            bookInfo.imageLinks.smallThumbnail,
-            authors = getAuthors(bookInfo.authors),
-            categories = getCategories(bookInfo.categories),
-            publishedDate = bookInfo.publishedDate
+            id = book.id ?: "",
+            bookInfo?.title ?: "",
+            bookInfo?.imageLinks?.smallThumbnail ?: "",
+            authors = getAuthors(bookInfo?.authors),
+            categories = getCategories(bookInfo?.categories),
+            publishedDate = bookInfo?.publishedDate ?: ""
         )
     }
 
