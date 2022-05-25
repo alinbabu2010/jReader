@@ -1,39 +1,50 @@
 package com.compose.jreader.ui.screens.search
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.compose.jreader.R
-import com.compose.jreader.data.model.Book
+import com.compose.jreader.data.model.BookUi
+import com.compose.jreader.data.model.UiState
 import com.compose.jreader.ui.components.InputField
 import com.compose.jreader.ui.components.ReaderAppBar
 import com.compose.jreader.utils.*
 
 
 @Composable
-fun ReaderBookSearchScreen(navController: NavHostController) {
+fun ReaderBookSearchScreen(
+    navController: NavHostController,
+    viewModel: SearchViewModel
+) {
+
+    var uiState by remember {
+        viewModel.listOfBooks
+    }
 
     Scaffold(topBar = {
         ReaderAppBar(
@@ -50,6 +61,7 @@ fun ReaderBookSearchScreen(navController: NavHostController) {
         Surface {
             Column {
                 SearchBar(
+                    loading = !uiState.isLoading,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
@@ -57,34 +69,75 @@ fun ReaderBookSearchScreen(navController: NavHostController) {
                             start = searchBarPadding,
                             end = searchBarPadding
                         )
-                ) {
-
+                ) { query ->
+                    viewModel.searchBooks(query)
+                    uiState = viewModel.listOfBooks.value
                 }
-                LazyColumn(
-                    Modifier.padding(
-                        start = searchLazyColumnPadding,
-                        end = searchLazyColumnPadding
-                    )
-                ) {
-                    items(Book.getBooks()) { book ->
-                        BookRow(book = book)
-                    }
-                }
+                BookListView(!uiState.isLoading, uiState.data ?: emptyList())
+                ContainerView(uiState)
             }
         }
-
 
     }
 
 }
 
 @Composable
-fun BookRow(book: Book) {
+fun BookListView(
+    isVisible: Boolean,
+    books: List<BookUi>
+) {
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = fadeIn(),
+        exit = fadeOut()
+    ) {
+        LazyColumn(
+            Modifier.padding(
+                start = searchLazyColumnPadding,
+                end = searchLazyColumnPadding
+            )
+        ) {
+            items(books) { book ->
+                BookRow(bookUi = book)
+            }
+        }
+    }
+}
+
+@Composable
+fun ContainerView(uiState: UiState<List<BookUi>>) {
+    Row(
+        modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        if (uiState.isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(48.dp)
+            )
+        } else {
+            Text(
+                text = if (uiState.isEmpty) stringResource(R.string.no_books_found)
+                else uiState.message ?: "",
+                modifier = Modifier.padding(16.dp),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.body2
+            )
+        }
+    }
+}
+
+@Composable
+fun BookRow(bookUi: BookUi) {
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = bookRowBottomPadding),
+            .padding(bottom = bookRowBottomPadding)
+            .clickable { },
         shape = RectangleShape,
         backgroundColor = Color.White,
         elevation = bookRowElevation
@@ -92,15 +145,13 @@ fun BookRow(book: Book) {
 
 
         ConstraintLayout(
-            modifier = Modifier
-                .padding(bookRowPadding)
-                .clickable { }
+            modifier = Modifier.padding(bookRowPadding)
         ) {
 
             val (image, titleText, authorText, dateText, categoryText) = createRefs()
 
             AsyncImage(
-                model = book.photoUrl,
+                model = bookUi.photoUrl,
                 contentDescription = stringResource(R.string.desc_book_image),
                 modifier = Modifier.constrainAs(image) {
                     linkTo(
@@ -124,7 +175,7 @@ fun BookRow(book: Book) {
                     top.linkTo(parent.top)
                     width = Dimension.fillToConstraints
                 },
-                text = book.title ?: "",
+                text = bookUi.title,
                 overflow = TextOverflow.Ellipsis
             )
 
@@ -139,8 +190,10 @@ fun BookRow(book: Book) {
                     top.linkTo(titleText.bottom)
                     width = Dimension.fillToConstraints
                 },
-                text = stringResource(R.string.author_name, book.authors ?: ""),
+                text = if (bookUi.authors.isNotBlank())
+                    stringResource(R.string.author_name, bookUi.authors) else "",
                 overflow = TextOverflow.Clip,
+                fontStyle = FontStyle.Italic,
                 style = MaterialTheme.typography.caption
             )
 
@@ -156,8 +209,10 @@ fun BookRow(book: Book) {
                     height = Dimension.wrapContent
                     width = Dimension.fillToConstraints
                 },
-                text = stringResource(R.string.published_date, book.id ?: ""),
+                text = if (bookUi.publishedDate.isNotBlank())
+                    stringResource(R.string.published_date, bookUi.publishedDate) else "",
                 overflow = TextOverflow.Clip,
+                fontStyle = FontStyle.Italic,
                 style = MaterialTheme.typography.caption
             )
 
@@ -174,7 +229,7 @@ fun BookRow(book: Book) {
                     height = Dimension.wrapContent
                     width = Dimension.fillToConstraints
                 },
-                text = "[${book.id ?: ""}]",
+                text = bookUi.categories,
                 overflow = TextOverflow.Clip,
                 style = MaterialTheme.typography.caption
             )
@@ -209,6 +264,7 @@ fun SearchBar(
             modifier = modifier,
             valueState = searchQueryState,
             label = hint,
+            enabled = loading,
             keyboardAction = KeyboardActions {
                 if (!valid) return@KeyboardActions
                 onSearch(searchQueryState.trimValue())
