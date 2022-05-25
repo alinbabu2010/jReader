@@ -6,6 +6,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+final String BASE_URL = "BASE_URL"
+
 android {
     compileSdk 32
 
@@ -15,6 +17,7 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", BASE_URL , '"https://www.googleapis.com/books/v1/"'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
