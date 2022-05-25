@@ -16,23 +16,16 @@ class UiMapper @Inject constructor() {
             id = book.id,
             bookInfo.title,
             bookInfo.imageLinks.smallThumbnail,
-            getAuthors(bookInfo.authors),
+            authors = getAuthors(bookInfo.authors),
+            categories = getCategories(bookInfo.categories),
             publishedDate = bookInfo.publishedDate
         )
     }
 
-    private fun getAuthors(authors: List<String>?): String {
-        var writers = ""
-        if (!authors.isNullOrEmpty()) {
-            if (authors.size == 1) writers = authors.first()
-            else {
-                authors.forEachIndexed { index, author ->
-                    writers = if (index != authors.size)
-                        "$writers$author, " else author
-                }
-            }
-        }
-        return writers
-    }
+    private fun getAuthors(authors: List<String>?) =
+        if (authors.isNullOrEmpty()) "" else authors.toString()
+
+    private fun getCategories(categories: List<String>?) =
+        if (categories.isNullOrEmpty()) "" else categories.toString()
 
 }
