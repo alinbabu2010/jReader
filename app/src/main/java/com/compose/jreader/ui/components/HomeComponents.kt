@@ -20,14 +20,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.compose.jreader.R
-import com.compose.jreader.data.model.Book
+import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.ui.theme.Cyan200
 import com.compose.jreader.utils.*
 
 
 @Composable
 fun ListCard(
-    book: Book,
+    bookUi: BookUi,
     onClickDetails: (String) -> Unit
 ) {
 
@@ -49,7 +49,7 @@ fun ListCard(
         Box(
             modifier = Modifier
                 .clickable {
-                    book.title?.let { onClickDetails.invoke(it) }
+                    bookUi.title?.let { onClickDetails.invoke(it) }
                 },
             contentAlignment = Alignment.BottomStart
         ) {
@@ -62,7 +62,7 @@ fun ListCard(
                 Row(horizontalArrangement = Arrangement.Center) {
 
                     AsyncImage(
-                        model = book.photoUrl,
+                        model = bookUi.photoUrl,
                         contentDescription = stringResource(R.string.desc_book_image),
                         modifier = Modifier
                             .height(bookImageHeight)
@@ -87,13 +87,13 @@ fun ListCard(
                 }
 
                 Text(
-                    text = book.title ?: "",
+                    text = bookUi.title ?: "",
                     modifier = Modifier.padding(listCardTextPadding),
                     fontWeight = FontWeight.Bold,
                     maxLines = 2, overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = book.authors ?: "",
+                    text = bookUi.authors ?: "",
                     modifier = Modifier.padding(listCardTextPadding),
                     style = MaterialTheme.typography.caption
                 )

@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.compose.jreader.R
-import com.compose.jreader.data.model.Book
+import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.ui.components.ListCard
 import com.compose.jreader.ui.components.ReaderAppBar
 import com.compose.jreader.ui.components.TitleSection
@@ -74,20 +74,20 @@ fun HomeContent(
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         HomeTitleRow(Modifier.align(Alignment.Start), loginViewModel)
-        ReadingRightNowArea(books = Book.getBooks(), navController = navController)
+        ReadingRightNowArea(bookUis = BookUi.getBooks(), navController = navController)
         TitleSection(label = stringResource(R.string.reading_list))
-        BookListArea(books = Book.getBooks(), navController = navController)
+        BookListArea(bookUis = BookUi.getBooks(), navController = navController)
     }
 
 }
 
 @Composable
 fun BookListArea(
-    books: List<Book>,
+    bookUis: List<BookUi>,
     navController: NavHostController
 ) {
 
-    HorizontalScrollContainer(books = books) {
+    HorizontalScrollContainer(bookUis = bookUis) {
         Log.d("TAG", "BookListArea: $it")
     }
 
@@ -95,7 +95,7 @@ fun BookListArea(
 
 @Composable
 fun HorizontalScrollContainer(
-    books: List<Book>,
+    bookUis: List<BookUi>,
     onPress: (String) -> Unit
 ) {
     val scrollState = rememberScrollState()
@@ -106,7 +106,7 @@ fun HorizontalScrollContainer(
             .horizontalScroll(scrollState)
     ) {
 
-        for (book in books) {
+        for (book in bookUis) {
             ListCard(book) {
                 onPress(it)
             }
@@ -169,10 +169,10 @@ fun FabContent(onTap: () -> Unit) {
 
 @Composable
 fun ReadingRightNowArea(
-    books: List<Book>,
+    bookUis: List<BookUi>,
     navController: NavHostController
 ) {
-    ListCard(books.first()) {
+    ListCard(bookUis.first()) {
         Log.d("TAG", "ReadingRightNowArea: $it")
     }
 }
