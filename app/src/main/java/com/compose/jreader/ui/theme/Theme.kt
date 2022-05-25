@@ -1,10 +1,13 @@
 package com.compose.jreader.ui.theme
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
@@ -27,6 +30,7 @@ private val LightColorPalette = lightColors(
     */
 )
 
+@ExperimentalFoundationApi
 @Composable
 fun JReaderTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
@@ -39,6 +43,10 @@ fun JReaderTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composabl
         colors = colors,
         typography = Typography,
         shapes = Shapes,
-        content = content
-    )
+    ) {
+        CompositionLocalProvider(
+            LocalOverScrollConfiguration provides null,
+            content = content
+        )
+    }
 }
