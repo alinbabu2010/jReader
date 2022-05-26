@@ -4,13 +4,17 @@ import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.data.wrappers.Resource
 import com.compose.jreader.data.wrappers.ResponseWrapper
 import com.compose.jreader.network.ApiLoader
+import com.compose.jreader.utils.Constants
 import com.compose.jreader.utils.UiMapper
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
 
 class BookRepository @Inject constructor(
     private val apiLoader: ApiLoader,
-    private val uiMapper: UiMapper
-
+    private val uiMapper: UiMapper,
+    private val firebaseAuth: FirebaseAuth,
+    private val fireStore: FirebaseFirestore
 ) {
 
     /**
@@ -39,6 +43,25 @@ class BookRepository @Inject constructor(
             is ResponseWrapper.Success -> {
                 if (response.data == null) Resource.empty()
                 else Resource.success(uiMapper.getBookUi(response.data))
+            }
+        }
+    }
+
+    /**
+     * To save [BookUi] into [FirebaseFirestore]
+     * @param bookData [BookUi] model of the book to be saved
+     * @param onComplete Callback function to call on successful database save.
+     */
+    fun saveBookToFirebase(bookData: BookUi?, onComplete: (Boolean, String?) -> Unit) {
+        bookData?.userId = firebaseAuth.currentUser?.uid ?: ""
+        val dbCollection = fireStore.collection(Constants.BOOK_DB_NAME)
+        if ((bookData != null) && bookData.toString().isNotBlank()) {
+            dbCollection.add(bookData).addOnSuccessListener { ref ->
+                dbCollection.document(ref.id).update(
+                    mapOf(Constants.USER_ID to ref.id)
+                ).addOnCompleteListener {
+                    onComplete(it.isSuccessful, it.exception?.message)
+                }
             }
         }
     }
