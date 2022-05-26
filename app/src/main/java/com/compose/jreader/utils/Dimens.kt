@@ -90,3 +90,11 @@ val bookRowPadding = 8.dp
 val bookRowBottomPadding = 12.dp
 val bookColumnStartEndMargin = 8.dp
 val bookRowElevation = 3.dp
+
+//LoaderMessageView dimension
+val progressBarSize = 48.dp
+val containerTextPadding = 16.dp
+
+// ReaderBookDetailsScreen dimensions
+val detailsSurfacePadding = 3.dp
+val detailsColumnPadding = 12.dp

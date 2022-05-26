@@ -10,4 +10,6 @@ object Constants {
 
     const val NETWORK_FAILURE = "Network error occurred. Please try later"
 
+    const val ARG_BOOK_ID = "bookId"
+
 }
