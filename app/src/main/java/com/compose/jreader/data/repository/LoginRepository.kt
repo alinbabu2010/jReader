@@ -1,6 +1,7 @@
 package com.compose.jreader.data.repository
 
 import com.compose.jreader.data.model.MUser
+import com.compose.jreader.utils.Constants
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -52,7 +53,7 @@ class LoginRepository @Inject constructor(
     private fun generateUserModel(displayName: String?) {
         val userId = firebaseAuth.currentUser?.uid
         val user = MUser(id = null, userId = userId, displayName = displayName).toMap()
-        fireStore.collection("users").add(user)
+        fireStore.collection(Constants.USER_DB_NAME).add(user)
     }
 
     /**
@@ -60,7 +61,7 @@ class LoginRepository @Inject constructor(
      * @return Display name
      */
     private fun getDisplayName(task: Task<AuthResult>): String? {
-        return task.result.user?.email?.substringBefore("@")
+        return task.result.user?.email?.substringBefore(Constants.DELIMITER_AT)
     }
 
     /**
@@ -80,7 +81,7 @@ class LoginRepository @Inject constructor(
      * To get display name to show from fireStore
      */
     fun displayName(): String? {
-        return firebaseAuth.currentUser?.email?.substringBefore("@")
+        return firebaseAuth.currentUser?.email?.substringBefore(Constants.DELIMITER_AT)
     }
 
 
