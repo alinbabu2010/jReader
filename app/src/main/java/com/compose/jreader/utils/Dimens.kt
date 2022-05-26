@@ -98,3 +98,11 @@ val containerTextPadding = 16.dp
 // ReaderBookDetailsScreen dimensions
 val detailsSurfacePadding = 3.dp
 val detailsColumnPadding = 12.dp
+
+// BookDetails dimension
+val bookImageCardPadding = 34.dp
+val bookImageCardElevation = 4.dp
+val detailsSpacerHeight = 5.dp
+val descriptionColPadding = 3.dp
+val descriptionSurfacePadding = 4.dp
+val descriptionSurfaceBorderStroke = 1.dp
