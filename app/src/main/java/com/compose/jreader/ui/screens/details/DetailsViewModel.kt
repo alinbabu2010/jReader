@@ -19,6 +19,8 @@ class DetailsViewModel @Inject constructor(
 
     val bookInfo = mutableStateOf(UiState<BookUi>())
 
+    val errorMsg = mutableStateOf("")
+
     /**
      * To get a book info from API
      * @param bookId Id of the book to be fetched
@@ -27,6 +29,22 @@ class DetailsViewModel @Inject constructor(
         bookInfo.value = UiState(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
             bookInfo.value = repository.getBookInfo(bookId).getUiState()
+        }
+    }
+
+    /**
+     * To save [BookUi] into fireStore
+     * @param bookData [BookUi] model of the book to be saved
+     * @param onSuccess Callback function to notify on save success
+     */
+    fun saveBook(bookData: BookUi?, onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            repository.saveBookToFirebase(bookData) { isSuccess, msg ->
+                if (isSuccess) {
+                    onSuccess()
+                    errorMsg.value = ""
+                } else errorMsg.value = msg.toString()
+            }
         }
     }
 
