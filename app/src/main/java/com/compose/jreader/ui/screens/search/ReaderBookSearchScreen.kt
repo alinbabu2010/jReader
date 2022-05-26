@@ -115,7 +115,7 @@ fun BookRow(
             .fillMaxWidth()
             .padding(bottom = bookRowBottomPadding)
             .clickable {
-                val route = "${ReaderScreens.DetailScreen.name}/${bookUi.id}"
+                val route = "${ReaderScreens.DetailScreen.name}/${bookUi.googleBookId}"
                 navController.navigate(route)
             },
         shape = RectangleShape,
