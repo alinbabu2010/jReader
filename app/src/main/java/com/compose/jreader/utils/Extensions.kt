@@ -2,6 +2,8 @@ package com.compose.jreader.utils
 
 import android.util.Patterns
 import androidx.compose.runtime.MutableState
+import com.compose.jreader.data.model.UiState
+import com.compose.jreader.data.wrappers.Resource
 
 /**
  * To check [MutableState] string value is valid one
@@ -23,6 +25,15 @@ fun MutableState<String>.trimValue(): String = this.value.trim()
 fun String.isValidEmail(): Boolean =
     this.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
-
-
-
+/**
+ * To get [UiState] model from [Resource] based on [Resource.status]
+ * @return [UiState] object
+ */
+fun <T> Resource<T>.getUiState(): UiState<T> {
+    return when (status) {
+        Status.SUCCESS -> UiState(data)
+        Status.ERROR -> UiState(isError = true, message = message)
+        Status.LOADING -> UiState(isLoading = true)
+        Status.EMPTY_RESPONSE -> UiState()
+    }
+}
