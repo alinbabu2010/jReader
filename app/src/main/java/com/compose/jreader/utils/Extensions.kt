@@ -1,6 +1,8 @@
 package com.compose.jreader.utils
 
+import android.content.Context
 import android.util.Patterns
+import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import com.compose.jreader.data.model.UiState
 import com.compose.jreader.data.wrappers.Resource
@@ -36,4 +38,12 @@ fun <T> Resource<T>.getUiState(): UiState<T> {
         Status.LOADING -> UiState(isLoading = true)
         Status.EMPTY_RESPONSE -> UiState()
     }
+}
+
+/**
+ * To show [Toast] message
+ * @param message Message to be displayed
+ */
+fun Context.showToast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
