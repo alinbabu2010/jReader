@@ -19,8 +19,10 @@
     <string name="desc_book_image">Book image</string>
     <string name="reading_list">Reading List</string>
     <string name="desc_star_icon">Star Icon</string>
-    <string name="author_name">Authors: %s</string>
-    <string name="published_date">Date: %s</string>
+    <string name="author_name">Authors:  %s</string>
+    <string name="published_date">Published:  %s</string>
+    <string name="categories">Categories:  %s</string>
+    <string name="page_count">Page Count:  %d</string>
     <string name="search">Search</string>
     <string name="search_books">Search Books</string>
     <string name="desc_back_icon">Back Arrow Icon</string>
