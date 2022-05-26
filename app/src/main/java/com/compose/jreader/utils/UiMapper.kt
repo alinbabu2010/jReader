@@ -14,9 +14,9 @@ class UiMapper @Inject constructor() {
     fun getBookUi(book: Book): BookUi {
         val bookInfo = book.volumeInfo
         return BookUi(
-            id = book.id ?: "",
-            bookInfo?.title ?: "",
-            bookInfo?.imageLinks?.smallThumbnail ?: "",
+            googleBookId = book.id ?: "",
+            title = bookInfo?.title ?: "",
+            photoUrl = bookInfo?.imageLinks?.smallThumbnail ?: "",
             authors = getAuthors(bookInfo?.authors),
             description = getDescription(bookInfo?.description),
             categories = getCategories(bookInfo?.categories),
