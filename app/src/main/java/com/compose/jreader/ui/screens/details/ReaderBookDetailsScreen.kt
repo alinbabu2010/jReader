@@ -63,7 +63,7 @@ fun BookDetailsScreen(
                 .fillMaxSize()
         ) {
 
-            BookDetails(uiState)
+            BookDetails(uiState, viewModel, navController)
             LoaderMessageView(uiState)
 
         }
@@ -73,8 +73,21 @@ fun BookDetailsScreen(
 
 @Composable
 private fun BookDetails(
-    uiState: UiState<BookUi>
+    uiState: UiState<BookUi>,
+    viewModel: DetailsViewModel,
+    navController: NavHostController
 ) {
+
+    val errorMsg by remember {
+        viewModel.errorMsg
+    }
+
+    val context = LocalContext.current
+
+    if (errorMsg.isNotBlank()) {
+        context.showToast(errorMsg)
+    }
+
     FadeVisibility(uiState.data != null) {
 
         val bookData = uiState.data
@@ -145,7 +158,7 @@ private fun BookDetails(
 
             if (bookData?.description?.isNotBlank() == true) {
 
-                val displayMetrics = LocalContext.current.resources.displayMetrics
+                val displayMetrics = context.resources.displayMetrics
 
                 Surface(
                     modifier = Modifier
@@ -172,11 +185,13 @@ private fun BookDetails(
             ) {
 
                 RoundedButton(label = stringResource(R.string.save), radius = 25) {
-
+                    viewModel.saveBook(bookData) {
+                        navController.popBackStack()
+                    }
                 }
 
                 RoundedButton(label = stringResource(R.string.cancel), radius = 25) {
-
+                    navController.popBackStack()
                 }
 
             }
