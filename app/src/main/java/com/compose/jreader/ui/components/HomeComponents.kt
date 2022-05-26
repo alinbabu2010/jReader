@@ -49,7 +49,7 @@ fun ListCard(
         Box(
             modifier = Modifier
                 .clickable {
-                    bookUi.title?.let { onClickDetails.invoke(it) }
+                    onClickDetails.invoke(bookUi.title)
                 },
             contentAlignment = Alignment.BottomStart
         ) {
@@ -87,13 +87,13 @@ fun ListCard(
                 }
 
                 Text(
-                    text = bookUi.title ?: "",
+                    text = bookUi.title,
                     modifier = Modifier.padding(listCardTextPadding),
                     fontWeight = FontWeight.Bold,
                     maxLines = 2, overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = bookUi.authors ?: "",
+                    text = bookUi.authors,
                     modifier = Modifier.padding(listCardTextPadding),
                     style = MaterialTheme.typography.caption
                 )
