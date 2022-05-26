@@ -6,7 +6,7 @@ import android.net.NetworkCapabilities
 import com.compose.jreader.BuildConfig
 import com.compose.jreader.R
 import com.compose.jreader.data.model.Book
-import com.compose.jreader.data.model.ErrorBody
+import com.compose.jreader.data.model.ErrorResponse
 import com.compose.jreader.data.wrappers.ResponseWrapper
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
@@ -88,7 +88,7 @@ class ApiLoaderImpl @Inject constructor(
                 val errorResponse = runCatching {
                     Gson().fromJson(
                         errorBody,
-                        ErrorBody::class.java
+                        ErrorResponse::class.java
                     )
                 }.getOrNull()
 
