@@ -30,6 +30,7 @@ import com.compose.jreader.data.model.UiState
 import com.compose.jreader.ui.components.FadeVisibility
 import com.compose.jreader.ui.components.LoaderMessageView
 import com.compose.jreader.ui.components.ReaderAppBar
+import com.compose.jreader.ui.components.RoundedButton
 import com.compose.jreader.utils.*
 
 @Composable
@@ -158,6 +159,24 @@ private fun BookDetails(
                             Text(text = bookData.description)
                         }
                     }
+                }
+
+            }
+
+            Spacer(modifier = Modifier.height(detailsSpacerHeight))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(0.7F),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+
+                RoundedButton(label = stringResource(R.string.save), radius = 25) {
+
+                }
+
+                RoundedButton(label = stringResource(R.string.cancel), radius = 25) {
+
                 }
 
             }
