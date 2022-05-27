@@ -1,7 +1,6 @@
-package com.compose.jreader.data.wrappers
+package com.compose.jreader.data.model
 
 import com.compose.jreader.utils.Constants
-import com.compose.jreader.utils.Status
 import java.io.IOException
 
 /**
@@ -25,6 +24,13 @@ data class Resource<out T>(
 
         fun <T> empty(): Resource<T> = Resource(Status.EMPTY_RESPONSE)
 
+    }
+
+    enum class Status {
+        SUCCESS,
+        ERROR,
+        LOADING,
+        EMPTY_RESPONSE
     }
 
 }

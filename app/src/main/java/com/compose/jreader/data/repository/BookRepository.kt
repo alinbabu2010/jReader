@@ -1,12 +1,11 @@
 package com.compose.jreader.data.repository
 
 import com.compose.jreader.data.model.BookUi
-import com.compose.jreader.data.wrappers.Resource
+import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.wrappers.ResponseWrapper
 import com.compose.jreader.network.ApiLoader
 import com.compose.jreader.utils.Constants
 import com.compose.jreader.utils.Mapper
-import com.compose.jreader.utils.UiMapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject

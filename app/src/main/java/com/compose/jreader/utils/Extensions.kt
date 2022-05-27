@@ -5,7 +5,8 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import com.compose.jreader.data.model.UiState
-import com.compose.jreader.data.wrappers.Resource
+import com.compose.jreader.data.model.Resource
+import com.compose.jreader.data.model.Resource.Status
 
 /**
  * To check [MutableState] string value is valid one
