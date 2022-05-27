@@ -1,5 +1,6 @@
 package com.compose.jreader.data.repository
 
+import com.compose.jreader.data.firebase.DatabaseSource
 import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.wrappers.ResponseWrapper
@@ -8,13 +9,15 @@ import com.compose.jreader.utils.Constants
 import com.compose.jreader.utils.Mapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class BookRepository @Inject constructor(
     private val apiLoader: ApiLoader,
     private val mapper: Mapper,
-    private val firebaseAuth: FirebaseAuth,
-    private val fireStore: FirebaseFirestore
+    private val databaseSource: DatabaseSource
 ) {
 
     /**
@@ -48,22 +51,18 @@ class BookRepository @Inject constructor(
     }
 
     /**
-     * To save [BookUi] into [FirebaseFirestore]
+     * To save [BookUi] into database
      * @param bookData [BookUi] model of the book to be saved
-     * @param onComplete Callback function to call on successful database save.
+     * @return Flow emitting a [String] value - On success emits a empty string else emits the error message
      */
-    fun saveBookToFirebase(bookData: BookUi?, onComplete: (Boolean, String?) -> Unit) {
-        bookData?.userId = firebaseAuth.currentUser?.uid ?: ""
-        val dbCollection = fireStore.collection(Constants.BOOK_DB_NAME)
-        if ((bookData != null) && bookData.toString().isNotBlank()) {
-            dbCollection.add(bookData).addOnSuccessListener { ref ->
-                dbCollection.document(ref.id).update(
-                    mapOf(Constants.USER_ID to ref.id)
-                ).addOnCompleteListener {
-                    onComplete(it.isSuccessful, it.exception?.message)
-                }
-            }
+    fun saveBookToFirebase(bookData: BookUi?) = channelFlow {
+        databaseSource.saveBookToFirebase(bookData).collectLatest { result ->
+            send(
+                if (result.isNullOrBlank()) null
+                else result.toString()
+            )
         }
     }
+
 
 }
