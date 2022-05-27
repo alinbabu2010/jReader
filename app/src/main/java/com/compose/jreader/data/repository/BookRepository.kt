@@ -5,6 +5,7 @@ import com.compose.jreader.data.wrappers.Resource
 import com.compose.jreader.data.wrappers.ResponseWrapper
 import com.compose.jreader.network.ApiLoader
 import com.compose.jreader.utils.Constants
+import com.compose.jreader.utils.Mapper
 import com.compose.jreader.utils.UiMapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 class BookRepository @Inject constructor(
     private val apiLoader: ApiLoader,
-    private val uiMapper: UiMapper,
+    private val mapper: Mapper,
     private val firebaseAuth: FirebaseAuth,
     private val fireStore: FirebaseFirestore
 ) {
@@ -27,7 +28,7 @@ class BookRepository @Inject constructor(
             is ResponseWrapper.Error -> Resource.error(response.exception)
             is ResponseWrapper.Success -> {
                 if (response.data.isNullOrEmpty()) Resource.empty()
-                else Resource.success(uiMapper.getBookUiList(response.data))
+                else Resource.success(mapper.getBookUiList(response.data))
             }
         }
     }
@@ -42,7 +43,7 @@ class BookRepository @Inject constructor(
             is ResponseWrapper.Error -> Resource.error(response.exception)
             is ResponseWrapper.Success -> {
                 if (response.data == null) Resource.empty()
-                else Resource.success(uiMapper.getBookUi(response.data))
+                else Resource.success(mapper.getBookUi(response.data))
             }
         }
     }

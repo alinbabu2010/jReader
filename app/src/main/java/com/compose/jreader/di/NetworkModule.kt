@@ -2,8 +2,6 @@ package com.compose.jreader.di
 
 import com.compose.jreader.BuildConfig
 import com.compose.jreader.network.BooksApi
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,15 +14,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-object AppModule {
-
-    @Singleton
-    @Provides
-    fun provideFirebaseAuth() = FirebaseAuth.getInstance()
-
-    @Singleton
-    @Provides
-    fun provideFireStore() = FirebaseFirestore.getInstance()
+object NetworkModule {
 
     @Provides
     @Singleton
