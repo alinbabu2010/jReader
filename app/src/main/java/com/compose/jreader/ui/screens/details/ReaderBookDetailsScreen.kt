@@ -78,15 +78,7 @@ private fun BookDetails(
     navController: NavHostController
 ) {
 
-    val errorMsg by remember {
-        viewModel.errorMsg
-    }
-
     val context = LocalContext.current
-
-    if (errorMsg.isNotBlank()) {
-        context.showToast(errorMsg)
-    }
 
     FadeVisibility(uiState.data != null) {
 
@@ -186,7 +178,9 @@ private fun BookDetails(
 
                 RoundedButton(label = stringResource(R.string.save), radius = 25) {
                     viewModel.saveBook(bookData) {
-                        navController.popBackStack()
+                        if (it.isNotBlank()) {
+                            navController.popBackStack()
+                        } else context.showToast(it)
                     }
                 }
 
