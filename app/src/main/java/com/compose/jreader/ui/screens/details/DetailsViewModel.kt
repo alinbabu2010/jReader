@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.compose.jreader.data.model.BookUi
-import com.compose.jreader.data.model.UiState
+import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.data.repository.BookRepository
 import com.compose.jreader.utils.getUiState
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.compose.jreader.R
-import com.compose.jreader.data.model.UiState
+import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.utils.containerTextPadding
 import com.compose.jreader.utils.progressBarSize
 

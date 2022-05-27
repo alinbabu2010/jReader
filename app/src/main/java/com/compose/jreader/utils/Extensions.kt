@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
-import com.compose.jreader.data.model.UiState
+import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.model.Resource.Status
 

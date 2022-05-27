@@ -1,4 +1,4 @@
-package com.compose.jreader.data.model
+package com.compose.jreader.ui.model
 
 data class UiState<out T>(
     val data: T? = null,

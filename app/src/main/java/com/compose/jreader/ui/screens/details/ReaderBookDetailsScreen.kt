@@ -26,7 +26,7 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.compose.jreader.R
 import com.compose.jreader.data.model.BookUi
-import com.compose.jreader.data.model.UiState
+import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.ui.components.FadeVisibility
 import com.compose.jreader.ui.components.LoaderMessageView
 import com.compose.jreader.ui.components.ReaderAppBar
