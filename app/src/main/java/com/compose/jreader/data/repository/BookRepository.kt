@@ -4,14 +4,10 @@ import com.compose.jreader.data.firebase.DatabaseSource
 import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.wrappers.ResponseWrapper
-import com.compose.jreader.network.ApiLoader
-import com.compose.jreader.utils.Constants
+import com.compose.jreader.data.network.ApiLoader
 import com.compose.jreader.utils.Mapper
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class BookRepository @Inject constructor(

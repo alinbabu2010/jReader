@@ -1,7 +1,7 @@
 package com.compose.jreader.di
 
 import com.compose.jreader.BuildConfig
-import com.compose.jreader.network.BooksApi
+import com.compose.jreader.data.network.BooksApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

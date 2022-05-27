@@ -1,7 +1,7 @@
 package com.compose.jreader.di
 
-import com.compose.jreader.network.ApiLoader
-import com.compose.jreader.network.ApiLoaderImpl
+import com.compose.jreader.data.network.ApiLoader
+import com.compose.jreader.data.network.ApiLoaderImpl
 import com.compose.jreader.utils.Mapper
 import com.compose.jreader.utils.UiMapper
 import dagger.Binds
