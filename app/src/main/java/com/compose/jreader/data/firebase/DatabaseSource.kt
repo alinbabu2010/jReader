@@ -4,6 +4,7 @@ import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
@@ -27,14 +28,12 @@ class DatabaseSource @Inject constructor(
                 dbCollection.document(ref.id).update(
                     mapOf(Constants.USER_ID to ref.id)
                 ).addOnCompleteListener {
-                    if(it.isSuccessful) channel.trySend(null)
-                    else channel.trySend(it.exception?.localizedMessage)
+                    if(it.isSuccessful) trySend(null)
+                    else trySend(it.exception?.localizedMessage)
                 }
             }
         }
-        awaitClose {
-            channel.close()
-        }
+        awaitClose { cancel() }
     }
 
 

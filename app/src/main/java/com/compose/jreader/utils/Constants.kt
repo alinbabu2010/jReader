@@ -12,7 +12,7 @@ object Constants {
 
     const val ARG_BOOK_ID = "bookId"
 
-    const val BOOK_DB_NAME = "book"
+    const val BOOK_DB_NAME = "books"
     const val USER_DB_NAME = "users"
     const val USER_ID = "id"
 

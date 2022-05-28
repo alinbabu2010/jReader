@@ -4,9 +4,8 @@ import com.compose.jreader.data.firebase.DatabaseSource
 import com.compose.jreader.data.model.Book
 import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.data.model.Resource
-import com.compose.jreader.data.wrappers.ResponseWrapper
 import com.compose.jreader.data.network.ApiLoader
-import com.compose.jreader.utils.Mapper
+import com.compose.jreader.data.wrappers.ResponseWrapper
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
@@ -53,10 +52,7 @@ class BookRepository @Inject constructor(
      */
     fun saveBookToFirebase(bookData: BookUi?) = channelFlow {
         databaseSource.saveBookToFirebase(bookData).collectLatest { result ->
-            send(
-                if (result.isNullOrBlank()) null
-                else result.toString()
-            )
+            send(result)
         }
     }
 
