@@ -8,9 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -79,6 +77,14 @@ private fun BookDetails(
 ) {
 
     val context = LocalContext.current
+
+    var errorMsg by remember {
+       mutableStateOf("")
+    }
+
+    if(errorMsg.isNotBlank()) {
+        context.showToast(errorMsg)
+    }
 
     FadeVisibility(uiState.data != null) {
 
@@ -179,8 +185,8 @@ private fun BookDetails(
                 RoundedButton(label = stringResource(R.string.save), radius = 25) {
                     viewModel.saveBook(bookData) {
                         if (it.isNotBlank()) {
-                            navController.popBackStack()
-                        } else context.showToast(it)
+                            errorMsg = it
+                        } else navController.popBackStack()
                     }
                 }
 
