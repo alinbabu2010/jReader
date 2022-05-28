@@ -11,6 +11,9 @@ import com.compose.jreader.utils.UiStateGenerator
 import com.compose.jreader.utils.getUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,6 +24,9 @@ class DetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val bookInfo = mutableStateOf(UiState<BookUi>())
+
+    private val _savedState = MutableSharedFlow<String?>()
+    val savedState = _savedState.asSharedFlow()
 
     /**
      * To get a book info from API
@@ -37,15 +43,11 @@ class DetailsViewModel @Inject constructor(
     /**
      * To save [BookUi] into fireStore
      * @param bookData [BookUi] model of the book to be saved
-     * @param onSuccess Callback function to notify on save success
      */
-    fun saveBook(bookData: BookUi?, onSuccess: (String) -> Unit) {
+    fun saveBook(bookData: BookUi?) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.saveBookToFirebase(bookData).collect {
-                onSuccess(
-                    if (it.isNullOrBlank()) ""
-                    else it
-                )
+                _savedState.emit(it)
             }
         }
     }
