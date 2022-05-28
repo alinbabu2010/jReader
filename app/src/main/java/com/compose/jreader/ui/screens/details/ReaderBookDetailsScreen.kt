@@ -8,7 +8,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,12 +27,13 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.compose.jreader.R
 import com.compose.jreader.data.model.BookUi
-import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.ui.components.FadeVisibility
 import com.compose.jreader.ui.components.LoaderMessageView
 import com.compose.jreader.ui.components.ReaderAppBar
 import com.compose.jreader.ui.components.RoundedButton
+import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.utils.*
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun BookDetailsScreen(
@@ -78,12 +82,12 @@ private fun BookDetails(
 
     val context = LocalContext.current
 
-    var errorMsg by remember {
-       mutableStateOf("")
-    }
-
-    if(errorMsg.isNotBlank()) {
-        context.showToast(errorMsg)
+    LaunchedEffect(null) {
+        viewModel.savedState.collectLatest { value ->
+            if (value.isNullOrBlank()) {
+                navController.popBackStack()
+            } else context.showToast(value)
+        }
     }
 
     FadeVisibility(uiState.data != null) {
@@ -183,11 +187,7 @@ private fun BookDetails(
             ) {
 
                 RoundedButton(label = stringResource(R.string.save), radius = 25) {
-                    viewModel.saveBook(bookData) {
-                        if (it.isNotBlank()) {
-                            errorMsg = it
-                        } else navController.popBackStack()
-                    }
+                    viewModel.saveBook(bookData)
                 }
 
                 RoundedButton(label = stringResource(R.string.cancel), radius = 25) {
