@@ -7,14 +7,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UiMapper @Inject constructor() : Mapper {
+class BookToBookUiMapper @Inject constructor() : Mapper<Book,BookUi> {
 
-    override fun getBookUiList(data: List<Book>): List<BookUi> = data.map { getBookUi(it) }
-
-    override fun getBookUi(book: Book): BookUi {
-        val bookInfo = book.volumeInfo
+    override fun map(data: Book): BookUi {
+        val bookInfo = data.volumeInfo
         return BookUi(
-            googleBookId = book.id ?: "",
+            googleBookId = data.id ?: "",
             title = bookInfo?.title ?: "",
             photoUrl = bookInfo?.imageLinks?.smallThumbnail ?: "",
             authors = getAuthors(bookInfo?.authors),

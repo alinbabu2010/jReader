@@ -1,9 +1,12 @@
 package com.compose.jreader.di
 
+import com.compose.jreader.data.model.Book
+import com.compose.jreader.data.model.BookUi
+import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.network.ApiLoader
 import com.compose.jreader.data.network.ApiLoaderImpl
-import com.compose.jreader.utils.Mapper
-import com.compose.jreader.utils.UiMapper
+import com.compose.jreader.ui.model.UiState
+import com.compose.jreader.utils.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,8 +22,8 @@ abstract class InterfaceModule {
     ): ApiLoader
 
     @Binds
-    abstract fun bindMapper(
-        uiMapper: UiMapper
-    ) : Mapper
+    abstract fun bindBookUiMapper(
+        bookUiMapper: BookToBookUiMapper
+    ): Mapper<Book, BookUi>
 
 }
