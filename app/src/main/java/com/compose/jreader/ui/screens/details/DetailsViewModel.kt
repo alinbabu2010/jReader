@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.data.repository.BookRepository
+import com.compose.jreader.utils.BookToBookUiMapper
+import com.compose.jreader.utils.UiStateGenerator
 import com.compose.jreader.utils.getUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val repository: BookRepository
+    private val repository: BookRepository,
+    private val uiStateGenerator: UiStateGenerator
 ) : ViewModel() {
 
     val bookInfo = mutableStateOf(UiState<BookUi>())
@@ -26,7 +29,8 @@ class DetailsViewModel @Inject constructor(
     fun getBookInfo(bookId: String) {
         bookInfo.value = UiState(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
-            bookInfo.value = repository.getBookInfo(bookId).getUiState()
+            val response = repository.getBookInfo(bookId)
+            bookInfo.value = uiStateGenerator.generate(response)
         }
     }
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.data.repository.BookRepository
+import com.compose.jreader.utils.UiStateGenerator
 import com.compose.jreader.utils.getUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repository: BookRepository
+    private val repository: BookRepository,
+    private val uiStateGenerator: UiStateGenerator
 ) : ViewModel() {
 
     val listOfBooks: MutableState<UiState<List<BookUi>>> = mutableStateOf(UiState())
@@ -32,7 +34,8 @@ class SearchViewModel @Inject constructor(
     fun searchBooks(query: String) {
         listOfBooks.value = UiState(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
-            listOfBooks.value = repository.getBooks(query).getUiState()
+            val response = repository.getBooks(query)
+            listOfBooks.value = uiStateGenerator.generate(response)
         }
     }
 

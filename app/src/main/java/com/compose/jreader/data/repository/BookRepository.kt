@@ -1,6 +1,7 @@
 package com.compose.jreader.data.repository
 
 import com.compose.jreader.data.firebase.DatabaseSource
+import com.compose.jreader.data.model.Book
 import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.wrappers.ResponseWrapper
@@ -12,7 +13,6 @@ import javax.inject.Inject
 
 class BookRepository @Inject constructor(
     private val apiLoader: ApiLoader,
-    private val mapper: Mapper,
     private val databaseSource: DatabaseSource
 ) {
 
@@ -21,12 +21,12 @@ class BookRepository @Inject constructor(
      * @param searchQuery Search keyword to be searched
      * @return An instance [Resource]
      */
-    fun getBooks(searchQuery: String): Resource<List<BookUi>> {
+    fun getBooks(searchQuery: String): Resource<List<Book>> {
         return when (val response = apiLoader.getAllBooks(searchQuery)) {
             is ResponseWrapper.Error -> Resource.error(response.exception)
             is ResponseWrapper.Success -> {
                 if (response.data.isNullOrEmpty()) Resource.empty()
-                else Resource.success(mapper.getBookUiList(response.data))
+                else Resource.success(response.data)
             }
         }
     }
@@ -36,12 +36,12 @@ class BookRepository @Inject constructor(
      * @param bookId Id of the book to be fetched
      * @return An instance [Resource]
      */
-    fun getBookInfo(bookId: String): Resource<BookUi> {
+    fun getBookInfo(bookId: String): Resource<Book> {
         return when (val response = apiLoader.getBookInfo(bookId)) {
             is ResponseWrapper.Error -> Resource.error(response.exception)
             is ResponseWrapper.Success -> {
                 if (response.data == null) Resource.empty()
-                else Resource.success(mapper.getBookUi(response.data))
+                else Resource.success(response.data)
             }
         }
     }
