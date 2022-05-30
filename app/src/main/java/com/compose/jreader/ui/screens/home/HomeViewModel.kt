@@ -1,6 +1,5 @@
 package com.compose.jreader.ui.screens.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.compose.jreader.data.model.BookUi
@@ -31,7 +30,6 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val uiState = repository.getAllBooks().getUiState()
             _listOfBooks.value = uiState
-            Log.d("TAG", "getAllBooks: ${listOfBooks.value}")
         }
     }
 

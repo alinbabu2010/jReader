@@ -49,7 +49,7 @@ fun ListCard(
         Box(
             modifier = Modifier
                 .clickable {
-                    onClickDetails.invoke(bookUi.title)
+                    onClickDetails.invoke(bookUi.googleBookId)
                 },
             contentAlignment = Alignment.BottomStart
         ) {
