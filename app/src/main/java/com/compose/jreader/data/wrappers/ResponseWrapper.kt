@@ -1,7 +1,7 @@
 package com.compose.jreader.data.wrappers
 
 /**
- * Class to handle API responses
+ * Class to handle API and fireStore responses
  */
 sealed class ResponseWrapper<out T : Any> {
     data class Success<out T : Any>(val data: T?) : ResponseWrapper<T>()
