@@ -21,12 +21,9 @@ class HomeViewModel @Inject constructor(
     private val _listOfBooks = MutableStateFlow<UiState<List<BookUi>>>(UiState())
     val listOfBooks = _listOfBooks.asStateFlow()
 
-    init {
-        getAllBooks()
-    }
-
-    private fun getAllBooks() {
-        _listOfBooks.value = UiState(isLoading = true)
+    fun getAllBooks() {
+        _listOfBooks.value = if (_listOfBooks.value.data == null)
+           UiState(isLoading = true) else listOfBooks.value
         viewModelScope.launch(Dispatchers.IO) {
             val uiState = repository.getAllBooks().getUiState()
             _listOfBooks.value = uiState
