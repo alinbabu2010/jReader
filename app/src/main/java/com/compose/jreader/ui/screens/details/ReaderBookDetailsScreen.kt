@@ -66,7 +66,7 @@ fun BookDetailsScreen(
         ) {
 
             BookDetails(uiState, viewModel, navController)
-            LoaderMessageView(uiState)
+            LoaderMessageView(uiState, stringResource(R.string.no_info_found))
 
         }
     }

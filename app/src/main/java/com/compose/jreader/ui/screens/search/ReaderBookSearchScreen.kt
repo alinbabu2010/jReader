@@ -72,7 +72,7 @@ fun ReaderBookSearchScreen(
                     uiState = viewModel.listOfBooks.value
                 }
                 BookListView(!uiState.isLoading, uiState.data, navController)
-                LoaderMessageView(uiState)
+                LoaderMessageView(uiState, stringResource(R.string.no_books_found))
             }
         }
 
