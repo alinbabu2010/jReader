@@ -98,7 +98,8 @@ fun BookListArea(
         LoaderMessageView(state.value, "")
     } else {
         HorizontalScrollContainer(bookUis = bookList) {
-            Log.d("TAG", "BookListArea: $it")
+            val route = "${ReaderScreens.UpdateScreen.name}/$it"
+            navController.navigate(route)
         }
     }
 }
