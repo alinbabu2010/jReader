@@ -10,15 +10,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import com.compose.jreader.R
 import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.utils.containerTextPadding
 import com.compose.jreader.utils.progressBarSize
 
 @Composable
-fun <T> LoaderMessageView(uiState: UiState<T>) {
+fun <T> LoaderMessageView(
+    uiState: UiState<T>,
+    message: String
+) {
 
     Row(
         modifier = Modifier
@@ -33,7 +34,7 @@ fun <T> LoaderMessageView(uiState: UiState<T>) {
             )
         } else {
             Text(
-                text = if (uiState.isEmpty) stringResource(R.string.no_books_found)
+                text = if (uiState.isEmpty) message
                 else uiState.message ?: "",
                 modifier = Modifier.padding(containerTextPadding),
                 textAlign = TextAlign.Center,
