@@ -32,6 +32,7 @@
     <string name="error_exception_message">The server responded with a malformed JSON text.\n\n[Response]%s</string>
     <string name="exception_message">The server response did not have any error details in it.\n\n[Response]%s</string>
     <string name="no_books_found">No books found</string>
+    <string name="no_info_found">No info found</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
 </resources>
