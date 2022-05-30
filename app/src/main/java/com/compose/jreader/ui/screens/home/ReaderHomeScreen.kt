@@ -11,7 +11,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,6 +41,9 @@ fun ReaderHomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
 
+    homeViewModel.getAllBooks()
+    val uiState = homeViewModel.listOfBooks.collectAsState().value
+
     Scaffold(topBar = {
         ReaderAppBar(
             stringResource(R.string.app_name),
@@ -61,7 +63,7 @@ fun ReaderHomeScreen(
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
         ) {
-            HomeContent(navController, loginViewModel, homeViewModel)
+            HomeContent(navController, loginViewModel,uiState)
         }
 
     }
@@ -72,7 +74,7 @@ fun ReaderHomeScreen(
 fun HomeContent(
     navController: NavHostController,
     loginViewModel: ReaderLoginViewModel,
-    homeViewModel: HomeViewModel,
+    uiState: UiState<List<BookUi>>,
 ) {
 
     Column(
@@ -82,7 +84,6 @@ fun HomeContent(
         HomeTitleRow(Modifier.align(Alignment.Start), loginViewModel)
         ReadingRightNowArea(bookUis = BookUi.getBooks(), navController = navController)
         TitleSection(label = stringResource(R.string.reading_list))
-        val uiState = homeViewModel.listOfBooks.collectAsState()
         BookListArea(uiState, navController = navController)
     }
 
@@ -90,12 +91,12 @@ fun HomeContent(
 
 @Composable
 fun BookListArea(
-    state: State<UiState<List<BookUi>>>,
+    state: UiState<List<BookUi>>,
     navController: NavHostController
 ) {
-    val bookList = state.value.data
+    val bookList = state.data
     if (bookList == null) {
-        LoaderMessageView(state.value, "")
+        LoaderMessageView(state, "")
     } else {
         HorizontalScrollContainer(bookUis = bookList) {
             val route = "${ReaderScreens.UpdateScreen.name}/$it"
