@@ -1,12 +1,15 @@
 package com.compose.jreader.data.firebase
 
 import com.compose.jreader.data.model.BookUi
+import com.compose.jreader.data.wrappers.ResponseWrapper
 import com.compose.jreader.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class DatabaseSource @Inject constructor(
@@ -28,12 +31,28 @@ class DatabaseSource @Inject constructor(
                 dbCollection.document(ref.id).update(
                     mapOf(Constants.USER_ID to ref.id)
                 ).addOnCompleteListener {
-                    if(it.isSuccessful) trySend(null)
+                    if (it.isSuccessful) trySend(null)
                     else trySend(it.exception?.localizedMessage)
                 }
             }
         }
         awaitClose { cancel() }
+    }
+
+    /**
+     * To get all books from firebase fireStore
+     * @return [ResponseWrapper] with list of books or exception in case of error
+     */
+    suspend fun getAllBooksFromFirebase(): ResponseWrapper<List<BookUi?>> {
+        val dbCollection = fireStore.collection(Constants.BOOK_DB_NAME)
+        return try {
+            val data = dbCollection.get().await().documents.map { snapshot ->
+                snapshot.toObject(BookUi::class.java)
+            }
+            ResponseWrapper.Success(data)
+        } catch (exception: FirebaseFirestoreException) {
+            ResponseWrapper.Error(exception.code.value(), exception)
+        }
     }
 
 
