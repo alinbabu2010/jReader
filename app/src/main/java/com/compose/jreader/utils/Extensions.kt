@@ -4,9 +4,9 @@ import android.content.Context
 import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
-import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.model.Resource.Status
+import com.compose.jreader.ui.model.UiState
 
 /**
  * To check [MutableState] string value is valid one
@@ -47,4 +47,13 @@ fun <T> Resource<T>.getUiState(): UiState<T> {
  */
 fun Context.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+}
+
+/**
+ * To show [Toast] message
+ * @param stringId Id of the string resource
+ */
+fun Context.showToast(stringId: Int) {
+    val message = this.getString(stringId)
+    this.showToast(message)
 }
