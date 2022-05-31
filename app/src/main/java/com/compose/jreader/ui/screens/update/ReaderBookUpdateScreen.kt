@@ -8,13 +8,11 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -32,6 +30,7 @@ import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.ui.components.*
 import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.ui.screens.details.DetailsViewModel
+import com.compose.jreader.ui.theme.Red500
 import com.compose.jreader.utils.*
 
 @Composable
@@ -91,7 +90,7 @@ fun UpdateComposable(uiState: UiState<BookUi>) {
             ) {
 
             }
-            StatusButton()
+            StatusButton(uiState.data)
             RateBook()
             UpdateButtons()
 
@@ -134,7 +133,16 @@ fun RateBook() {
 }
 
 @Composable
-fun StatusButton() {
+fun StatusButton(book: BookUi?) {
+
+    var isStartedReading by remember {
+        mutableStateOf(false)
+    }
+
+    var isFinishedReading by remember {
+        mutableStateOf(false)
+    }
+
     Row(
         modifier = Modifier.padding(
             end = statusButtonPadding,
@@ -144,12 +152,44 @@ fun StatusButton() {
         horizontalArrangement = Arrangement.SpaceAround
     ) {
 
-        TextButton(onClick = { /*TODO*/ }) {
-            Text(text = "Start reading")
+        if (book?.startedReading == null) {
+            TextButton(
+                onClick = { isStartedReading = true },
+                enabled = book?.startedReading == null
+            ) {
+                if (isStartedReading) {
+                    Text(
+                        text = stringResource(R.string.started_reading),
+                        modifier = Modifier.alpha(0.6f),
+                        color = Red500
+                    )
+                } else Text(text = stringResource(R.string.start_reading))
+            }
+        } else {
+            Text(
+                text = stringResource(
+                    R.string.read_started_date,
+                    book.startedReading.toString()
+                )
+            )
         }
 
-        TextButton(onClick = { /*TODO*/ }) {
-            Text(text = "Mark as Read")
+        TextButton(
+            onClick = { isFinishedReading = true },
+            enabled = book?.finishedReading == null
+        ) {
+            if (book?.finishedReading == null) {
+                if (isFinishedReading) {
+                    Text(text = stringResource(R.string.finished_reading))
+                } else Text(text = stringResource(R.string.mark_as_read))
+            } else {
+                Text(
+                    text = stringResource(
+                        R.string.read_finished_date,
+                        book.finishedReading.toString()
+                    )
+                )
+            }
         }
 
     }

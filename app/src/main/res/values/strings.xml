@@ -42,4 +42,10 @@
     <string name="notes_input_label">Enter your thoughts</string>
     <string name="text_error">Enter valid text input</string>
     <string name="default_note">No thoughts available.</string>
+    <string name="started_reading">Started reading</string>
+    <string name="start_reading">Start reading</string>
+    <string name="finished_reading">Finished Reading!</string>
+    <string name="mark_as_read">Mark as Read</string>
+    <string name="read_finished_date">Finished on: %s</string>
+    <string name="read_started_date">Started on: %s</string>
 </resources>
