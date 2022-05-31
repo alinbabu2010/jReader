@@ -106,3 +106,15 @@ val detailsSpacerHeight = 5.dp
 val descriptionColPadding = 3.dp
 val descriptionSurfacePadding = 4.dp
 val descriptionSurfaceBorderStroke = 1.dp
+
+// Update screen dimensions
+val updateSurfacePadding = 16.dp
+val updateColumnPadding = 3.dp
+val updateBookInfoElevation = 4.dp
+val updateConstraintLayoutPadding = 8.dp
+val imageMarginStart = 40.dp
+val infoTextMargin = 16.dp
+val thoughtsTextPadding = 16.dp
+val thoughtsTextHeight = 140.dp
+val statusButtonPadding = 8.dp
+val updateButtonTopPadding = 8.dp
