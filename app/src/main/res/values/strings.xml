@@ -35,4 +35,10 @@
     <string name="no_info_found">No info found</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="update_book">Update Book</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="rating">Rating</string>
+    <string name="notes_input_label">Enter your thoughts</string>
+    <string name="text_error">Enter valid text input</string>
 </resources>
