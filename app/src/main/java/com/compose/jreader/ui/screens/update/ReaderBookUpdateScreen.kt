@@ -162,8 +162,10 @@ fun EnterThoughts(modifier: Modifier, onSubmit: (String) -> Unit) {
 
     val context = LocalContext.current
 
+    val defaultNote = stringResource(R.string.default_note)
+
     val noteState = rememberSaveable {
-        mutableStateOf("")
+        mutableStateOf(defaultNote)
     }
 
     val validInput by remember(noteState.value) {

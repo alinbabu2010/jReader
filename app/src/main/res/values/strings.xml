@@ -41,4 +41,5 @@
     <string name="rating">Rating</string>
     <string name="notes_input_label">Enter your thoughts</string>
     <string name="text_error">Enter valid text input</string>
+    <string name="default_note">No thoughts available.</string>
 </resources>
