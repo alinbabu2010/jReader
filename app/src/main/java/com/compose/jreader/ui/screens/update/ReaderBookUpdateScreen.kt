@@ -106,11 +106,11 @@ fun UpdateButtons() {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
 
-        RoundedButton(label = stringResource(R.string.update), radius = 25) {
+        RoundedButton(label = stringResource(R.string.update)) {
 
         }
 
-        RoundedButton(label = stringResource(R.string.delete), radius = 25) {
+        RoundedButton(label = stringResource(R.string.delete)) {
 
         }
 

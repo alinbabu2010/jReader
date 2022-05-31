@@ -145,7 +145,7 @@ fun BookRating(score: Double) {
 @Composable
 fun RoundedButton(
     label: String,
-    radius: Int,
+    radius: Int = 25,
     onPress: () -> Unit
 ) {
 

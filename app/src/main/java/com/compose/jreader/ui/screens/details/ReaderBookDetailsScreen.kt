@@ -186,11 +186,11 @@ private fun BookDetails(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
 
-                RoundedButton(label = stringResource(R.string.save), radius = 25) {
+                RoundedButton(label = stringResource(R.string.save)) {
                     viewModel.saveBook(bookData)
                 }
 
-                RoundedButton(label = stringResource(R.string.cancel), radius = 25) {
+                RoundedButton(label = stringResource(R.string.cancel)) {
                     navController.popBackStack()
                 }
 
