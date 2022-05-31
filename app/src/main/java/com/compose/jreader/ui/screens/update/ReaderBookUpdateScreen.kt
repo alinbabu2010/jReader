@@ -1,6 +1,7 @@
 package com.compose.jreader.ui.screens.update
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -18,6 +19,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -79,7 +81,9 @@ fun UpdateComposable(uiState: UiState<BookUi>) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            ShowBookInfo(uiState)
+            ShowBookInfo(uiState) {
+
+            }
             EnterThoughts(
                 modifier = Modifier
                     .padding(thoughtsTextPadding)
@@ -186,13 +190,18 @@ fun EnterThoughts(modifier: Modifier, onSubmit: (String) -> Unit) {
 }
 
 @Composable
-private fun ShowBookInfo(uiState: UiState<BookUi>) {
+private fun ShowBookInfo(uiState: UiState<BookUi>, onInfoClick: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = CircleShape,
         elevation = updateBookInfoElevation
     ) {
-        ConstraintLayout(Modifier.padding(updateConstraintLayoutPadding)) {
+        ConstraintLayout(
+            Modifier
+                .padding(updateConstraintLayoutPadding)
+                .clickable {
+                    onInfoClick()
+                }) {
 
             val data = uiState.data
 
@@ -207,9 +216,9 @@ private fun ShowBookInfo(uiState: UiState<BookUi>) {
                         )
                         start.linkTo(parent.start, imageMarginStart)
                     }
-                    .height(bookImageHeight)
-                    .width(bookImageWidth)
-                    .padding(bookImagePadding),
+                    .height(imageHeight)
+                    .width(imageWidth)
+                    .padding(imagePadding),
                 painter = rememberAsyncImagePainter(
                     model = data?.photoUrl,
                     contentScale = ContentScale.FillBounds
@@ -233,14 +242,19 @@ private fun ShowBookInfo(uiState: UiState<BookUi>) {
                     text = data?.title ?: "",
                     style = MaterialTheme.typography.h6,
                     maxLines = 2,
+                    fontWeight = FontWeight.SemiBold,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = data?.authors ?: "",
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.body2
                 )
-                Text(text = data?.publishedDate ?: "")
+                Text(
+                    text = data?.publishedDate ?: "",
+                    style = MaterialTheme.typography.body2
+                )
             }
 
 

@@ -118,3 +118,6 @@ val thoughtsTextPadding = 16.dp
 val thoughtsTextHeight = 140.dp
 val statusButtonPadding = 8.dp
 val updateButtonTopPadding = 8.dp
+val imageHeight = 100.dp
+val imageWidth = 120.dp
+val imagePadding = 4.dp
