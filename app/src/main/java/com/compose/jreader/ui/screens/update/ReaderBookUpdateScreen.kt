@@ -34,9 +34,9 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.compose.jreader.R
 import com.compose.jreader.data.model.BookUi
+import com.compose.jreader.data.model.BookUpdateValue
 import com.compose.jreader.ui.components.*
 import com.compose.jreader.ui.model.UiState
-import com.compose.jreader.ui.screens.home.HomeViewModel
 import com.compose.jreader.ui.theme.Grey100
 import com.compose.jreader.ui.theme.Red500
 import com.compose.jreader.ui.theme.Yellow100
@@ -47,7 +47,7 @@ import com.compose.jreader.utils.*
 fun ReaderBookUpdateScreen(
     navController: NavHostController,
     bookId: String,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: UpdateViewModel = hiltViewModel()
 ) {
 
     val uiState by produceState<UiState<BookUi>>(
@@ -73,7 +73,7 @@ fun ReaderBookUpdateScreen(
                 .fillMaxSize()
 
         ) {
-            UpdateComposable(uiState)
+            UpdateComposable(uiState, viewModel)
             LoaderMessageView(uiState, stringResource(R.string.no_info_found))
         }
 
@@ -83,12 +83,26 @@ fun ReaderBookUpdateScreen(
 
 @ExperimentalComposeUiApi
 @Composable
-fun UpdateComposable(uiState: UiState<BookUi>) {
+fun UpdateComposable(uiState: UiState<BookUi>, viewModel: UpdateViewModel) {
 
     FadeVisibility(uiState.data != null) {
 
-        var ratingValue by remember {
+        var ratingValue by rememberSaveable {
             mutableStateOf(0)
+        }
+
+        val defaultNote = stringResource(R.string.default_note)
+
+        var notes by rememberSaveable {
+            mutableStateOf(defaultNote)
+        }
+
+        val isStartedReading = rememberSaveable {
+            mutableStateOf(false)
+        }
+
+        val isFinishedReading = rememberSaveable {
+            mutableStateOf(false)
         }
 
         Column(
@@ -105,18 +119,30 @@ fun UpdateComposable(uiState: UiState<BookUi>) {
                     .padding(thoughtsTextPadding)
                     .height(thoughtsTextHeight)
             ) {
-
+                notes = it
             }
-            StatusButton(uiState.data)
+            StatusButton(uiState.data, isStartedReading, isFinishedReading)
 
-            uiState.data?.rating?.toInt()?.let {
+            uiState.data?.rating?.let {
                 RateBar(it) { rating ->
-                    println(rating)
                     ratingValue = rating
                 }
             }
 
-            UpdateButtons()
+            UpdateButtons { isUpdate ->
+                if (isUpdate) {
+                    val bookUpdateValue = BookUpdateValue(
+                        notes,
+                        isFinishedReading.value,
+                        isStartedReading.value,
+                        ratingValue
+                    )
+                    viewModel.updateBook(bookUpdateValue) {
+
+                    }
+                }
+
+            }
 
         }
 
@@ -124,7 +150,7 @@ fun UpdateComposable(uiState: UiState<BookUi>) {
 }
 
 @Composable
-fun UpdateButtons() {
+fun UpdateButtons(onButtonClick: (Boolean) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -134,11 +160,11 @@ fun UpdateButtons() {
     ) {
 
         RoundedButton(label = stringResource(R.string.update)) {
-
+            onButtonClick(true)
         }
 
         RoundedButton(label = stringResource(R.string.delete)) {
-
+            onButtonClick(false)
         }
 
     }
@@ -162,6 +188,7 @@ fun RateBar(rating: Int, onRatingClick: (Int) -> Unit) {
     )
 
     Column(
+        modifier = Modifier.padding(top = rateBarTopPadding),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -203,15 +230,11 @@ fun RateBar(rating: Int, onRatingClick: (Int) -> Unit) {
 }
 
 @Composable
-fun StatusButton(book: BookUi?) {
-
-    var isStartedReading by remember {
-        mutableStateOf(false)
-    }
-
-    var isFinishedReading by remember {
-        mutableStateOf(false)
-    }
+fun StatusButton(
+    book: BookUi?,
+    isStartedReading: MutableState<Boolean>,
+    isFinishedReading: MutableState<Boolean>
+) {
 
     Row(
         modifier = Modifier.padding(
@@ -224,10 +247,10 @@ fun StatusButton(book: BookUi?) {
 
         if (book?.startedReading == null) {
             TextButton(
-                onClick = { isStartedReading = true },
+                onClick = { isStartedReading.value = true },
                 enabled = book?.startedReading == null
             ) {
-                if (isStartedReading) {
+                if (isStartedReading.value) {
                     Text(
                         text = stringResource(R.string.started_reading),
                         modifier = Modifier.alpha(0.6f),
@@ -245,11 +268,11 @@ fun StatusButton(book: BookUi?) {
         }
 
         TextButton(
-            onClick = { isFinishedReading = true },
+            onClick = { isFinishedReading.value = true },
             enabled = book?.finishedReading == null
         ) {
             if (book?.finishedReading == null) {
-                if (isFinishedReading) {
+                if (isFinishedReading.value) {
                     Text(text = stringResource(R.string.finished_reading))
                 } else Text(text = stringResource(R.string.mark_as_read))
             } else {
@@ -282,7 +305,6 @@ fun EnterThoughts(modifier: Modifier, onSubmit: (String) -> Unit) {
         mutableStateOf(noteState.isValidInput())
     }
 
-
     InputField(
         modifier = modifier,
         valueState = noteState,
@@ -295,7 +317,6 @@ fun EnterThoughts(modifier: Modifier, onSubmit: (String) -> Unit) {
                 return@KeyboardActions
             }
             onSubmit(noteState.trimValue())
-            noteState.value = ""
             focusManager.clearFocus()
         }
     )
