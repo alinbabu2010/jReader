@@ -23,11 +23,16 @@ class HomeViewModel @Inject constructor(
 
     fun getAllBooks() {
         _listOfBooks.value = if (_listOfBooks.value.data == null)
-           UiState(isLoading = true) else listOfBooks.value
+            UiState(isLoading = true) else listOfBooks.value
         viewModelScope.launch(Dispatchers.IO) {
             val uiState = repository.getAllBooks().getUiState()
             _listOfBooks.value = uiState
         }
+    }
+
+    fun getBook(bookId: String): UiState<BookUi> {
+        val data = repository.getBookById(bookId)
+        return UiState(data = data)
     }
 
 }
