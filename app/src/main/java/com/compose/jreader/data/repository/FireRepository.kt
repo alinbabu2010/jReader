@@ -5,6 +5,8 @@ import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.wrappers.ResponseWrapper
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,8 +17,6 @@ class FireRepository @Inject constructor(
 ) {
 
     private val userId = firebaseAuth.currentUser?.uid
-
-    private var bookList = mutableListOf<BookUi>()
 
     /**
      * To get all books from [DatabaseSource]
@@ -31,8 +31,7 @@ class FireRepository @Inject constructor(
                 }
                 if (data.isNullOrEmpty()) Resource.empty()
                 else {
-                    bookList = data.toMutableList()
-                    Resource.success(bookList)
+                    Resource.success(data)
                 }
             }
         }
@@ -43,10 +42,21 @@ class FireRepository @Inject constructor(
      * @param bookId Id of the book
      * @return [BookUi] object for specified bookId
      */
-    fun getBookById(bookId: String): BookUi {
-        return bookList.first {
-            it.googleBookId == bookId
-        }
+    suspend fun getBookById(bookId: String): BookUi? {
+        return databaseSource.getBookById(bookId)
+    }
+
+    /**
+     * To update a book info in firebase
+     * @param bookId Id of the book to be updated
+     * @param updateData Map containing data to updated
+     */
+    suspend fun updateBook(
+        bookId: String,
+        updateData: Map<String, Comparable<*>?>
+    ) = channelFlow {
+        databaseSource.updateBookById(bookId, updateData)
+            .collectLatest { trySend(it) }
     }
 
 }
