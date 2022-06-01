@@ -1,5 +1,9 @@
 package com.compose.jreader.ui.screens.update
 
+import android.view.MotionEvent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,11 +12,14 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -30,9 +37,12 @@ import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.ui.components.*
 import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.ui.screens.details.DetailsViewModel
+import com.compose.jreader.ui.theme.Grey100
 import com.compose.jreader.ui.theme.Red500
+import com.compose.jreader.ui.theme.Yellow100
 import com.compose.jreader.utils.*
 
+@ExperimentalComposeUiApi
 @Composable
 fun ReaderBookUpdateScreen(
     navController: NavHostController,
@@ -70,10 +80,16 @@ fun ReaderBookUpdateScreen(
 
 }
 
+@ExperimentalComposeUiApi
 @Composable
 fun UpdateComposable(uiState: UiState<BookUi>) {
 
     FadeVisibility(uiState.data != null) {
+
+        var ratingValue by remember {
+            mutableStateOf(0)
+        }
+
         Column(
             modifier = Modifier.padding(updateColumnPadding),
             verticalArrangement = Arrangement.Top,
@@ -91,7 +107,14 @@ fun UpdateComposable(uiState: UiState<BookUi>) {
 
             }
             StatusButton(uiState.data)
-            RateBook()
+
+            uiState.data?.rating?.toInt()?.let {
+                RateBar(it) { rating ->
+                    println(rating)
+                    ratingValue = rating
+                }
+            }
+
             UpdateButtons()
 
         }
@@ -120,14 +143,60 @@ fun UpdateButtons() {
     }
 }
 
+@ExperimentalComposeUiApi
 @Composable
-fun RateBook() {
+fun RateBar(rating: Int, onRatingClick: (Int) -> Unit) {
+
+    var ratingState by remember {
+        mutableStateOf(rating)
+    }
+
+    var isSelected by remember {
+        mutableStateOf(false)
+    }
+
+    val starSize by animateDpAsState(
+        targetValue = if (isSelected) starSizeSelected else starSizeNotSelected,
+        spring(Spring.DampingRatioLowBouncy)
+    )
+
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = stringResource(R.string.rating))
-
+        Text(
+            text = stringResource(R.string.rating),
+            modifier = Modifier.padding(bottom = ratingTextBottomPadding)
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            for (index in 1..5) {
+                Icon(
+                    imageVector = Icons.Filled.Star,
+                    contentDescription = stringResource(R.string.desc_star_icon),
+                    modifier = Modifier
+                        .size(starSize)
+                        .pointerInteropFilter {
+                            when (it.action) {
+                                MotionEvent.ACTION_DOWN -> {
+                                    if (ratingState != index || ratingState == 0) {
+                                        isSelected = true
+                                        onRatingClick(index)
+                                        ratingState = index
+                                    }
+                                }
+                                MotionEvent.ACTION_UP -> {
+                                    isSelected = false
+                                }
+                            }
+                            true
+                        },
+                    tint = if (index <= ratingState) Yellow100 else Grey100
+                )
+            }
+        }
 
     }
 }
