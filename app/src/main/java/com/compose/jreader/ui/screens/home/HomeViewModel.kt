@@ -30,9 +30,4 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getBook(bookId: String): UiState<BookUi> {
-        val data = repository.getBookById(bookId)
-        return UiState(data = data)
-    }
-
 }
