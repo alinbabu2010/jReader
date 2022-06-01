@@ -36,7 +36,7 @@ import com.compose.jreader.R
 import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.ui.components.*
 import com.compose.jreader.ui.model.UiState
-import com.compose.jreader.ui.screens.details.DetailsViewModel
+import com.compose.jreader.ui.screens.home.HomeViewModel
 import com.compose.jreader.ui.theme.Grey100
 import com.compose.jreader.ui.theme.Red500
 import com.compose.jreader.ui.theme.Yellow100
@@ -47,12 +47,13 @@ import com.compose.jreader.utils.*
 fun ReaderBookUpdateScreen(
     navController: NavHostController,
     bookId: String,
-    viewModel: DetailsViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
 
-    val uiState by remember {
-        viewModel.getBookInfo(bookId)
-        viewModel.bookInfo
+    val uiState by produceState<UiState<BookUi>>(
+        initialValue = UiState(isLoading = true)
+    ) {
+        value = viewModel.getBook(bookId)
     }
 
     Scaffold(topBar = {
