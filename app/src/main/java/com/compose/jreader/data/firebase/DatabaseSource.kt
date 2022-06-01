@@ -55,5 +55,27 @@ class DatabaseSource @Inject constructor(
         }
     }
 
+    /**
+     * To update a book info
+     * @param bookId Id of the book to be updated
+     * @return CallBackFlow sending a boolean value
+     */
+    fun updateBookById(bookId: String, updateData: Map<String, Comparable<*>?>) = callbackFlow {
+        val dbCollection = fireStore.collection(Constants.BOOK_DB_NAME)
+        dbCollection.document(bookId).update(updateData).addOnCompleteListener {
+            trySend(it.isSuccessful)
+        }
+        awaitClose { cancel() }
+    }
+
+    /**
+     * To get a book info
+     * @param bookId Id of the book to be updated
+     * @return An object [BookUi] containing book info
+     */
+    suspend fun getBookById(bookId: String): BookUi? {
+        val dbCollection = fireStore.collection(Constants.BOOK_DB_NAME)
+        return dbCollection.document(bookId).get().await().toObject(BookUi::class.java)
+    }
 
 }
