@@ -121,3 +121,8 @@ val updateButtonTopPadding = 8.dp
 val imageHeight = 100.dp
 val imageWidth = 120.dp
 val imagePadding = 4.dp
+
+// RateBar dimensions
+val starSizeSelected = 48.dp
+val starSizeNotSelected = 40.dp
+val ratingTextBottomPadding = 3.dp
