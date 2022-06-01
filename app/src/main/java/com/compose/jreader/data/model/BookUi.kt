@@ -28,7 +28,7 @@ data class BookUi(
     @get:PropertyName("page_count")
     @set:PropertyName("page_count")
     var pageCount: Int = 0,
-    var rating: Double = 0.0,
+    var rating: Int = 0,
 
     @get:PropertyName("started_reading_at")
     @set:PropertyName("started_reading_at")
@@ -44,7 +44,9 @@ data class BookUi(
 
     @get:PropertyName("google_book_id")
     @set:PropertyName("google_book_id")
-    var googleBookId: String = ""
+    var googleBookId: String = "",
+
+    var notes: String = ""
 
 ) {
 
