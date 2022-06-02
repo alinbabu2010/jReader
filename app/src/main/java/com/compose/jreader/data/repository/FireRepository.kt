@@ -5,6 +5,7 @@ import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.wrappers.ResponseWrapper
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
@@ -58,5 +59,17 @@ class FireRepository @Inject constructor(
         databaseSource.updateBookById(bookId, updateData)
             .collectLatest { trySend(it) }
     }
+
+    /**
+     * To delete a book info
+     * @param bookId Id of the book to be updated
+     * @return CallBackFlow sending a boolean value
+     */
+    fun deleteBook(bookId: String) = callbackFlow {
+        databaseSource.deleteBookById(bookId).collectLatest {
+            trySend(it)
+        }
+    }
+
 
 }

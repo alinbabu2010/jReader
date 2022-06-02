@@ -78,4 +78,17 @@ class DatabaseSource @Inject constructor(
         return dbCollection.document(bookId).get().await().toObject(BookUi::class.java)
     }
 
+    /**
+     * To delete a book info
+     * @param bookId Id of the book to be updated
+     * @return CallBackFlow sending a boolean value
+     */
+    fun deleteBookById(bookId: String) = callbackFlow {
+        val dbCollection = fireStore.collection(Constants.BOOK_DB_NAME)
+        dbCollection.document(bookId).delete().addOnCompleteListener {
+            trySend(it.isSuccessful)
+        }
+        awaitClose { cancel() }
+    }
+
 }

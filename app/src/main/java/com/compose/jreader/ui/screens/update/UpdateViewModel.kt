@@ -48,5 +48,13 @@ class UpdateViewModel @Inject constructor(
         }
     }
 
+    fun deleteBook(bookId: String, onDelete: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            repository.deleteBook(bookId).collectLatest {
+                onDelete(it)
+            }
+        }
+    }
+
 
 }
