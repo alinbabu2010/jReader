@@ -95,15 +95,17 @@ fun UpdateComposable(
 
     FadeVisibility(uiState.data != null) {
 
+        val bookInfo = uiState.data
+
         var ratingValue by rememberSaveable {
-            mutableStateOf(0)
+            mutableStateOf(bookInfo?.rating ?: 0)
         }
 
         val defaultNote = stringResource(R.string.default_note)
         val context = LocalContext.current
 
-        var notes by rememberSaveable {
-            mutableStateOf(defaultNote)
+        val notes = rememberSaveable {
+            mutableStateOf(bookInfo?.notes ?: defaultNote)
         }
 
         val isStartedReading = rememberSaveable {
@@ -118,6 +120,21 @@ fun UpdateComposable(
             mutableStateOf(false)
         }
 
+        val isInfoChanged by remember(
+            notes.value,
+            isFinishedReading.value,
+            isStartedReading.value,
+            ratingValue
+        ) {
+            val bookUpdateValue = BookUpdateValue(
+                notes.value,
+                isFinishedReading.value,
+                isStartedReading.value,
+                ratingValue
+            )
+            mutableStateOf(viewModel.isValidForUpdate(bookUpdateValue))
+        }
+
         Column(
             modifier = Modifier.padding(updateColumnPadding),
             verticalArrangement = Arrangement.Top,
@@ -128,11 +145,12 @@ fun UpdateComposable(
 
             }
             EnterThoughts(
+                noteState = notes,
                 modifier = Modifier
                     .padding(thoughtsTextPadding)
                     .height(thoughtsTextHeight)
             ) {
-                notes = it
+                notes.value = it
             }
             StatusButton(uiState.data, isStartedReading, isFinishedReading)
 
@@ -142,20 +160,15 @@ fun UpdateComposable(
                 }
             }
 
-            UpdateButtons { isUpdate ->
+            UpdateButtons(isInfoChanged) { isUpdate ->
 
                 if (isUpdate) {
-                    val bookUpdateValue = BookUpdateValue(
-                        notes,
-                        isFinishedReading.value,
-                        isStartedReading.value,
-                        ratingValue
-                    )
-                    viewModel.updateBook(bookUpdateValue) { isSuccess ->
-                        if (isSuccess) {
+                    viewModel.updateBook { isSuccess ->
+                        if (isSuccess == true) {
                             context.showToast(R.string.update_success_msg)
                             navController.popBackStack()
-                        } else {
+                        }
+                        if (isSuccess == false) {
                             context.showToast(R.string.update_failure_msg)
                         }
                     }
@@ -189,7 +202,7 @@ fun UpdateComposable(
 }
 
 @Composable
-fun UpdateButtons(onButtonClick: (Boolean) -> Unit) {
+fun UpdateButtons(isUpdateEnabled: Boolean, onButtonClick: (Boolean) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -198,7 +211,7 @@ fun UpdateButtons(onButtonClick: (Boolean) -> Unit) {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
 
-        RoundedButton(label = stringResource(R.string.update)) {
+        RoundedButton(isEnabled = isUpdateEnabled, label = stringResource(R.string.update)) {
             onButtonClick(true)
         }
 
@@ -330,17 +343,11 @@ fun StatusButton(
 }
 
 @Composable
-fun EnterThoughts(modifier: Modifier, onSubmit: (String) -> Unit) {
+fun EnterThoughts(noteState: MutableState<String>, modifier: Modifier, onSubmit: (String) -> Unit) {
 
     val focusManager = LocalFocusManager.current
 
     val context = LocalContext.current
-
-    val defaultNote = stringResource(R.string.default_note)
-
-    val noteState = rememberSaveable {
-        mutableStateOf(defaultNote)
-    }
 
     val validInput by remember(noteState.value) {
         mutableStateOf(noteState.isValidInput())
