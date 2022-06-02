@@ -191,3 +191,35 @@ fun TitleSection(
     }
 }
 
+
+@Composable
+fun ShowAlertDialog(
+    title: String,
+    message: String,
+    showState: MutableState<Boolean>,
+    onPositiveAction: () -> Unit
+) {
+
+    AlertDialog(
+        onDismissRequest = {
+            showState.value = false
+        },
+        title = {
+            Text(text = title)
+        },
+        text = {
+            Text(text = message)
+        },
+        confirmButton = {
+            TextButton(onClick = { onPositiveAction() }) {
+                Text(text = "Yes")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { showState.value = false }) {
+                Text(text = "No")
+            }
+        })
+
+}
+
