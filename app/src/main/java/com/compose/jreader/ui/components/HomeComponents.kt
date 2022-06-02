@@ -146,6 +146,7 @@ fun BookRating(score: Double) {
 fun RoundedButton(
     label: String,
     radius: Int = 25,
+    isEnabled: Boolean = true,
     onPress: () -> Unit
 ) {
 
@@ -164,6 +165,7 @@ fun RoundedButton(
         modifier = Modifier
             .width(roundedButtonWidth)
             .height(roundedButtonHeightIn),
+        enabled = isEnabled,
         contentPadding = PaddingValues(roundedButtonContentPadding)
     ) {
 
