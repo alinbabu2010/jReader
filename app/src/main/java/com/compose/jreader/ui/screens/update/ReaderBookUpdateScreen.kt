@@ -42,6 +42,8 @@ import com.compose.jreader.ui.theme.Red500
 import com.compose.jreader.ui.theme.Yellow100
 import com.compose.jreader.utils.*
 
+private var bookID = ""
+
 @ExperimentalComposeUiApi
 @Composable
 fun ReaderBookUpdateScreen(
@@ -49,6 +51,8 @@ fun ReaderBookUpdateScreen(
     bookId: String,
     viewModel: UpdateViewModel = hiltViewModel()
 ) {
+
+    bookID = bookId
 
     val uiState by produceState<UiState<BookUi>>(
         initialValue = UiState(isLoading = true)
@@ -110,6 +114,10 @@ fun UpdateComposable(
             mutableStateOf(false)
         }
 
+        val showDeleteConfirmation = rememberSaveable {
+            mutableStateOf(false)
+        }
+
         Column(
             modifier = Modifier.padding(updateColumnPadding),
             verticalArrangement = Arrangement.Top,
@@ -145,16 +153,34 @@ fun UpdateComposable(
                     )
                     viewModel.updateBook(bookUpdateValue) { isSuccess ->
                         if (isSuccess) {
-                            context.showToast("Book updated successfully")
+                            context.showToast(R.string.update_success_msg)
                             navController.popBackStack()
                         } else {
-                            context.showToast("Sorry,update Failed")
+                            context.showToast(R.string.update_failure_msg)
                         }
                     }
                 } else {
-                    //Todo: Delete functionality
+                    showDeleteConfirmation.value = true
                 }
 
+            }
+
+            if (showDeleteConfirmation.value) {
+                ShowAlertDialog(
+                    title = stringResource(R.string.delete_book),
+                    message = stringResource(R.string.delete_dialog_msg),
+                    showState = showDeleteConfirmation
+                ) {
+                    viewModel.deleteBook(bookID) { isSuccess ->
+                        if (isSuccess) {
+                            showDeleteConfirmation.value = false
+                            context.showToast(R.string.delete_success_msg)
+                            navController.popBackStack()
+                        } else {
+                            context.showToast(R.string.delete_failure_msg)
+                        }
+                    }
+                }
             }
 
         }
