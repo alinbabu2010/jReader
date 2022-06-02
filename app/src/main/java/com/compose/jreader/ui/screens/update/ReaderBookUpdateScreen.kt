@@ -73,7 +73,7 @@ fun ReaderBookUpdateScreen(
                 .fillMaxSize()
 
         ) {
-            UpdateComposable(uiState, viewModel)
+            UpdateComposable(uiState, viewModel, navController)
             LoaderMessageView(uiState, stringResource(R.string.no_info_found))
         }
 
@@ -83,7 +83,11 @@ fun ReaderBookUpdateScreen(
 
 @ExperimentalComposeUiApi
 @Composable
-fun UpdateComposable(uiState: UiState<BookUi>, viewModel: UpdateViewModel) {
+fun UpdateComposable(
+    uiState: UiState<BookUi>,
+    viewModel: UpdateViewModel,
+    navController: NavHostController
+) {
 
     FadeVisibility(uiState.data != null) {
 
@@ -92,6 +96,7 @@ fun UpdateComposable(uiState: UiState<BookUi>, viewModel: UpdateViewModel) {
         }
 
         val defaultNote = stringResource(R.string.default_note)
+        val context = LocalContext.current
 
         var notes by rememberSaveable {
             mutableStateOf(defaultNote)
@@ -130,6 +135,7 @@ fun UpdateComposable(uiState: UiState<BookUi>, viewModel: UpdateViewModel) {
             }
 
             UpdateButtons { isUpdate ->
+
                 if (isUpdate) {
                     val bookUpdateValue = BookUpdateValue(
                         notes,
@@ -137,9 +143,16 @@ fun UpdateComposable(uiState: UiState<BookUi>, viewModel: UpdateViewModel) {
                         isStartedReading.value,
                         ratingValue
                     )
-                    viewModel.updateBook(bookUpdateValue) {
-
+                    viewModel.updateBook(bookUpdateValue) { isSuccess ->
+                        if (isSuccess) {
+                            context.showToast("Book updated successfully")
+                            navController.popBackStack()
+                        } else {
+                            context.showToast("Sorry,update Failed")
+                        }
                     }
+                } else {
+                    //Todo: Delete functionality
                 }
 
             }
@@ -237,19 +250,20 @@ fun StatusButton(
 ) {
 
     Row(
-        modifier = Modifier.padding(
-            end = statusButtonPadding,
-            start = statusButtonPadding
-        ),
+        modifier = Modifier
+            .padding(
+                end = statusButtonPadding,
+                start = statusButtonPadding
+            ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround
     ) {
 
-        if (book?.startedReading == null) {
-            TextButton(
-                onClick = { isStartedReading.value = true },
-                enabled = book?.startedReading == null
-            ) {
+        TextButton(
+            onClick = { isStartedReading.value = true },
+            enabled = book?.startedReading == null
+        ) {
+            if (book?.startedReading == null) {
                 if (isStartedReading.value) {
                     Text(
                         text = stringResource(R.string.started_reading),
@@ -257,15 +271,16 @@ fun StatusButton(
                         color = Red500
                     )
                 } else Text(text = stringResource(R.string.start_reading))
-            }
-        } else {
-            Text(
-                text = stringResource(
-                    R.string.read_started_date,
-                    book.startedReading.toString()
+            } else {
+                Text(
+                    text = stringResource(
+                        R.string.read_started_date,
+                        book.startedReading?.formatDate().toString()
+                    )
                 )
-            )
+            }
         }
+
 
         TextButton(
             onClick = { isFinishedReading.value = true },
@@ -279,7 +294,7 @@ fun StatusButton(
                 Text(
                     text = stringResource(
                         R.string.read_finished_date,
-                        book.finishedReading.toString()
+                        book.finishedReading?.formatDate().toString()
                     )
                 )
             }
