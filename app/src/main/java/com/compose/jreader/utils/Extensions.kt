@@ -1,12 +1,14 @@
 package com.compose.jreader.utils
 
 import android.content.Context
+import android.icu.text.DateFormat
 import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.model.Resource.Status
 import com.compose.jreader.ui.model.UiState
+import com.google.firebase.Timestamp
 
 /**
  * To check [MutableState] string value is valid one
@@ -57,3 +59,11 @@ fun Context.showToast(stringId: Int) {
     val message = this.getString(stringId)
     this.showToast(message)
 }
+
+/**
+ * To format [Timestamp] to display in readable format
+ * @return Formatted date as String
+ */
+fun Timestamp.formatDate(): String = DateFormat.getDateInstance()
+    .format(this.toDate()).toString()
+    .split(",").first()
