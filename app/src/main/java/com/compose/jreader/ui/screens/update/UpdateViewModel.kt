@@ -28,22 +28,13 @@ class UpdateViewModel @Inject constructor(
         } else UiState()
     }
 
-    fun updateBook(
-        bookUpdateValue: BookUpdateValue,
-        onUpdate: (Boolean) -> Unit
-    ) {
-        val isValid = updateManager.isUpdateValid(bookUpdateValue, data)
-        if (!isValid) {
-            onUpdate(false)
-            return
-        } else {
-            viewModelScope.launch {
-                repository.updateBook(
-                    data.id,
-                    updateManager.bookData
-                ).collectLatest {
-                    onUpdate(it)
-                }
+    fun updateBook(onUpdate: (Boolean?) -> Unit) {
+        viewModelScope.launch {
+            repository.updateBook(
+                data.id,
+                updateManager.bookData
+            ).collectLatest {
+                onUpdate(it)
             }
         }
     }
@@ -56,5 +47,8 @@ class UpdateViewModel @Inject constructor(
         }
     }
 
+    fun isValidForUpdate(bookUpdateValue: BookUpdateValue): Boolean {
+        return updateManager.isUpdateValid(bookUpdateValue, data)
+    }
 
 }
