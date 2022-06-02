@@ -48,4 +48,10 @@
     <string name="mark_as_read">Mark as Read</string>
     <string name="read_finished_date">Finished on\n%s</string>
     <string name="read_started_date">Started on\n%s</string>
+    <string name="delete_dialog_msg">Are you sure you want to delete this book?</string>
+    <string name="delete_book">Delete Book</string>
+    <string name="update_success_msg">Book updated successfully</string>
+    <string name="update_failure_msg">Sorry,update failed</string>
+    <string name="delete_success_msg">Book deleted successfully</string>
+    <string name="delete_failure_msg">Sorry,delete failed</string>
 </resources>
