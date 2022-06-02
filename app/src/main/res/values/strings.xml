@@ -46,6 +46,6 @@
     <string name="start_reading">Start reading</string>
     <string name="finished_reading">Finished Reading!</string>
     <string name="mark_as_read">Mark as Read</string>
-    <string name="read_finished_date">Finished on: %s</string>
-    <string name="read_started_date">Started on: %s</string>
+    <string name="read_finished_date">Finished on\n%s</string>
+    <string name="read_started_date">Started on\n%s</string>
 </resources>
