@@ -58,4 +58,18 @@
     <string name="book_empty_msg">No books found. Save book to reading list.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="book_status">Book Status</string>
+    <string name="your_status">Your Status</string>
+    <plurals name="reading_count">
+        <item quantity="one">You\'re reading: %s book</item>
+        <item quantity="zero">You\'re reading: %s book</item>
+        <item quantity="other">You\'re reading: %s books</item>
+    </plurals>
+    <plurals name="read_count">
+        <item quantity="one">You\'ve read: %s book</item>
+        <item quantity="zero">You\'ve read: %s book</item>
+        <item quantity="other">You\'ve read: %s books</item>
+    </plurals>
+    <string name="read_finish_date">Finished: %s</string>
+    <string name="read_start_date">Started: %s</string>
 </resources>

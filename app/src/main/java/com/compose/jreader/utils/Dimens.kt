@@ -112,7 +112,7 @@ val updateSurfacePadding = 16.dp
 val updateColumnPadding = 3.dp
 val updateBookInfoElevation = 4.dp
 val updateConstraintLayoutPadding = 8.dp
-val imageMarginStart = 40.dp
+val imageMarginStart = 24.dp
 val infoTextMargin = 16.dp
 val thoughtsTextPadding = 16.dp
 val thoughtsTextHeight = 140.dp
@@ -120,10 +120,19 @@ val statusButtonPadding = 8.dp
 val updateButtonTopPadding = 48.dp
 val imageHeight = 100.dp
 val imageWidth = 120.dp
-val imagePadding = 4.dp
 
 // RateBar dimensions
 val starSizeSelected = 48.dp
 val starSizeNotSelected = 40.dp
 val ratingTextBottomPadding = 3.dp
 val rateBarTopPadding = 24.dp
+
+// Status screen dimensions
+val statusSurfaceHPadding = 16.dp
+val statusBoxSize = 45.dp
+val statusBoxPadding = 2.dp
+val statusCardPadding = 4.dp
+val statusCardElevation = 5.dp
+val statusCardRowHPadding = 24.dp
+val statusCardRowVPadding = 4.dp
+val statusLazyColContentPadding = 8.dp
