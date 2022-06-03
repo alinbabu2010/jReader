@@ -5,6 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +19,8 @@ import com.compose.jreader.utils.progressBarSize
 @Composable
 fun <T> LoaderMessageView(
     uiState: UiState<T>,
-    message: String
+    message: String,
+    linearProgressNeeded: Boolean = false
 ) {
 
     Row(
@@ -29,7 +31,10 @@ fun <T> LoaderMessageView(
         horizontalArrangement = Arrangement.Center
     ) {
         if (uiState.isLoading) {
-            CircularProgressIndicator(
+            if (linearProgressNeeded) LinearProgressIndicator(
+                modifier = Modifier.width(progressBarSize)
+            )
+            else CircularProgressIndicator(
                 modifier = Modifier.size(progressBarSize)
             )
         } else {
