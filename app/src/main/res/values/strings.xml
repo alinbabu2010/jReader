@@ -56,4 +56,6 @@
     <string name="delete_failure_msg">Sorry,delete failed</string>
     <string name="not_yet">Not Yet</string>
     <string name="book_empty_msg">No books found. Save book to reading list.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

@@ -217,12 +217,12 @@ fun ShowAlertDialog(
         },
         confirmButton = {
             TextButton(onClick = { onPositiveAction() }) {
-                Text(text = "Yes")
+                Text(text = stringResource(R.string.yes))
             }
         },
         dismissButton = {
             TextButton(onClick = { showState.value = false }) {
-                Text(text = "No")
+                Text(text = stringResource(R.string.no))
             }
         })
 
