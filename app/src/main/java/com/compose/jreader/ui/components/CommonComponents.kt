@@ -58,11 +58,16 @@ fun InputField(
     imeAction: ImeAction = ImeAction.Next,
     keyboardAction: KeyboardActions = KeyboardActions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    isNoteField: Boolean = false,
     trailingIcon: @Composable () -> Unit = {}
 ) {
 
+    val value = if (isNoteField) {
+        valueState.value.ifEmpty { stringResource(R.string.default_note) }
+    } else valueState.value
+
     OutlinedTextField(
-        value = valueState.value,
+        value = value,
         onValueChange = {
             valueState.value = it
         },

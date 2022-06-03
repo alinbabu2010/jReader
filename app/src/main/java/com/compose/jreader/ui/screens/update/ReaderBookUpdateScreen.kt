@@ -101,11 +101,10 @@ fun UpdateComposable(
             mutableStateOf(bookInfo.rating)
         }
 
-        val defaultNote = stringResource(R.string.default_note)
         val context = LocalContext.current
 
         val notes = rememberSaveable {
-            mutableStateOf(bookInfo.notes.ifBlank { defaultNote })
+            mutableStateOf(bookInfo.notes)
         }
 
         val isStartedReading = rememberSaveable {
@@ -357,6 +356,7 @@ fun EnterThoughts(noteState: MutableState<String>, modifier: Modifier, onSubmit:
         label = stringResource(R.string.notes_input_label),
         imeAction = ImeAction.Done,
         isSingleLine = false,
+        isNoteField = true,
         keyboardAction = KeyboardActions {
             if (!validInput) {
                 context.showToast(R.string.text_error)
