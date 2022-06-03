@@ -5,6 +5,7 @@ import android.icu.text.DateFormat
 import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
+import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.model.Resource.Status
 import com.compose.jreader.ui.model.UiState
@@ -67,3 +68,23 @@ fun Context.showToast(stringId: Int) {
 fun Timestamp.formatDate(): String = DateFormat.getDateInstance()
     .format(this.toDate()).toString()
     .split(",").first()
+
+/**
+ * To get list of books started reading
+ * @return List of books
+ */
+fun List<BookUi>.getReadingBooks(): List<BookUi> {
+    return filter {
+        it.startedReading != null && it.finishedReading == null
+    }
+}
+
+/**
+ * To get list of books that are not started and finished reading
+ * @return List of books
+ */
+fun List<BookUi>.getSavedBooks(): List<BookUi> {
+    return filter {
+        it.startedReading == null && it.finishedReading == null
+    }
+}
