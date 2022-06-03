@@ -31,4 +31,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getReadBooks() = repository.getReadBook()
+
+    fun getReadBookCount() = repository.getReadBookCount()
+
+    fun getReadingBookCount() = repository.getReadingBooksCount()
+
 }
