@@ -18,7 +18,8 @@ class HomeViewModel @Inject constructor(
     private val repository: FireRepository
 ) : ViewModel() {
 
-    private val _listOfBooks = MutableStateFlow<UiState<List<BookUi>>>(UiState())
+    private val _listOfBooks = MutableStateFlow<
+            UiState<Pair<List<BookUi>, List<BookUi>>>>(UiState())
     val listOfBooks = _listOfBooks.asStateFlow()
 
     fun getAllBooks() {
