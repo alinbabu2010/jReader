@@ -80,7 +80,7 @@ fun HomeContent(
         modifier = Modifier.padding(homeContentColumnPadding),
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        HomeTitleRow(Modifier.align(Alignment.Start), loginViewModel)
+        HomeTitleRow(Modifier.align(Alignment.Start), loginViewModel, navController)
         ReadingRightNowArea(uiState, navController = navController)
         TitleSection(label = stringResource(R.string.reading_list))
         BookListArea(uiState, navController = navController)
@@ -129,7 +129,8 @@ fun HorizontalScrollContainer(
 @Composable
 private fun HomeTitleRow(
     modifier: Modifier,
-    loginViewModel: ReaderLoginViewModel
+    loginViewModel: ReaderLoginViewModel,
+    navController: NavHostController
 ) {
     Row(modifier = modifier) {
         TitleSection(label = stringResource(R.string.home_reading_title))
@@ -139,7 +140,7 @@ private fun HomeTitleRow(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             IconButton(onClick = {
-
+                navController.navigate(ReaderScreens.StatusScreen.name)
             }) {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,

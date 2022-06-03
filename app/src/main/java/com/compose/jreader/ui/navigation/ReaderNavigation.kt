@@ -14,6 +14,7 @@ import com.compose.jreader.ui.screens.login.ReaderLoginScreen
 import com.compose.jreader.ui.screens.search.ReaderBookSearchScreen
 import com.compose.jreader.ui.screens.search.SearchViewModel
 import com.compose.jreader.ui.screens.splash.ReaderSplashScreen
+import com.compose.jreader.ui.screens.status.StatusScreen
 import com.compose.jreader.ui.screens.update.ReaderBookUpdateScreen
 import com.compose.jreader.utils.Constants
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -84,6 +85,11 @@ fun ReaderNavigation() {
         ) { navBackStackEntry ->
             val bookId = navBackStackEntry.arguments?.getString(Constants.ARG_BOOK_ID) ?: ""
             ReaderBookUpdateScreen(navController, bookId)
+        }
+
+        // Status screen navigation
+        composable(ReaderScreens.StatusScreen.name) {
+            StatusScreen(navController)
         }
 
     }
