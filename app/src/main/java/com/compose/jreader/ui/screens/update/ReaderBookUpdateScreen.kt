@@ -95,17 +95,17 @@ fun UpdateComposable(
 
     FadeVisibility(uiState.data != null) {
 
-        val bookInfo = uiState.data
+        val bookInfo = uiState.data as BookUi
 
         var ratingValue by rememberSaveable {
-            mutableStateOf(bookInfo?.rating ?: 0)
+            mutableStateOf(bookInfo.rating)
         }
 
         val defaultNote = stringResource(R.string.default_note)
         val context = LocalContext.current
 
         val notes = rememberSaveable {
-            mutableStateOf(bookInfo?.notes ?: defaultNote)
+            mutableStateOf(bookInfo.notes.ifBlank { defaultNote })
         }
 
         val isStartedReading = rememberSaveable {
@@ -154,10 +154,8 @@ fun UpdateComposable(
             }
             StatusButton(uiState.data, isStartedReading, isFinishedReading)
 
-            uiState.data?.rating?.let {
-                RateBar(it) { rating ->
-                    ratingValue = rating
-                }
+            RateBar(bookInfo.rating) { rating ->
+                ratingValue = rating
             }
 
             UpdateButtons(isInfoChanged) { isUpdate ->
