@@ -1,6 +1,5 @@
 package com.compose.jreader.ui.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -63,7 +62,7 @@ fun ReaderHomeScreen(
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
         ) {
-            HomeContent(navController, loginViewModel,uiState)
+            HomeContent(navController, loginViewModel, uiState)
         }
 
     }
@@ -74,7 +73,7 @@ fun ReaderHomeScreen(
 fun HomeContent(
     navController: NavHostController,
     loginViewModel: ReaderLoginViewModel,
-    uiState: UiState<List<BookUi>>,
+    uiState: UiState<Pair<List<BookUi>, List<BookUi>>>,
 ) {
 
     Column(
@@ -82,7 +81,7 @@ fun HomeContent(
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         HomeTitleRow(Modifier.align(Alignment.Start), loginViewModel)
-        ReadingRightNowArea(bookUis = BookUi.getBooks(), navController = navController)
+        ReadingRightNowArea(uiState, navController = navController)
         TitleSection(label = stringResource(R.string.reading_list))
         BookListArea(uiState, navController = navController)
     }
@@ -91,14 +90,15 @@ fun HomeContent(
 
 @Composable
 fun BookListArea(
-    state: UiState<List<BookUi>>,
+    uiState: UiState<Pair<List<BookUi>, List<BookUi>>>,
     navController: NavHostController
 ) {
-    val bookList = state.data
-    if (bookList == null) {
-        LoaderMessageView(state, "")
+    val bookList = uiState.data
+    if (bookList == null || bookList.second.isEmpty()) {
+        if (bookList?.second?.isEmpty() == true) uiState.isEmpty = true
+        LoaderMessageView(uiState, stringResource(R.string.book_empty_msg), true)
     } else {
-        HorizontalScrollContainer(bookUis = bookList) {
+        HorizontalScrollContainer(bookList.second) {
             val route = "${ReaderScreens.UpdateScreen.name}/$it"
             navController.navigate(route)
         }
@@ -123,7 +123,6 @@ fun HorizontalScrollContainer(
                 onPress(it)
             }
         }
-
     }
 }
 
@@ -181,10 +180,17 @@ fun FabContent(onTap: () -> Unit) {
 
 @Composable
 fun ReadingRightNowArea(
-    bookUis: List<BookUi>,
+    uiState: UiState<Pair<List<BookUi>, List<BookUi>>>,
     navController: NavHostController
 ) {
-    ListCard(bookUis.first()) {
-        Log.d("TAG", "ReadingRightNowArea: $it")
+    val bookList = uiState.data
+    if (bookList == null || bookList.first.isEmpty()) {
+        if (bookList?.first?.isEmpty() == true) uiState.isEmpty = true
+        LoaderMessageView(uiState, stringResource(R.string.book_empty_msg), true)
+    } else {
+        HorizontalScrollContainer(bookList.first) {
+            val route = "${ReaderScreens.UpdateScreen.name}/$it"
+            navController.navigate(route)
+        }
     }
 }
