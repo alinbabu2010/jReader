@@ -4,6 +4,8 @@ import com.compose.jreader.data.firebase.DatabaseSource
 import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.wrappers.ResponseWrapper
+import com.compose.jreader.utils.getReadingBooks
+import com.compose.jreader.utils.getSavedBooks
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.channelFlow
@@ -21,18 +23,18 @@ class FireRepository @Inject constructor(
 
     /**
      * To get all books from [DatabaseSource]
-     * @return [Resource] for list of books response
+     * @return [Resource] for [Pair] containing two list of books response
      */
-    suspend fun getAllBooks(): Resource<List<BookUi>> {
+    suspend fun getAllBooks(): Resource<Pair<List<BookUi>, List<BookUi>>> {
         return when (val response = databaseSource.getAllBooksFromFirebase()) {
             is ResponseWrapper.Error -> Resource.error(response.exception)
             is ResponseWrapper.Success -> {
-                val data = response.data?.filterNotNull()?.filter {
-                    it.userId == userId
-                }
-                if (data.isNullOrEmpty()) Resource.empty()
+                if (response.data.isNullOrEmpty()) Resource.empty()
                 else {
-                    Resource.success(data)
+                    val data = response.data.filter {
+                        it?.userId == userId
+                    }.filterNotNull()
+                    Resource.success(Pair(data.getReadingBooks(), data.getSavedBooks()))
                 }
             }
         }
