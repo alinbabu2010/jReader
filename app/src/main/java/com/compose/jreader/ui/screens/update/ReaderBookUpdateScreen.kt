@@ -371,16 +371,15 @@ fun EnterThoughts(noteState: MutableState<String>, modifier: Modifier, onSubmit:
 @Composable
 private fun ShowBookInfo(uiState: UiState<BookUi>, onInfoClick: () -> Unit) {
     Surface(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(updateConstraintLayoutPadding),
         shape = CircleShape,
         elevation = updateBookInfoElevation
     ) {
         ConstraintLayout(
-            Modifier
-                .padding(updateConstraintLayoutPadding)
-                .clickable {
-                    onInfoClick()
-                }) {
+            Modifier.clickable { onInfoClick() }
+        ) {
 
             val data = uiState.data
 
@@ -396,8 +395,7 @@ private fun ShowBookInfo(uiState: UiState<BookUi>, onInfoClick: () -> Unit) {
                         start.linkTo(parent.start, imageMarginStart)
                     }
                     .height(imageHeight)
-                    .width(imageWidth)
-                    .padding(imagePadding),
+                    .width(imageWidth),
                 painter = rememberAsyncImagePainter(
                     model = data?.photoUrl,
                     contentScale = ContentScale.FillBounds
