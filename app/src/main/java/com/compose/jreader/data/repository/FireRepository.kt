@@ -20,6 +20,7 @@ class FireRepository @Inject constructor(
 ) {
 
     private val userId = firebaseAuth.currentUser?.uid
+    private lateinit var data: List<BookUi>
 
     /**
      * To get all books from [DatabaseSource]
@@ -31,7 +32,7 @@ class FireRepository @Inject constructor(
             is ResponseWrapper.Success -> {
                 if (response.data.isNullOrEmpty()) Resource.empty()
                 else {
-                    val data = response.data.filter {
+                    data = response.data.filter {
                         it?.userId == userId
                     }.filterNotNull()
                     Resource.success(Pair(data.getReadingBooks(), data.getSavedBooks()))
@@ -73,5 +74,29 @@ class FireRepository @Inject constructor(
         }
     }
 
+    /**
+     * Get list of books read by user
+     * @return List of book read by user
+     */
+    @Singleton
+    fun getReadBook(): List<BookUi> = data.filter {
+        it.finishedReading != null
+    }
+
+    /**
+     * To get number of books read by user
+     * @return Number of book
+     */
+    fun getReadBookCount(): Int {
+        return getReadBook().size
+    }
+
+    /**
+     * To get number of books currently reading by a user
+     * @return Number of book
+     */
+    fun getReadingBooksCount(): Int {
+        return data.getReadingBooks().size
+    }
 
 }
