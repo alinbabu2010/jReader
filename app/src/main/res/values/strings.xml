@@ -54,4 +54,6 @@
     <string name="update_failure_msg">Sorry,update failed</string>
     <string name="delete_success_msg">Book deleted successfully</string>
     <string name="delete_failure_msg">Sorry,delete failed</string>
+    <string name="not_yet">Not Yet</string>
+    <string name="book_empty_msg">No books found. Save book to reading list.</string>
 </resources>
