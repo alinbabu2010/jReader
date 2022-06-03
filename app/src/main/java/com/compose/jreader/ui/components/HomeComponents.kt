@@ -7,7 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.rounded.FavoriteBorder
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -98,11 +98,20 @@ fun ListCard(
                     style = MaterialTheme.typography.caption
                 )
 
+                var isStartedReading by remember {
+                    mutableStateOf(false)
+                }
+
                 Column(
                     Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.End
                 ) {
-                    RoundedButton(label = stringResource(R.string.reading), radius = 70) {
+                    isStartedReading = bookUi.startedReading != null
+                    RoundedButton(
+                        label = if (isStartedReading)
+                            stringResource(R.string.reading) else stringResource(R.string.not_yet),
+                        radius = 70
+                    ) {
 
                     }
                 }
