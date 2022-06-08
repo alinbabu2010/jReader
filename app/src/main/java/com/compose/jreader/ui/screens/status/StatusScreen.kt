@@ -55,7 +55,7 @@ fun StatusScreen(
 
                 UserInfo(loginViewModel)
                 UserReadingInfo(homeViewModel)
-                Divider()
+                Divider(modifier = Modifier.padding(top = statusDividerTopPadding))
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -122,17 +122,17 @@ private fun UserReadingInfo(homeViewModel: HomeViewModel) {
 
 @Composable
 private fun UserInfo(loginViewModel: ReaderLoginViewModel) {
-    Row {
-        Box(
-            modifier = Modifier
-                .size(statusBoxSize)
-                .padding(statusBoxPadding)
-        ) {
-            Icon(
-                imageVector = Icons.Sharp.Person,
-                contentDescription = stringResource(R.string.desc_profile_icon)
-            )
-        }
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .height(statusRowHeight)
+            .padding(statusRowPadding)
+    ) {
+        Icon(
+            imageVector = Icons.Sharp.Person,
+            contentDescription = stringResource(R.string.desc_profile_icon)
+        )
+        Spacer(modifier = Modifier.width(statusRowSpacerWidth))
         Text(text = "Hi, ${loginViewModel.displayName?.toUpperCase(Locale.current)}")
     }
 }

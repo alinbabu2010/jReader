@@ -131,8 +131,10 @@ val rateBarTopPadding = 24.dp
 
 // Status screen dimensions
 val statusSurfaceHPadding = 16.dp
-val statusBoxSize = 45.dp
-val statusBoxPadding = 2.dp
+val statusDividerTopPadding = 4.dp
+val statusRowHeight = 45.dp
+val statusRowSpacerWidth = 4.dp
+val statusRowPadding = 2.dp
 val statusCardPadding = 4.dp
 val statusCardElevation = 5.dp
 val statusCardRowHPadding = 24.dp
