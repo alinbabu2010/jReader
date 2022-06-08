@@ -23,14 +23,16 @@ val inputPadding = 10.dp
 
 // Submit Button dimensions
 val submitButtonPadding = 3.dp
-val submitButtonProgressSize = 20.dp
-val submitButtonProgressStrokeWidth = 4.dp
+val submitButtonProgressSize = 28.dp
+val submitButtonProgressStrokeWidth = 2.dp
 val submitButtonTextPadding = 5.dp
 
 // Login screen dimensions
-val spacerHeight = 15.dp
+val spacer1Height = 15.dp
+val spacer2Height = 150.dp
 val loginRowPadding = 15.dp
 val loginRowTextStartPadding = 5.dp
+val loginErrorTextHPadding = 16.dp
 
 // ReaderAppBar dimensions
 val appBarIconCorner = 12.dp

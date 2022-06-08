@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -16,10 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -40,13 +43,17 @@ fun ReaderLoginScreen(
         mutableStateOf(true)
     }
 
+    val loading = loginViewModel.loading.collectAsState().value
+    val message = loginViewModel.message.collectAsState().value
+
+
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
             ReaderLogo()
-            UserForm(isCreateAccount = !showLoginForm.value) { email, password ->
+            UserForm(loading = loading, isCreateAccount = !showLoginForm.value) { email, password ->
                 if (showLoginForm.value) {
                     loginViewModel.loginUser(email, password) {
                         navController.navigate(ReaderScreens.HomeScreen.name)
@@ -57,7 +64,7 @@ fun ReaderLoginScreen(
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(spacerHeight))
+            Spacer(modifier = Modifier.height(spacer1Height))
             Row(
                 modifier = Modifier.padding(loginRowPadding),
                 horizontalArrangement = Arrangement.Center,
@@ -78,12 +85,22 @@ fun ReaderLoginScreen(
                     modifier = Modifier
                         .padding(start = loginRowTextStartPadding)
                         .clickable {
-                            showLoginForm.value = !showLoginForm.value
+                            if (!loading) showLoginForm.value = !showLoginForm.value
                         },
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colors.secondaryVariant
                 )
 
+            }
+            if (message.isNotBlank()) {
+                Spacer(modifier = Modifier.height(spacer2Height))
+                Text(
+                    modifier = Modifier.padding(horizontal = loginErrorTextHPadding),
+                    text = message,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.subtitle1
+                )
             }
 
         }
@@ -167,25 +184,28 @@ fun UserForm(
 }
 
 @Composable
-fun SubmitButton(
+private fun SubmitButton(
     text: String,
     loading: Boolean,
     validInputs: Boolean,
     onClick: () -> Unit
 ) {
     Button(
-        onClick = onClick,
+        onClick = {
+            if (!loading) onClick()
+        },
         modifier = Modifier
             .padding(submitButtonPadding)
             .fillMaxWidth(),
-        enabled = !loading && validInputs,
+        enabled = validInputs,
         shape = CircleShape
     ) {
 
         if (loading) {
             CircularProgressIndicator(
                 modifier = Modifier.size(submitButtonProgressSize),
-                strokeWidth = submitButtonProgressStrokeWidth
+                strokeWidth = submitButtonProgressStrokeWidth,
+                color = Color.White
             )
         } else {
             Text(
