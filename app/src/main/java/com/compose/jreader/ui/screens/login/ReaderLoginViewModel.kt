@@ -1,12 +1,11 @@
 package com.compose.jreader.ui.screens.login
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.compose.jreader.data.repository.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,10 +14,11 @@ class ReaderLoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository
 ) : ViewModel() {
 
-    //val loadingState = MutableStateFlow(LoadingState.IDLE)
+    private val _loading = MutableStateFlow(false)
+    val loading = _loading.asStateFlow()
 
-    private val _loading = MutableLiveData(false)
-    val loading: LiveData<Boolean> = _loading
+    private val _message = MutableStateFlow("")
+    val message = _message.asStateFlow()
 
     val displayName = loginRepository.displayName()
 
@@ -34,11 +34,15 @@ class ReaderLoginViewModel @Inject constructor(
         navigateToHome: () -> Unit
     ) = viewModelScope.launch {
 
-        loginRepository.signIn(email, password) { isSuccess, message ->
-            if (isSuccess) {
-                navigateToHome()
-            } else {
-                Log.d("TAG", "createUser: $message")
+        if (!_loading.value) {
+            _loading.value = true
+            loginRepository.signIn(email, password) { isSuccess, message ->
+                if (isSuccess) {
+                    navigateToHome()
+                } else {
+                    _message.value = message ?: ""
+                }
+                _loading.value = false
             }
         }
 
@@ -56,12 +60,12 @@ class ReaderLoginViewModel @Inject constructor(
         navigateToHome: () -> Unit
     ) = viewModelScope.launch {
 
-        if (_loading.value == false) {
+        if (!_loading.value) {
             _loading.value = true
             loginRepository.createUser(email, password) { isSuccess, message ->
                 if (isSuccess) navigateToHome()
                 else {
-                    Log.d("TAG", "createUser: $message")
+                    _message.value = message ?: ""
                 }
                 _loading.value = false
             }
