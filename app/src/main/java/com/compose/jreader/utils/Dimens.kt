@@ -130,6 +130,7 @@ val ratingTextBottomPadding = 3.dp
 val rateBarTopPadding = 24.dp
 
 // Status screen dimensions
+val defaultEndMargin = 0.dp
 val statusSurfaceHPadding = 16.dp
 val statusDividerTopPadding = 4.dp
 val statusRowHeight = 45.dp

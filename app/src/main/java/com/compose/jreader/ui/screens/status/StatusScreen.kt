@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.sharp.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,6 +30,7 @@ import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.ui.components.ReaderAppBar
 import com.compose.jreader.ui.screens.home.HomeViewModel
 import com.compose.jreader.ui.screens.login.ReaderLoginViewModel
+import com.compose.jreader.ui.theme.Green400
 import com.compose.jreader.utils.*
 
 @Composable
@@ -154,7 +156,7 @@ private fun BookRow(bookUi: BookUi) {
             modifier = Modifier.padding(bookRowPadding)
         ) {
 
-            val (image, titleText, authorText, startDateText, finishDateText) = createRefs()
+            val (image, titleText, authorText, startDateText, finishDateText, thumbsUpIcon) = createRefs()
 
             AsyncImage(
                 model = bookUi.photoUrl,
@@ -174,9 +176,9 @@ private fun BookRow(bookUi: BookUi) {
                 modifier = Modifier.constrainAs(titleText) {
                     linkTo(
                         start = image.end,
-                        end = parent.end,
+                        end = if (bookUi.rating > 4) thumbsUpIcon.start else parent.end,
                         startMargin = bookColumnStartEndMargin,
-                        endMargin = bookColumnStartEndMargin
+                        endMargin = if (bookUi.rating > 4) bookColumnStartEndMargin else defaultEndMargin
                     )
                     top.linkTo(parent.top)
                     width = Dimension.fillToConstraints
@@ -184,6 +186,18 @@ private fun BookRow(bookUi: BookUi) {
                 text = bookUi.title,
                 overflow = TextOverflow.Ellipsis
             )
+
+            if (bookUi.rating > 4) {
+                Icon(
+                    modifier = Modifier.constrainAs(thumbsUpIcon) {
+                        end.linkTo(parent.end, bookColumnStartEndMargin)
+                        top.linkTo(parent.top)
+                    },
+                    imageVector = Icons.Default.ThumbUp,
+                    contentDescription = stringResource(R.string.desc_thumbsup_icon),
+                    tint = Green400
+                )
+            }
 
             Text(
                 modifier = Modifier.constrainAs(authorText) {

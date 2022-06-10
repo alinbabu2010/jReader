@@ -72,4 +72,5 @@
     </plurals>
     <string name="read_finish_date">Finished: %s</string>
     <string name="read_start_date">Started: %s</string>
+    <string name="desc_thumbsup_icon">Thumbs up icon</string>
 </resources>
