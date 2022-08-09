@@ -2,11 +2,10 @@ package com.compose.jreader.di
 
 import com.compose.jreader.data.model.Book
 import com.compose.jreader.data.model.BookUi
-import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.network.ApiLoader
 import com.compose.jreader.data.network.ApiLoaderImpl
-import com.compose.jreader.ui.model.UiState
-import com.compose.jreader.utils.*
+import com.compose.jreader.utils.BookToBookUiMapper
+import com.compose.jreader.utils.Mapper
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

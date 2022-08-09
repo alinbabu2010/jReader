@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BookToBookUiMapper @Inject constructor() : Mapper<Book,BookUi> {
+class BookToBookUiMapper @Inject constructor() : Mapper<Book, BookUi> {
 
     override fun map(data: Book): BookUi {
         val bookInfo = data.volumeInfo

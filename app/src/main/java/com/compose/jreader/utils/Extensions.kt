@@ -2,7 +2,6 @@ package com.compose.jreader.utils
 
 import android.content.Context
 import android.icu.text.DateFormat
-import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import com.compose.jreader.data.model.BookUi
@@ -23,13 +22,6 @@ fun MutableState<String>.isValidInput(): Boolean =
  * @return Trimmed string
  */
 fun MutableState<String>.trimValue(): String = this.value.trim()
-
-/**
- * To check the email is valid or not
- * @return true if it is valid else false
- */
-fun String.isValidEmail(): Boolean =
-    this.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
 /**
  * To get [UiState] model from [Resource] based on [Resource.status]

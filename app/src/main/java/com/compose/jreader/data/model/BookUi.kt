@@ -48,41 +48,4 @@ data class BookUi(
 
     var notes: String = ""
 
-) {
-
-    companion object {
-
-        fun getBooks(): List<BookUi> = listOf(
-            BookUi(
-                id = "12",
-                title = "Running",
-                photoUrl = "http://books.google.com/books/content?id=Wu5qDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
-                authors = "Jacob",
-                description = "Good, interesting one"
-            ),
-            BookUi(
-                id = "12",
-                title = "Running",
-                photoUrl = "http://books.google.com/books/content?id=Wu5qDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
-                authors = "Jacob",
-                description = "Good, interesting one"
-            ),
-            BookUi(
-                id = "12",
-                title = "Running",
-                photoUrl = "http://books.google.com/books/content?id=Wu5qDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
-                authors = "Jacob",
-                description = "Good, interesting one"
-            ),
-            BookUi(
-                id = "12",
-                title = "Running",
-                photoUrl = "http://books.google.com/books/content?id=Wu5qDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
-                authors = "Jacob",
-                description = "Good, interesting one"
-            )
-        )
-
-    }
-
-}
+)

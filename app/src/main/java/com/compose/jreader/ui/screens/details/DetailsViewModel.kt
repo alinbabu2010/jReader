@@ -4,16 +4,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.compose.jreader.data.model.BookUi
-import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.data.repository.BookRepository
-import com.compose.jreader.utils.BookToBookUiMapper
+import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.utils.UiStateGenerator
-import com.compose.jreader.utils.getUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

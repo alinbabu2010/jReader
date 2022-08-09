@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 class UiStateGenerator @Inject constructor(
     private val bookUiMapper: BookToBookUiMapper
-){
+) {
 
-    fun generate(resource: Resource<Book>) : UiState<BookUi> {
+    fun generate(resource: Resource<Book>): UiState<BookUi> {
         val state = resource.getUiState()
         return UiState(
             state.data?.let { bookUiMapper.map(it) },
@@ -21,7 +21,7 @@ class UiStateGenerator @Inject constructor(
     }
 
     @JvmName("generate_list")
-    fun generate(resource: Resource<List<Book>>) : UiState<List<BookUi>> {
+    fun generate(resource: Resource<List<Book>>): UiState<List<BookUi>> {
         val state = resource.getUiState()
         return UiState(
             state.data?.map { bookUiMapper.map(it) },
