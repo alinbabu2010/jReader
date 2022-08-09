@@ -1,5 +1,6 @@
 package com.compose.jreader.ui.screens.details
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -36,6 +37,7 @@ import com.compose.jreader.utils.*
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 fun BookDetailsScreen(
     navController: NavHostController,
     bookId: String,

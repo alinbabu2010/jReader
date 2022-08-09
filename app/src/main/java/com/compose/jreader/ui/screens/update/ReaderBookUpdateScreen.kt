@@ -1,5 +1,6 @@
 package com.compose.jreader.ui.screens.update
 
+import android.annotation.SuppressLint
 import android.view.MotionEvent
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
@@ -46,6 +47,7 @@ private var bookID = ""
 
 @ExperimentalComposeUiApi
 @Composable
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 fun ReaderBookUpdateScreen(
     navController: NavHostController,
     bookId: String,

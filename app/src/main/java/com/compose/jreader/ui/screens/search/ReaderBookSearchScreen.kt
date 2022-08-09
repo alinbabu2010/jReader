@@ -1,5 +1,6 @@
 package com.compose.jreader.ui.screens.search
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,6 +36,7 @@ import com.compose.jreader.utils.*
 
 
 @Composable
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 fun ReaderBookSearchScreen(
     navController: NavHostController,
     viewModel: SearchViewModel

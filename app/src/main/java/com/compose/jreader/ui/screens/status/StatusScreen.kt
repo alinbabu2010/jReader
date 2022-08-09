@@ -1,5 +1,6 @@
 package com.compose.jreader.ui.screens.status
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -34,6 +35,7 @@ import com.compose.jreader.ui.theme.Green400
 import com.compose.jreader.utils.*
 
 @Composable
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 fun StatusScreen(
     navController: NavHostController,
     homeViewModel: HomeViewModel = hiltViewModel(),

@@ -1,5 +1,6 @@
 package com.compose.jreader.ui.screens.home
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -34,6 +35,7 @@ import com.compose.jreader.utils.*
 
 @Preview
 @Composable
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 fun ReaderHomeScreen(
     navController: NavHostController = NavHostController(LocalContext.current),
     loginViewModel: ReaderLoginViewModel = hiltViewModel(),
