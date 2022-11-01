@@ -27,11 +27,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Visibility
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.compose.jreader.R
-import com.compose.jreader.ui.navigation.ReaderScreens
-import com.compose.jreader.ui.screens.login.ReaderLoginViewModel
 import com.compose.jreader.ui.theme.Green400
 import com.compose.jreader.ui.theme.Red700
 import com.compose.jreader.utils.*
@@ -102,9 +98,8 @@ fun InputField(
 fun ReaderAppBar(
     title: String,
     showProfile: Boolean = true,
-    navController: NavController,
     icon: ImageVector? = null,
-    viewModel: ReaderLoginViewModel = hiltViewModel(),
+    onLogout: () -> Unit = {},
     onBackArrowClick: () -> Unit = {}
 ) {
 
@@ -145,9 +140,7 @@ fun ReaderAppBar(
         actions = {
             if (showProfile) {
                 IconButton(onClick = {
-                    viewModel.signOut().run {
-                        navController.navigate(ReaderScreens.LoginScreen.name)
-                    }
+                    onLogout()
                 }) {
                     Icon(
                         imageVector = Icons.Default.Logout,

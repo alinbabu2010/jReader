@@ -48,8 +48,11 @@ fun ReaderHomeScreen(
     Scaffold(topBar = {
         ReaderAppBar(
             stringResource(R.string.app_name),
-            navController = navController,
-            viewModel = loginViewModel
+            onLogout = {
+                loginViewModel.signOut().run {
+                    navController.navigate(ReaderScreens.LoginScreen.name)
+                }
+            }
         )
     }, floatingActionButton = {
         FabContent {

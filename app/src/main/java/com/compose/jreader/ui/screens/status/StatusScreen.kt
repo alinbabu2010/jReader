@@ -45,7 +45,6 @@ fun StatusScreen(
     Scaffold(topBar = {
         ReaderAppBar(
             title = stringResource(R.string.book_status),
-            navController = navController,
             icon = Icons.Default.ArrowBack,
             showProfile = false
         ) {

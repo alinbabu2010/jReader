@@ -65,7 +65,6 @@ fun ReaderBookUpdateScreen(
     Scaffold(topBar = {
         ReaderAppBar(
             title = stringResource(R.string.update_book),
-            navController = navController,
             icon = Icons.Default.ArrowBack,
             showProfile = false
         ) {

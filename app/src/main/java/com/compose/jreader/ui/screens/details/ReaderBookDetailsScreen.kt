@@ -53,8 +53,7 @@ fun BookDetailsScreen(
         ReaderAppBar(
             title = "Book Details",
             icon = Icons.Default.ArrowBack,
-            showProfile = false,
-            navController = navController
+            showProfile = false
         ) {
             navController.popBackStack()
         }

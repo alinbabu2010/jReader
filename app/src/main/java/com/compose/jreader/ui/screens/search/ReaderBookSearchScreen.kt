@@ -49,7 +49,6 @@ fun ReaderBookSearchScreen(
     Scaffold(topBar = {
         ReaderAppBar(
             title = stringResource(R.string.search_books),
-            navController = navController,
             icon = Icons.Default.ArrowBack,
             showProfile = false
         ) {
