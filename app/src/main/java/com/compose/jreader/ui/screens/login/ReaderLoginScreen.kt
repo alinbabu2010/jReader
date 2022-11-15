@@ -43,8 +43,7 @@ fun ReaderLoginScreen(
         mutableStateOf(true)
     }
 
-    val loading = loginViewModel.loading.collectAsState().value
-    val message = loginViewModel.message.collectAsState().value
+    val uiState = loginViewModel.loginUiState.collectAsState().value
 
 
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -53,7 +52,10 @@ fun ReaderLoginScreen(
             verticalArrangement = Arrangement.Top
         ) {
             ReaderLogo()
-            UserForm(loading = loading, isCreateAccount = !showLoginForm.value) { email, password ->
+            UserForm(
+                loading = uiState.isLoading,
+                isCreateAccount = !showLoginForm.value
+            ) { email, password ->
                 if (showLoginForm.value) {
                     loginViewModel.loginUser(email, password) {
                         navController.navigate(ReaderScreens.HomeScreen.name)
@@ -85,18 +87,18 @@ fun ReaderLoginScreen(
                     modifier = Modifier
                         .padding(start = loginRowTextStartPadding)
                         .clickable {
-                            if (!loading) showLoginForm.value = !showLoginForm.value
+                            if (!uiState.isLoading) showLoginForm.value = !showLoginForm.value
                         },
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colors.secondaryVariant
                 )
 
             }
-            if (message.isNotBlank()) {
+            if (uiState.message.isNotBlank()) {
                 Spacer(modifier = Modifier.height(spacer2Height))
                 Text(
                     modifier = Modifier.padding(horizontal = loginErrorTextHPadding),
-                    text = message,
+                    text = uiState.message,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colors.error,
                     style = MaterialTheme.typography.subtitle1

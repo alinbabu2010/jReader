@@ -14,13 +14,11 @@ class ReaderLoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository
 ) : ViewModel() {
 
-    private val _loading = MutableStateFlow(false)
-    val loading = _loading.asStateFlow()
+    private val _loginUiState = MutableStateFlow(LoginUiState(false, ""))
+    val loginUiState = _loginUiState.asStateFlow()
 
-    private val _message = MutableStateFlow("")
-    val message = _message.asStateFlow()
-
-    val displayName = loginRepository.displayName()
+    private val _displayName = loginRepository.displayName()
+    val displayName get() = _displayName
 
     /**
      * To login user using email and password
@@ -34,15 +32,15 @@ class ReaderLoginViewModel @Inject constructor(
         navigateToHome: () -> Unit
     ) = viewModelScope.launch {
 
-        if (!_loading.value) {
-            _loading.value = true
+        if (!loginUiState.value.isLoading) {
+            _loginUiState.value = _loginUiState.value.copy(isLoading = true)
             loginRepository.signIn(email, password) { isSuccess, message ->
                 if (isSuccess) {
                     navigateToHome()
                 } else {
-                    _message.value = message ?: ""
+                    _loginUiState.value = _loginUiState.value.copy(message = message ?: "")
                 }
-                _loading.value = false
+                _loginUiState.value = _loginUiState.value.copy(isLoading = false)
             }
         }
 
@@ -60,14 +58,14 @@ class ReaderLoginViewModel @Inject constructor(
         navigateToHome: () -> Unit
     ) = viewModelScope.launch {
 
-        if (!_loading.value) {
-            _loading.value = true
+        if (!loginUiState.value.isLoading) {
+            _loginUiState.value = _loginUiState.value.copy(isLoading = true)
             loginRepository.createUser(email, password) { isSuccess, message ->
                 if (isSuccess) navigateToHome()
                 else {
-                    _message.value = message ?: ""
+                    _loginUiState.value = _loginUiState.value.copy(message = message ?: "")
                 }
-                _loading.value = false
+                _loginUiState.value = _loginUiState.value.copy(isLoading = false)
             }
         }
 
@@ -86,3 +84,8 @@ class ReaderLoginViewModel @Inject constructor(
 
 
 }
+
+data class LoginUiState(
+    val isLoading: Boolean,
+    val message: String
+)
