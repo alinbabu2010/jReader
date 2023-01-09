@@ -3,7 +3,7 @@ package com.compose.jreader.ui.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.compose.jreader.data.model.BookUi
-import com.compose.jreader.data.repository.FireRepository
+import com.compose.jreader.data.repository.FireStoreRepository
 import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.utils.getUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: FireRepository
+    private val repository: FireStoreRepository
 ) : ViewModel() {
 
     private val _listOfBooks = MutableStateFlow<

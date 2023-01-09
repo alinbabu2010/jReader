@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.data.model.BookUpdateValue
-import com.compose.jreader.data.repository.FireRepository
+import com.compose.jreader.data.repository.FireStoreRepository
 import com.compose.jreader.ui.model.UiState
 import com.compose.jreader.utils.UpdateManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UpdateViewModel @Inject constructor(
-    private val repository: FireRepository,
+    private val repository: FireStoreRepository,
     private val updateManager: UpdateManager
 ) : ViewModel() {
 
