@@ -14,10 +14,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FireRepository @Inject constructor(
+class FireStoreRepositoryImpl @Inject constructor(
     private val databaseSource: DatabaseSource,
     firebaseAuth: FirebaseAuth
-) {
+) : FireStoreRepository {
 
     private val userId = firebaseAuth.currentUser?.uid
     private lateinit var data: List<BookUi>
@@ -26,7 +26,7 @@ class FireRepository @Inject constructor(
      * To get all books from [DatabaseSource]
      * @return [Resource] for [Pair] containing two list of books response
      */
-    suspend fun getAllBooks(): Resource<Pair<List<BookUi>, List<BookUi>>> {
+    override suspend fun getAllBooks(): Resource<Pair<List<BookUi>, List<BookUi>>> {
         return when (val response = databaseSource.getAllBooksFromFirebase()) {
             is ResponseWrapper.Error -> Resource.error(response.exception)
             is ResponseWrapper.Success -> {
@@ -46,7 +46,7 @@ class FireRepository @Inject constructor(
      * @param bookId Id of the book
      * @return [BookUi] object for specified bookId
      */
-    suspend fun getBookById(bookId: String): BookUi? {
+    override suspend fun getBookById(bookId: String): BookUi? {
         return databaseSource.getBookById(bookId)
     }
 
@@ -55,7 +55,7 @@ class FireRepository @Inject constructor(
      * @param bookId Id of the book to be updated
      * @param updateData Map containing data to updated
      */
-    suspend fun updateBook(
+    override suspend fun updateBook(
         bookId: String,
         updateData: Map<String, Comparable<*>?>
     ) = channelFlow {
@@ -68,7 +68,7 @@ class FireRepository @Inject constructor(
      * @param bookId Id of the book to be updated
      * @return CallBackFlow sending a boolean value
      */
-    fun deleteBook(bookId: String) = callbackFlow {
+    override fun deleteBook(bookId: String) = callbackFlow {
         databaseSource.deleteBookById(bookId).collectLatest {
             trySend(it)
         }
@@ -79,7 +79,7 @@ class FireRepository @Inject constructor(
      * @return List of book read by user
      */
     @Singleton
-    fun getReadBook(): List<BookUi> = data.filter {
+    override fun getReadBook(): List<BookUi> = data.filter {
         it.finishedReading != null
     }
 
@@ -87,7 +87,7 @@ class FireRepository @Inject constructor(
      * To get number of books read by user
      * @return Number of book
      */
-    fun getReadBookCount(): Int {
+    override fun getReadBookCount(): Int {
         return getReadBook().size
     }
 
@@ -95,7 +95,7 @@ class FireRepository @Inject constructor(
      * To get number of books currently reading by a user
      * @return Number of book
      */
-    fun getReadingBooksCount(): Int {
+    override fun getReadingBooksCount(): Int {
         return data.getReadingBooks().size
     }
 
