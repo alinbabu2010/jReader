@@ -23,8 +23,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.toUpperCase
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.compose.jreader.R
 import com.compose.jreader.data.model.BookUi
@@ -37,19 +35,18 @@ import com.compose.jreader.utils.*
 @Composable
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 fun StatusScreen(
-    navController: NavHostController,
-    homeViewModel: HomeViewModel = hiltViewModel(),
-    loginViewModel: ReaderLoginViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel,
+    loginViewModel: ReaderLoginViewModel,
+    onNavigateBack: () -> Unit
 ) {
 
     Scaffold(topBar = {
         ReaderAppBar(
             title = stringResource(R.string.book_status),
             icon = Icons.Default.ArrowBack,
-            showProfile = false
-        ) {
-            navController.popBackStack()
-        }
+            showProfile = false,
+            onBackArrowClick = onNavigateBack
+        )
     }) {
 
         Surface(modifier = Modifier.padding(horizontal = statusSurfaceHPadding)) {

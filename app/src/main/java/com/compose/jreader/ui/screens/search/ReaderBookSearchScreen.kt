@@ -23,7 +23,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.compose.jreader.R
 import com.compose.jreader.data.model.BookUi
@@ -31,15 +30,15 @@ import com.compose.jreader.ui.components.FadeVisibility
 import com.compose.jreader.ui.components.InputField
 import com.compose.jreader.ui.components.LoaderMessageView
 import com.compose.jreader.ui.components.ReaderAppBar
-import com.compose.jreader.ui.navigation.ReaderScreens
 import com.compose.jreader.utils.*
 
 
 @Composable
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 fun ReaderBookSearchScreen(
-    navController: NavHostController,
-    viewModel: SearchViewModel
+    viewModel: SearchViewModel,
+    onNavigateBack: () -> Unit,
+    onNavigateToDetails: (String) -> Unit
 ) {
 
     var uiState by remember {
@@ -50,10 +49,9 @@ fun ReaderBookSearchScreen(
         ReaderAppBar(
             title = stringResource(R.string.search_books),
             icon = Icons.Default.ArrowBack,
-            showProfile = false
-        ) {
-            navController.popBackStack()
-        }
+            showProfile = false,
+            onBackArrowClick = onNavigateBack
+        )
 
     }) {
 
@@ -72,7 +70,7 @@ fun ReaderBookSearchScreen(
                     viewModel.searchBooks(query)
                     uiState = viewModel.listOfBooks.value
                 }
-                BookListView(!uiState.isLoading, uiState.data, navController)
+                BookListView(!uiState.isLoading, uiState.data, onNavigateToDetails)
                 LoaderMessageView(uiState, stringResource(R.string.no_books_found))
             }
         }
@@ -85,7 +83,7 @@ fun ReaderBookSearchScreen(
 fun BookListView(
     isVisible: Boolean,
     books: List<BookUi>?,
-    navController: NavHostController
+    onNavigateToDetails: (String) -> Unit,
 ) {
 
     FadeVisibility(isVisible) {
@@ -97,7 +95,7 @@ fun BookListView(
                 )
             ) {
                 items(books) { book ->
-                    BookRow(book, navController)
+                    BookRow(book, onNavigateToDetails)
                 }
             }
         }
@@ -108,7 +106,7 @@ fun BookListView(
 @Composable
 fun BookRow(
     bookUi: BookUi,
-    navController: NavHostController
+    onNavigateToDetails: (String) -> Unit,
 ) {
 
     Card(
@@ -116,8 +114,7 @@ fun BookRow(
             .fillMaxWidth()
             .padding(bottom = bookRowBottomPadding)
             .clickable {
-                val route = "${ReaderScreens.DetailScreen.name}/${bookUi.googleBookId}"
-                navController.navigate(route)
+                onNavigateToDetails(bookUi.googleBookId)
             },
         shape = RectangleShape,
         backgroundColor = Color.White,

@@ -24,19 +24,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.compose.jreader.R
 import com.compose.jreader.ui.components.EmailInput
 import com.compose.jreader.ui.components.PasswordInput
 import com.compose.jreader.ui.components.ReaderLogo
-import com.compose.jreader.ui.navigation.ReaderScreens
 import com.compose.jreader.utils.*
 
 @Composable
 fun ReaderLoginScreen(
-    navController: NavHostController,
-    loginViewModel: ReaderLoginViewModel = hiltViewModel()
+    loginViewModel: ReaderLoginViewModel,
+    onNavigateToHomeScreen: () -> Unit
 ) {
 
     val showLoginForm = rememberSaveable {
@@ -58,11 +55,11 @@ fun ReaderLoginScreen(
             ) { email, password ->
                 if (showLoginForm.value) {
                     loginViewModel.loginUser(email, password) {
-                        navController.navigate(ReaderScreens.HomeScreen.name)
+                        onNavigateToHomeScreen()
                     }
                 } else {
                     loginViewModel.createUser(email, password) {
-                        navController.navigate(ReaderScreens.HomeScreen.name)
+                        onNavigateToHomeScreen()
                     }
                 }
             }

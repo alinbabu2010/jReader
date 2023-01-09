@@ -30,8 +30,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.compose.jreader.R
 import com.compose.jreader.data.model.BookUi
@@ -49,9 +47,9 @@ private var bookID = ""
 @Composable
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 fun ReaderBookUpdateScreen(
-    navController: NavHostController,
     bookId: String,
-    viewModel: UpdateViewModel = hiltViewModel()
+    viewModel: UpdateViewModel,
+    onNavigateBack: () -> Unit
 ) {
 
     bookID = bookId
@@ -66,10 +64,9 @@ fun ReaderBookUpdateScreen(
         ReaderAppBar(
             title = stringResource(R.string.update_book),
             icon = Icons.Default.ArrowBack,
-            showProfile = false
-        ) {
-            navController.popBackStack()
-        }
+            showProfile = false,
+            onBackArrowClick = onNavigateBack
+        )
     }) {
 
         Surface(
@@ -78,7 +75,7 @@ fun ReaderBookUpdateScreen(
                 .fillMaxSize()
 
         ) {
-            UpdateComposable(uiState, viewModel, navController)
+            UpdateComposable(uiState, viewModel, onNavigateBack)
             LoaderMessageView(uiState, stringResource(R.string.no_info_found))
         }
 
@@ -91,7 +88,7 @@ fun ReaderBookUpdateScreen(
 fun UpdateComposable(
     uiState: UiState<BookUi>,
     viewModel: UpdateViewModel,
-    navController: NavHostController
+    onNavigateBack: () -> Unit,
 ) {
 
     FadeVisibility(uiState.data != null) {
@@ -164,7 +161,7 @@ fun UpdateComposable(
                     viewModel.updateBook { isSuccess ->
                         if (isSuccess == true) {
                             context.showToast(R.string.update_success_msg)
-                            navController.popBackStack()
+                            onNavigateBack()
                         }
                         if (isSuccess == false) {
                             context.showToast(R.string.update_failure_msg)
@@ -186,7 +183,7 @@ fun UpdateComposable(
                         if (isSuccess) {
                             showDeleteConfirmation.value = false
                             context.showToast(R.string.delete_success_msg)
-                            navController.popBackStack()
+                            onNavigateBack()
                         } else {
                             context.showToast(R.string.delete_failure_msg)
                         }
@@ -259,7 +256,7 @@ fun RateBar(rating: Int, onRatingClick: (Int) -> Unit) {
                         .pointerInteropFilter {
                             when (it.action) {
                                 MotionEvent.ACTION_DOWN -> {
-                                    if (ratingState != index || ratingState == 0) {
+                                    if (ratingState != index) {
                                         isSelected = true
                                         onRatingClick(index)
                                         ratingState = index

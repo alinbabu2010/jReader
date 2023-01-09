@@ -23,8 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.compose.jreader.R
 import com.compose.jreader.data.model.BookUi
@@ -39,9 +37,9 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 fun BookDetailsScreen(
-    navController: NavHostController,
     bookId: String,
-    viewModel: DetailsViewModel = hiltViewModel()
+    viewModel: DetailsViewModel,
+    onNavigateBack: () -> Unit
 ) {
 
     val uiState by remember {
@@ -53,10 +51,9 @@ fun BookDetailsScreen(
         ReaderAppBar(
             title = "Book Details",
             icon = Icons.Default.ArrowBack,
-            showProfile = false
-        ) {
-            navController.popBackStack()
-        }
+            showProfile = false,
+            onBackArrowClick = onNavigateBack
+        )
 
     }) {
 
@@ -66,7 +63,7 @@ fun BookDetailsScreen(
                 .fillMaxSize()
         ) {
 
-            BookDetails(uiState, viewModel, navController)
+            BookDetails(uiState, viewModel, onNavigateBack)
             LoaderMessageView(uiState, stringResource(R.string.no_info_found))
 
         }
@@ -78,7 +75,7 @@ fun BookDetailsScreen(
 private fun BookDetails(
     uiState: UiState<BookUi>,
     viewModel: DetailsViewModel,
-    navController: NavHostController
+    onNavigateBack: () -> Unit,
 ) {
 
     val context = LocalContext.current
@@ -86,7 +83,7 @@ private fun BookDetails(
     LaunchedEffect(null) {
         viewModel.savedState.collectLatest { value ->
             if (value.isNullOrBlank()) {
-                navController.popBackStack()
+                onNavigateBack()
             } else context.showToast(value)
         }
     }
@@ -192,7 +189,7 @@ private fun BookDetails(
                 }
 
                 RoundedButton(label = stringResource(R.string.cancel)) {
-                    navController.popBackStack()
+                    onNavigateBack()
                 }
 
             }
