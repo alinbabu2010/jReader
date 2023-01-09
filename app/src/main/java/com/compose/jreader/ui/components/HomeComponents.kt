@@ -80,7 +80,7 @@ fun ListCard(
                             contentDescription = stringResource(R.string.desc_fav_icon),
                             modifier = Modifier.padding(bottom = bookFavoriteIconBottomPadding)
                         )
-                        BookRating(score = 3.5)
+                        BookRating(score = bookUi.rating.toDouble())
 
                     }
 
