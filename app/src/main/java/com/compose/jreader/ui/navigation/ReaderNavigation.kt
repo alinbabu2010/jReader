@@ -5,20 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
-import com.compose.jreader.ui.screens.details.BookDetailsScreen
-import com.compose.jreader.ui.screens.home.ReaderHomeScreen
-import com.compose.jreader.ui.screens.login.ReaderLoginScreen
-import com.compose.jreader.ui.screens.search.ReaderBookSearchScreen
-import com.compose.jreader.ui.screens.search.SearchViewModel
-import com.compose.jreader.ui.screens.splash.ReaderSplashScreen
-import com.compose.jreader.ui.screens.status.StatusScreen
-import com.compose.jreader.ui.screens.update.ReaderBookUpdateScreen
-import com.compose.jreader.utils.Constants
 import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
 @ExperimentalComposeUiApi
@@ -40,57 +27,62 @@ fun ReaderNavigation() {
         }
     ) {
 
+        splashScreen(
+            onNavigateToNextScreen = { isLoggedIn ->
+                if (isLoggedIn) {
+                    navController.navigateToHome()
+                } else {
+                    navController.navigateToLogin()
+                }
+            }
+        )
 
-        // Splash screen navigation
-        composable(ReaderScreens.SplashScreen.name) {
-            ReaderSplashScreen(navController)
-        }
+        loginScreen(
+            onNavigateToHomeScreen = {
+                navController.navigateToHome()
+            }
+        )
 
-        // Login screen navigation
-        composable(ReaderScreens.LoginScreen.name) {
-            ReaderLoginScreen(navController)
-        }
+        homeScreen(
+            onNavigateToLoginScreen = {
+                navController.navigateToLogin()
+            },
+            onNavigateToStatusScreen = {
+                navController.navigateToStatus()
+            },
+            onNavigateToSearchScreen = {
+                navController.navigateToSearch()
+            },
+            onNavigateToUpdateScreen = { id ->
+                navController.navigateToUpdateScreen(id)
+            }
+        )
 
-        // Home screen navigation
-        composable(ReaderScreens.HomeScreen.name) {
-            ReaderHomeScreen(navController)
-        }
+        searchScreen(
+            onNavigateBack = {
+                navController.popBackStack()
+            }, onNavigateToDetails = { id ->
+                navController.navigateToDetails(id)
+            }
+        )
 
-        // Search screen navigation
-        composable(ReaderScreens.SearchScreen.name) {
-            val viewModel: SearchViewModel = hiltViewModel()
-            ReaderBookSearchScreen(navController, viewModel)
-        }
+        detailsScreen(
+            onNavigateBack = {
+                navController.popBackStack()
+            }
+        )
 
-        // Details screen navigation
-        val route = "${ReaderScreens.DetailScreen.name}/{bookId}"
-        composable(
-            route = route,
-            arguments = listOf(navArgument(Constants.ARG_BOOK_ID) {
-                type = NavType.StringType
+        updateScreen(
+            onNavigateBack = {
+                navController.popBackStack()
+            }
+        )
 
-            })
-        ) { navBackStackEntry ->
-            val bookId = navBackStackEntry.arguments?.getString(Constants.ARG_BOOK_ID) ?: ""
-            BookDetailsScreen(navController, bookId)
-        }
-
-        // Update screen navigation
-        val updateScreenRoute = "${ReaderScreens.UpdateScreen.name}/{bookId}"
-        composable(
-            route = updateScreenRoute,
-            arguments = listOf(navArgument(Constants.ARG_BOOK_ID) {
-                type = NavType.StringType
-            })
-        ) { navBackStackEntry ->
-            val bookId = navBackStackEntry.arguments?.getString(Constants.ARG_BOOK_ID) ?: ""
-            ReaderBookUpdateScreen(navController, bookId)
-        }
-
-        // Status screen navigation
-        composable(ReaderScreens.StatusScreen.name) {
-            StatusScreen(navController)
-        }
+        statusScreen(
+            onNavigateBack = {
+                navController.popBackStack()
+            }
+        )
 
     }
 
