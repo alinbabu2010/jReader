@@ -14,7 +14,7 @@
     <string name="author_name">المؤلفون: %s</string>
     <string name="published_date">نشرت: %s</string>
     <string name="categories">فئات: %s</string>
-    <string name="page_count">عدد الصفحات: %s</string>
+    <string name="page_count">عدد الصفحات: %d</string>
     <string name="search">يبحث</string>
     <string name="search_books">البحث في الكتب</string>
     <string name="reading">قراءة</string>
@@ -35,8 +35,8 @@
     <string name="start_reading">بدء القراءة</string>
     <string name="finished_reading">قراءة الانتهاء!</string>
     <string name="mark_as_read">ضع إشارة مقروء</string>
-    <string name="read_finished_date">انتهى في s%س</string>
-    <string name="read_started_date">بدأ في s%س</string>
+    <string name="read_finished_date">انتهى في %s س</string>
+    <string name="read_started_date">بدأ في %s س</string>
     <string name="delete_dialog_msg">هل أنت متأكد أنك تريد حذف هذا الكتاب؟</string>
     <string name="delete_book">حذف الكتاب</string>
     <string name="update_success_msg">تم تحديث الكتاب بنجاح</string>
@@ -49,16 +49,16 @@
     <string name="no">رقم</string>
     <string name="book_status">حالة الكتاب</string>
     <string name="your_status">حالتك</string>
-    <string name="read_finish_date">انتهى:s%</string>
-    <string name="read_start_date">بدأت: s%</string>
+    <string name="read_finish_date">انتهى:%s</string>
+    <string name="read_start_date">بدأت: %s</string>
     <plurals name="reading_count" tools:ignore="MissingQuantity">
-        <item quantity="one">أنت تقرأ:s%  كتاب</item>
-        <item quantity="zero">أنت تقرأ:s% كتاب</item>
-        <item quantity="other">أنت تقرأ:s% كتابًا</item>
+        <item quantity="one">أنت تقرأ:%s  كتاب</item>
+        <item quantity="zero">أنت تقرأ:%s كتاب</item>
+        <item quantity="other">أنت تقرأ:%s كتابًا</item>
     </plurals>
     <plurals name="read_count" tools:ignore="MissingQuantity">
-        <item quantity="one">لقد قرأت: كتابs%</item>
-        <item quantity="zero">لقد قرأت: كتابs%</item>
-        <item quantity="other">لقد قرأت: s% كتب</item>
+        <item quantity="one">لقد قرأت: كتاب%s</item>
+        <item quantity="zero">لقد قرأت: كتاب%s</item>
+        <item quantity="other">لقد قرأت: %s كتب</item>
     </plurals>
 </resources>
