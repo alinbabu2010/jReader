@@ -24,6 +24,13 @@ internal fun NavGraphBuilder.homeScreen(
     }
 }
 
-internal fun NavController.navigateToHome() {
-    this.navigate(ReaderScreens.HomeScreen.name)
+internal fun NavController.navigateToHome(isFromSplash: Boolean) {
+    navigate(ReaderScreens.HomeScreen.name) {
+        popUpTo(
+            if (isFromSplash) ReaderScreens.SplashScreen.name
+            else ReaderScreens.LoginScreen.name
+        ) {
+            inclusive = true
+        }
+    }
 }

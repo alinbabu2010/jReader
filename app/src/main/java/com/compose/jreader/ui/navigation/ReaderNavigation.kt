@@ -30,22 +30,22 @@ fun ReaderNavigation() {
         splashScreen(
             onNavigateToNextScreen = { isLoggedIn ->
                 if (isLoggedIn) {
-                    navController.navigateToHome()
+                    navController.navigateToHome(true)
                 } else {
-                    navController.navigateToLogin()
+                    navController.navigateToLogin(true)
                 }
             }
         )
 
         loginScreen(
             onNavigateToHomeScreen = {
-                navController.navigateToHome()
+                navController.navigateToHome(false)
             }
         )
 
         homeScreen(
             onNavigateToLoginScreen = {
-                navController.navigateToLogin()
+                navController.navigateToLogin(false)
             },
             onNavigateToStatusScreen = {
                 navController.navigateToStatus()
