@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">jReader</string>
-    <string name="app_tagline">Read. Change. Yourself</string>
+    <string name="app_name" translatable="false">jReader</string>
+    <string name="app_tagline" translatable="false">Read. Change. Yourself</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="create_account">Create Account</string>
@@ -9,28 +9,28 @@
     <string name="new_user">New User?</string>
     <string name="already_user">Already a user?</string>
     <string name="input_criteria_message">Please enter a valid email and password</string>
-    <string name="desc_icon_add">Add a book</string>
-    <string name="desc_reader_logo">Reader Logo</string>
-    <string name="desc_logout_icon">Logout Icon</string>
-    <string name="not_applicable">N/A</string>
-    <string name="desc_profile_icon">Profile Icon</string>
+    <string name="desc_icon_add" translatable="false">Add a book</string>
+    <string name="desc_reader_logo" translatable="false">Reader Logo</string>
+    <string name="desc_logout_icon" translatable="false">Logout Icon</string>
+    <string name="not_applicable" translatable="false">N/A</string>
+    <string name="desc_profile_icon" translatable="false">Profile Icon</string>
     <string name="home_reading_title">"Your reading \nactivity right now…"</string>
-    <string name="desc_fav_icon">Favorite Icon</string>
-    <string name="desc_book_image">Book image</string>
+    <string name="desc_fav_icon" translatable="false">Favorite Icon</string>
+    <string name="desc_book_image" translatable="false">Book image</string>
     <string name="reading_list">Reading List</string>
-    <string name="desc_star_icon">Star Icon</string>
+    <string name="desc_star_icon" translatable="false">Star Icon</string>
     <string name="author_name">Authors:  %s</string>
     <string name="published_date">Published:  %s</string>
     <string name="categories">Categories:  %s</string>
     <string name="page_count">Page Count:  %d</string>
     <string name="search">Search</string>
     <string name="search_books">Search Books</string>
-    <string name="desc_back_icon">Back Arrow Icon</string>
+    <string name="desc_back_icon" translatable="false">Back Arrow Icon</string>
     <string name="reading">Reading</string>
     <string name="server_error_message">Oops, something went wrong. Sorry for the inconvenience!</string>
     <string name="offline_message">Looks like you’re offline! Please connect to WiFi or cellular.</string>
-    <string name="error_exception_message">The server responded with a malformed JSON text.\n\n[Response]%s</string>
-    <string name="exception_message">The server response did not have any error details in it.\n\n[Response]%s</string>
+    <string name="error_exception_message" translatable="false">The server responded with a malformed JSON text.\n\n[Response]%s</string>
+    <string name="exception_message" translatable="false">The server response did not have any error details in it.\n\n[Response]%s</string>
     <string name="no_books_found">No books found</string>
     <string name="no_info_found">No info found</string>
     <string name="save">Save</string>
@@ -72,5 +72,5 @@
     </plurals>
     <string name="read_finish_date">Finished: %s</string>
     <string name="read_start_date">Started: %s</string>
-    <string name="desc_thumbsup_icon">Thumbs up icon</string>
+    <string name="desc_thumbsup_icon" translatable="false">Thumbs up icon</string>
 </resources>

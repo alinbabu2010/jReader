@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">jReader</string>
+    <string name="email">بريد إلكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="create_account">إنشاء حساب</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="sign_up">اشتراك</string>
+    <string name="new_user">مستخدم جديد؟</string>
+    <string name="already_user">بالفعل مستخدم؟</string>
+    <string name="input_criteria_message">الرجاء إدخال بريد إلكتروني وكلمة مرور صالحين</string>
+    <string name="home_reading_title">قراءتك النشاط الآن …</string>
+    <string name="reading_list">قائمة القراءة</string>
+    <string name="author_name">المؤلفون: %s</string>
+    <string name="published_date">نشرت: %s</string>
+    <string name="categories">فئات: %s</string>
+    <string name="page_count">عدد الصفحات: %s</string>
+    <string name="search">يبحث</string>
+    <string name="search_books">البحث في الكتب</string>
+    <string name="reading">قراءة</string>
+    <string name="server_error_message">تبا شيء ما حدث بشكل خاطئ. نأسف للإزعاج!</string>
+    <string name="offline_message">يبدو أنك غير متصل بالإنترنت! يرجى الاتصال بشبكة WiFi أو شبكة خلوية.</string>
+    <string name="no_books_found">لم يتم العثور على كتب</string>
+    <string name="no_info_found">لم يتم العثور على معلومات</string>
+    <string name="save">يحفظ</string>
+    <string name="cancel">يلغي</string>
+    <string name="update_book">تحديث الكتاب</string>
+    <string name="update">تحديث</string>
+    <string name="delete">حذف</string>
+    <string name="rating">تقييم</string>
+    <string name="notes_input_label">أدخل أفكارك</string>
+    <string name="text_error">أدخل إدخال نص صالح</string>
+    <string name="default_note">لا توجد أفكار متاحة.</string>
+    <string name="started_reading">بدأت القراءة</string>
+    <string name="start_reading">بدء القراءة</string>
+    <string name="finished_reading">قراءة الانتهاء!</string>
+    <string name="mark_as_read">ضع إشارة مقروء</string>
+    <string name="read_finished_date">انتهى في s%س</string>
+    <string name="read_started_date">بدأ في s%س</string>
+    <string name="delete_dialog_msg">هل أنت متأكد أنك تريد حذف هذا الكتاب؟</string>
+    <string name="delete_book">حذف الكتاب</string>
+    <string name="update_success_msg">تم تحديث الكتاب بنجاح</string>
+    <string name="update_failure_msg">عذرا ، فشل التحديث</string>
+    <string name="delete_success_msg">تم حذف الكتاب بنجاح</string>
+    <string name="delete_failure_msg">عذرا ، فشل الحذف</string>
+    <string name="not_yet">ليس بعد</string>
+    <string name="book_empty_msg">لم يتم العثور على كتب. حفظ الكتاب في قائمة القراءة.</string>
+    <string name="yes">نعم</string>
+    <string name="no">رقم</string>
+    <string name="book_status">حالة الكتاب</string>
+    <string name="your_status">حالتك</string>
+    <string name="read_finish_date">انتهى:s%</string>
+    <string name="read_start_date">بدأت: s%</string>
+    <plurals name="reading_count" tools:ignore="MissingQuantity">
+        <item quantity="one">أنت تقرأ:s%  كتاب</item>
+        <item quantity="zero">أنت تقرأ:s% كتاب</item>
+        <item quantity="other">أنت تقرأ:s% كتابًا</item>
+    </plurals>
+    <plurals name="read_count" tools:ignore="MissingQuantity">
+        <item quantity="one">لقد قرأت: كتابs%</item>
+        <item quantity="zero">لقد قرأت: كتابs%</item>
+        <item quantity="other">لقد قرأت: s% كتب</item>
+    </plurals>
+</resources>
