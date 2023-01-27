@@ -1,8 +1,10 @@
 package com.compose.jreader.ui.navigation
 
+import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -22,6 +24,18 @@ fun ReaderNavigation() {
         enterTransition = {
             slideInHorizontally(
                 initialOffsetX = { it },
+                animationSpec = tween(durationMillis = animationTime)
+            )
+        },
+        popEnterTransition = {
+            slideIntoContainer(
+                AnimatedContentScope.SlideDirection.End,
+                animationSpec = tween(durationMillis = animationTime)
+            )
+        },
+        popExitTransition = {
+            slideOutHorizontally(
+                targetOffsetX = { it },
                 animationSpec = tween(durationMillis = animationTime)
             )
         }
