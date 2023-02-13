@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -38,7 +40,12 @@ fun ReaderLogo(modifier: Modifier = Modifier) {
     Text(
         modifier = modifier.padding(bottom = logoTextBottomPadding),
         text = stringResource(R.string.app_name),
-        style = MaterialTheme.typography.h3,
+        style = MaterialTheme.typography.h3.copy(
+            fontFamily = FontFamily(
+                Font(resId = R.font.steelfish_outline)
+            ),
+            fontWeight = FontWeight.ExtraBold
+        ),
         color = Color.Red.copy(alpha = 0.5f)
     )
 }
