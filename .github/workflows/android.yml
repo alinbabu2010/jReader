@@ -25,6 +25,7 @@ jobs:
       
   generate-apk:
     name: Generate APK
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -49,7 +50,7 @@ jobs:
         - name: Download artifact
           uses: actions/download-artifact@v3
           with:
-            name: artifact
+            name: app
         - name: Upload artifact to Firebase App Distribution
           uses: wzieba/Firebase-Distribution-Github-Action@v1
           with:
