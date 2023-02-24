@@ -23,7 +23,7 @@ jobs:
       run: ./gradlew build
       
       
-  apk:
+  generate-apk:
     name: Generate APK
     runs-on: ubuntu-latest
     steps:
@@ -41,4 +41,20 @@ jobs:
         with:
           name: app
           path: app/build/outputs/apk/debug/app-debug.apk
+          
+  upload-android:
+      needs: generate-apk
+      runs-on: ubuntu-latest
+      steps:
+        - name: Download artifact
+          uses: actions/download-artifact@v3
+          with:
+            name: artifact
+        - name: Upload artifact to Firebase App Distribution
+          uses: wzieba/Firebase-Distribution-Github-Action@v1
+          with:
+            appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
+            token: ${{secrets.FIREBASE_TOKEN}}
+            groups: cicd-test-group
+            file: app-debug.apk
 
