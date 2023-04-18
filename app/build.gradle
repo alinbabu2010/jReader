@@ -10,7 +10,7 @@ final String BASE_URL = "BASE_URL"
 
 android {
     ext {
-        buildNumber = 1
+        buildNumber = 2
     }
 
     compileSdk 33
