@@ -17,7 +17,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ApiLoaderImpl @Inject constructor(
+class DefaultApiLoader @Inject constructor(
     private val booksApi: BooksApi,
     @ApplicationContext val context: Context
 ) : ApiLoader {

@@ -12,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BookRepositoryImpl @Inject constructor(
+class DefaultBookRepository @Inject constructor(
     private val apiLoader: ApiLoader,
     private val databaseSource: DatabaseSource
 ) : BookRepository {

@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LoginRepositoryImpl @Inject constructor(
+class DefaultLoginRepository @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val fireStore: FirebaseFirestore
 ) : LoginRepository {
