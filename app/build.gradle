@@ -9,13 +9,17 @@ plugins {
 final String BASE_URL = "BASE_URL"
 
 android {
+    ext {
+        buildNumber = 1
+    }
+
     compileSdk 33
 
     defaultConfig {
         applicationId "com.compose.jreader"
         minSdk 27
         targetSdk 33
-        versionCode 1
+        versionCode buildNumber
         versionName "1.0"
         buildConfigField "String", BASE_URL, '"https://www.googleapis.com/books/v1/"'
 
@@ -49,7 +53,17 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+
     namespace 'com.compose.jreader'
+
+    task incrementBuildNumber {
+        doLast {
+            String buildFileText = buildFile.getText()
+            String newBuildFileText = buildFileText.replaceFirst("buildNumber = $buildNumber", "buildNumber = ${buildNumber + 1}")
+            buildFile.setText(newBuildFileText)
+        }
+    }
+
 }
 
 dependencies {
