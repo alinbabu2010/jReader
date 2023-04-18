@@ -7,7 +7,7 @@ import com.compose.jreader.ui.model.UiState
 import javax.inject.Inject
 
 class UiStateGenerator @Inject constructor(
-    private val bookUiMapper: BookToBookUiMapper
+    private val bookUiMapper: Mapper<Book, BookUi>
 ) {
 
     fun generate(resource: Resource<Book>): UiState<BookUi> {
