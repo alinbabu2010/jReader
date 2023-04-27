@@ -48,6 +48,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
+        applicationVariants.all { variant ->
+            variant.outputs.all { output ->
+                switch (output.baseName) {
+                    case "release": outputFileName = "jReader_v${variant.versionName}.apk"
+                        break
+                    case "debug": outputFileName = "jReader-dev_v${variant.versionName}.apk"
+                        break
+                }
+            }
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
