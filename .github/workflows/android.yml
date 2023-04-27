@@ -58,6 +58,12 @@ jobs:
     needs: build-apk
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - name: Get version name
+        run: |
+          set -e
+          _version=$(grep "versionName" app/build.gradle | awk '{print $2}' | sed 's/"//g' | head -n 1)
+          echo "VERSION_NAME=$_version" >> $GITHUB_ENV
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
@@ -68,5 +74,5 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: cicd-test-group
-          file: jReader_v1.0.apk
+          file: jReader_v${{ env.VERSION_NAME }}.apk
 
