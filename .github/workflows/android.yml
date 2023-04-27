@@ -8,8 +8,8 @@ on:
 
 jobs:
 
-  build:
-    name: Generate build
+  build-apk:
+    name: Generate APK
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -21,6 +21,20 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
+      - name: Decode Keystore File
+        uses: timheuer/base64-to-file@v1
+        id: android_keystore
+        with:
+          fileName: "jReader_key.jks"
+          encodedString: ${{ secrets.KEYSTORE_FILE }}
+      - name: Setup Properties-file
+        run: |
+          touch secret.properties
+          echo KEYSTORE_FILE=${{ steps.android_keystore.outputs.filePath }} >> secret.properties
+          echo KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} >> secret.properties
+          echo KEY_ALIAS=${{ secrets.KEY_ALIAS }} >> secret.properties
+          echo KEY_PASSWORD=${{ secrets.KEY_PASSWORD }} >> secret.properties
+          cat secret.properties
       - name: Increment build number
         run: ./gradlew incrementBuildNumber
       - name: Commit build number change
@@ -32,42 +46,27 @@ jobs:
           commit_author: Alin Babu <alinbabu2010@gmail.com>
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Build with Gradle
-        run: ./gradlew build
-
-  generate-apk:
-    name: Generate APK
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
-      - name: Build debug APK
-        run: bash ./gradlew assembleDebug --stacktrace
+      - name: Build APK
+        run: bash ./gradlew assembleRelease --stacktrace
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
           name: app
           path: app/build/outputs/apk/debug/app-debug.apk
-          
-  upload-android:
-      needs: generate-apk
-      runs-on: ubuntu-latest
-      steps:
-        - name: Download artifact
-          uses: actions/download-artifact@v3
-          with:
-            name: app
-        - name: Upload artifact to Firebase App Distribution
-          uses: wzieba/Firebase-Distribution-Github-Action@v1
-          with:
-            appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
-            serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
-            groups: cicd-test-group
-            file: app-debug.apk
+
+  upload-apk:
+    needs: build-apk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: app
+      - name: Upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: cicd-test-group
+          file: app-debug.apk
 
