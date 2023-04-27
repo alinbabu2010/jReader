@@ -68,5 +68,5 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: cicd-test-group
-          file: /**/*.apk
+          file: jReader_v1.0.apk
 
