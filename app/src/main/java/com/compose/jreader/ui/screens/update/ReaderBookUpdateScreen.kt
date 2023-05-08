@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -25,8 +26,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -142,7 +145,7 @@ fun UpdateComposable(
 
             }
             EnterThoughts(
-                noteState = notes,
+                notes = notes.value.ifEmpty { stringResource(R.string.default_note) },
                 modifier = Modifier
                     .padding(thoughtsTextPadding)
                     .height(thoughtsTextHeight)
@@ -262,6 +265,7 @@ fun RateBar(rating: Int, onRatingClick: (Int) -> Unit) {
                                         ratingState = index
                                     }
                                 }
+
                                 MotionEvent.ACTION_UP -> {
                                     isSelected = false
                                 }
@@ -338,31 +342,49 @@ fun StatusButton(
 }
 
 @Composable
-fun EnterThoughts(noteState: MutableState<String>, modifier: Modifier, onSubmit: (String) -> Unit) {
+fun EnterThoughts(notes: String, modifier: Modifier, onSubmit: (String) -> Unit) {
 
     val focusManager = LocalFocusManager.current
 
     val context = LocalContext.current
 
-    val validInput by remember(noteState.value) {
-        mutableStateOf(noteState.isValidInput())
+    var thoughts by remember {
+        mutableStateOf(notes)
     }
 
-    InputField(
-        modifier = modifier,
-        valueState = noteState,
-        label = stringResource(R.string.notes_input_label),
-        imeAction = ImeAction.Done,
-        isSingleLine = false,
-        isNoteField = true,
-        keyboardAction = KeyboardActions {
-            if (!validInput) {
+    OutlinedTextField(
+        value = thoughts,
+        onValueChange = {
+            thoughts = it
+            onSubmit(thoughts.trim())
+        },
+        modifier = modifier
+            .padding(
+                bottom = inputPadding,
+                start = inputPadding,
+                end = inputPadding
+            )
+            .fillMaxWidth(),
+        label = {
+            Text(text = stringResource(id = R.string.notes_input_label))
+        },
+        singleLine = false,
+        textStyle = TextStyle(
+            fontSize = inputFontSize,
+            color = MaterialTheme.colors.onBackground
+        ),
+        keyboardActions = KeyboardActions {
+            if (thoughts.trim().isBlank()) {
                 context.showToast(R.string.text_error)
                 return@KeyboardActions
             }
-            onSubmit(noteState.trimValue())
+            onSubmit(thoughts.trim())
             focusManager.clearFocus()
-        }
+        },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Text
+        )
     )
 }
 
