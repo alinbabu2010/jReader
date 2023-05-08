@@ -6,7 +6,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.Composable
@@ -32,7 +40,16 @@ import androidx.constraintlayout.compose.Visibility
 import com.compose.jreader.R
 import com.compose.jreader.ui.theme.Green400
 import com.compose.jreader.ui.theme.Red700
-import com.compose.jreader.utils.*
+import com.compose.jreader.utils.appBarElevation
+import com.compose.jreader.utils.appBarIconCorner
+import com.compose.jreader.utils.appBarTitleFontSize
+import com.compose.jreader.utils.appBarTitleMarginStart
+import com.compose.jreader.utils.inputFontSize
+import com.compose.jreader.utils.inputPadding
+import com.compose.jreader.utils.logoTextBottomPadding
+import com.compose.jreader.utils.titleSecFontSize
+import com.compose.jreader.utils.titleSecSurfaceStartPadding
+import com.compose.jreader.utils.titleSecSurfaceTopPadding
 
 
 @Composable
@@ -61,16 +78,11 @@ fun InputField(
     imeAction: ImeAction = ImeAction.Next,
     keyboardAction: KeyboardActions = KeyboardActions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    isNoteField: Boolean = false,
     trailingIcon: @Composable () -> Unit = {}
 ) {
 
-    val value = if (isNoteField) {
-        valueState.value.ifEmpty { stringResource(R.string.default_note) }
-    } else valueState.value
-
     OutlinedTextField(
-        value = value,
+        value = valueState.value,
         onValueChange = {
             valueState.value = it
         },
