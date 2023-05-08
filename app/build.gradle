@@ -14,7 +14,7 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     ext {
-        buildNumber = 4
+        buildNumber = 5
     }
 
     signingConfigs {
