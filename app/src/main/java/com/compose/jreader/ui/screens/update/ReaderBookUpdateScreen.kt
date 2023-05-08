@@ -108,11 +108,11 @@ fun UpdateComposable(
             mutableStateOf(bookInfo.notes)
         }
 
-        val isStartedReading = rememberSaveable {
+        var isStartedReading by rememberSaveable {
             mutableStateOf(false)
         }
 
-        val isFinishedReading = rememberSaveable {
+        var isFinishedReading by rememberSaveable {
             mutableStateOf(false)
         }
 
@@ -122,14 +122,14 @@ fun UpdateComposable(
 
         val isInfoChanged by remember(
             notes.value,
-            isFinishedReading.value,
-            isStartedReading.value,
+            isFinishedReading,
+            isStartedReading,
             ratingValue
         ) {
             val bookUpdateValue = BookUpdateValue(
                 notes.value,
-                isFinishedReading.value,
-                isStartedReading.value,
+                isFinishedReading,
+                isStartedReading,
                 ratingValue
             )
             mutableStateOf(viewModel.isValidForUpdate(bookUpdateValue))
@@ -152,7 +152,13 @@ fun UpdateComposable(
             ) {
                 notes.value = it
             }
-            StatusButton(uiState.data, isStartedReading, isFinishedReading)
+            StatusButton(
+                uiState.data,
+                isStartedReading,
+                isFinishedReading,
+                onStartedClick = { isStartedReading = true },
+                onFinished = { isFinishedReading = true }
+            )
 
             RateBar(bookInfo.rating) { rating ->
                 ratingValue = rating
@@ -283,8 +289,10 @@ fun RateBar(rating: Int, onRatingClick: (Int) -> Unit) {
 @Composable
 fun StatusButton(
     book: BookUi?,
-    isStartedReading: MutableState<Boolean>,
-    isFinishedReading: MutableState<Boolean>
+    isStartedReading: Boolean,
+    isFinishedReading: Boolean,
+    onStartedClick: () -> Unit,
+    onFinished: () -> Unit
 ) {
 
     Row(
@@ -298,11 +306,11 @@ fun StatusButton(
     ) {
 
         TextButton(
-            onClick = { isStartedReading.value = true },
+            onClick = onStartedClick,
             enabled = book?.startedReading == null
         ) {
             if (book?.startedReading == null) {
-                if (isStartedReading.value) {
+                if (isStartedReading) {
                     Text(
                         text = stringResource(R.string.started_reading),
                         modifier = Modifier.alpha(0.6f),
@@ -321,11 +329,11 @@ fun StatusButton(
 
 
         TextButton(
-            onClick = { isFinishedReading.value = true },
+            onClick = onFinished,
             enabled = book?.finishedReading == null
         ) {
             if (book?.finishedReading == null) {
-                if (isFinishedReading.value) {
+                if (isFinishedReading) {
                     Text(text = stringResource(R.string.finished_reading))
                 } else Text(text = stringResource(R.string.mark_as_read))
             } else {
