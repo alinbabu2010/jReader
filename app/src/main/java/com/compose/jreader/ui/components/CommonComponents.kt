@@ -18,7 +18,6 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
@@ -70,7 +69,8 @@ fun ReaderLogo(modifier: Modifier = Modifier) {
 @Composable
 fun InputField(
     modifier: Modifier = Modifier,
-    valueState: MutableState<String>,
+    value: String,
+    onValueChange: (String) -> Unit,
     label: String,
     isSingleLine: Boolean = true,
     enabled: Boolean = true,
@@ -78,14 +78,12 @@ fun InputField(
     imeAction: ImeAction = ImeAction.Next,
     keyboardAction: KeyboardActions = KeyboardActions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    trailingIcon: @Composable () -> Unit = {}
+    trailingIcon: @Composable () -> Unit = {},
 ) {
 
     OutlinedTextField(
-        value = valueState.value,
-        onValueChange = {
-            valueState.value = it
-        },
+        value = value,
+        onValueChange = onValueChange,
         label = {
             Text(text = label)
         },
