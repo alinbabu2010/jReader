@@ -1,12 +1,14 @@
 package com.compose.jreader.ui.components
 
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -17,37 +19,43 @@ import com.compose.jreader.R
 @Composable
 fun EmailInput(
     modifier: Modifier = Modifier,
-    emailState: MutableState<String>,
+    email: String,
+    onChange: (String) -> Unit,
     enabled: Boolean = true,
     imeAction: ImeAction = ImeAction.Next,
-    onKeyboardAction: KeyboardActions = KeyboardActions.Default
+    onKeyboardAction: KeyboardActions = KeyboardActions.Default,
 ) {
     InputField(
         modifier = modifier,
-        valueState = emailState,
+        value = email,
+        onValueChange = onChange,
         label = stringResource(R.string.email),
         enabled = enabled,
         imeAction = imeAction,
-        keyboardAction = onKeyboardAction
+        keyboardAction = onKeyboardAction,
+        keyboardType = KeyboardType.Email
     )
 }
 
 @Composable
 fun PasswordInput(
     modifier: Modifier = Modifier,
-    passwordState: MutableState<String>,
+    password: String,
+    onChange: (String) -> Unit,
     enabled: Boolean = true,
     imeAction: ImeAction = ImeAction.Next,
-    passwordVisibility: MutableState<Boolean>,
-    onKeyboardAction: KeyboardActions = KeyboardActions.Default
+    showPassword: Boolean,
+    onPasswordVisibility: () -> Unit,
+    onKeyboardAction: KeyboardActions = KeyboardActions.Default,
 ) {
 
-    val visualTransformation = if (passwordVisibility.value) VisualTransformation.None
+    val visualTransformation = if (showPassword) VisualTransformation.None
     else PasswordVisualTransformation()
 
     InputField(
         modifier = modifier,
-        valueState = passwordState,
+        value = password,
+        onValueChange = onChange,
         label = stringResource(R.string.password),
         enabled = enabled,
         imeAction = imeAction,
@@ -55,14 +63,14 @@ fun PasswordInput(
         keyboardType = KeyboardType.Password,
         visualTransformation = visualTransformation
     ) {
-        PasswordVisibility(passwordVisibility = passwordVisibility)
+        IconButton(onClick = onPasswordVisibility) {
+            Icon(
+                imageVector = if (showPassword) Icons.Default.VisibilityOff
+                else Icons.Default.Visibility,
+                contentDescription = "",
+                tint = Color.Gray
+            )
+        }
     }
-}
 
-@Composable
-fun PasswordVisibility(passwordVisibility: MutableState<Boolean>) {
-    val visible = passwordVisibility.value
-    IconButton(onClick = { passwordVisibility.value = !visible }) {
-        Icons.Default.Close
-    }
 }
