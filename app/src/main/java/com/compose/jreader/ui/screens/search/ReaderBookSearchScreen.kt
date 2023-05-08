@@ -228,25 +228,26 @@ fun SearchBar(
 
     Column {
 
-        val searchQueryState = rememberSaveable {
+        var searchQuery by rememberSaveable {
             mutableStateOf("")
         }
 
         val focusManager = LocalFocusManager.current
 
-        val valid = remember(searchQueryState.value) {
-            searchQueryState.isValidInput()
+        val isValid = remember(searchQuery) {
+            searchQuery.isValidInput()
         }
 
         InputField(
             modifier = modifier,
-            valueState = searchQueryState,
+            value = searchQuery,
+            onValueChange = { searchQuery = it },
             label = hint,
             enabled = loading,
             keyboardAction = KeyboardActions {
-                if (!valid) return@KeyboardActions
-                onSearch(searchQueryState.trimValue())
-                searchQueryState.value = ""
+                if (!isValid) return@KeyboardActions
+                onSearch(searchQuery.trim())
+                searchQuery = ""
                 focusManager.clearFocus()
             },
             imeAction = ImeAction.Done
