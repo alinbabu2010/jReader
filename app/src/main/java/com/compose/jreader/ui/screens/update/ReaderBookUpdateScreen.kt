@@ -116,7 +116,7 @@ fun UpdateComposable(
             mutableStateOf(false)
         }
 
-        val showDeleteConfirmation = rememberSaveable {
+        var showDeleteConfirmation by rememberSaveable {
             mutableStateOf(false)
         }
 
@@ -177,20 +177,20 @@ fun UpdateComposable(
                         }
                     }
                 } else {
-                    showDeleteConfirmation.value = true
+                    showDeleteConfirmation = true
                 }
 
             }
 
-            if (showDeleteConfirmation.value) {
+            if (showDeleteConfirmation) {
                 ShowAlertDialog(
                     title = stringResource(R.string.delete_book),
                     message = stringResource(R.string.delete_dialog_msg),
-                    showState = showDeleteConfirmation
+                    onDismiss = { showDeleteConfirmation = false }
                 ) {
                     viewModel.deleteBook(bookID) { isSuccess ->
                         if (isSuccess) {
-                            showDeleteConfirmation.value = false
+                            showDeleteConfirmation = false
                             context.showToast(R.string.delete_success_msg)
                             onNavigateBack()
                         } else {

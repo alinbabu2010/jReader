@@ -213,14 +213,12 @@ fun TitleSection(
 fun ShowAlertDialog(
     title: String,
     message: String,
-    showState: MutableState<Boolean>,
+    onDismiss: () -> Unit,
     onPositiveAction: () -> Unit
 ) {
 
     AlertDialog(
-        onDismissRequest = {
-            showState.value = false
-        },
+        onDismissRequest = onDismiss,
         title = {
             Text(text = title)
         },
@@ -233,7 +231,7 @@ fun ShowAlertDialog(
             }
         },
         dismissButton = {
-            TextButton(onClick = { showState.value = false }) {
+            TextButton(onClick = onDismiss) {
                 Text(text = stringResource(R.string.no))
             }
         })
