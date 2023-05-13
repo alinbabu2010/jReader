@@ -16,7 +16,7 @@ val keystoreProperties = Properties().apply {
 
 android {
 
-    val buildNumber by extra { 5 }
+    val buildNumber by extra { 6 }
 
     applicationVariants.all {
         val variant = this
