@@ -99,7 +99,7 @@ android {
         doLast {
             val buildFileText = buildFile.readText()
             val newBuildFileText = buildFileText.replaceFirst(
-                "val buildNumber by extra { $buildNumber } ",
+                "val buildNumber by extra { $buildNumber }",
                 "val buildNumber by extra { ${buildNumber + 1} }"
             )
             buildFile.writeText(newBuildFileText)
