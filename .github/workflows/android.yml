@@ -62,7 +62,7 @@ jobs:
       - name: Get version name
         run: |
           set -e
-          _version=$(grep "versionName" app/build.gradle | awk '{print $2}' | sed 's/"//g' | head -n 1)
+          _version=$(grep "versionName " app/build.gradle.kts | awk '{print $3}' | sed 's/"//g' | head -n 1)
           echo "VERSION_NAME=$_version" >> $GITHUB_ENV
       - name: Download artifact
         uses: actions/download-artifact@v3
