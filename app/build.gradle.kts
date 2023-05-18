@@ -49,6 +49,7 @@ android {
         buildConfigField("String", "BASE_URL", "\"https://www.googleapis.com/books/v1/\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        resourceConfigurations += listOf("en", "ar")
         vectorDrawables {
             useSupportLibrary = true
         }
