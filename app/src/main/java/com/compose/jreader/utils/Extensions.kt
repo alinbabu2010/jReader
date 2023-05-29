@@ -3,6 +3,8 @@ package com.compose.jreader.utils
 import android.content.Context
 import android.icu.text.DateFormat
 import android.widget.Toast
+import androidx.core.text.HtmlCompat
+import com.compose.jreader.data.model.Book
 import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.data.model.Resource
 import com.compose.jreader.data.model.Resource.Status
@@ -73,3 +75,52 @@ fun List<BookUi>.getSavedBooks(): List<BookUi> {
         it.startedReading == null && it.finishedReading == null
     }
 }
+
+/**
+ * To map [Resource]<[Book]> to [UiState]<[BookUi]>
+ */
+fun Resource<Book>.toBookUiState(): UiState<BookUi> {
+    val state = getUiState()
+    return UiState(
+        state.data?.toBookUi(),
+        state.isLoading,
+        state.isError,
+        state.message
+    )
+}
+
+/**
+ * To map [Resource]<List<[Book]>> to [UiState]<List<[Book]>>
+ */
+fun Resource<List<Book>>.toBookUiListState(): UiState<List<BookUi>> {
+    val state = getUiState()
+    return UiState(
+        state.data?.map { it.toBookUi() },
+        state.isLoading,
+        state.isError,
+        state.message
+    )
+}
+
+private fun Book.toBookUi(): BookUi {
+    val bookInfo = volumeInfo
+    return BookUi(
+        googleBookId = id ?: "",
+        title = bookInfo?.title ?: "",
+        photoUrl = bookInfo?.imageLinks?.smallThumbnail ?: "",
+        authors = getAuthors(bookInfo?.authors),
+        description = getDescription(bookInfo?.description),
+        categories = getCategories(bookInfo?.categories),
+        publishedDate = bookInfo?.publishedDate ?: "",
+        pageCount = bookInfo?.pageCount ?: 0
+    )
+}
+
+private fun getDescription(description: String?): String =
+    HtmlCompat.fromHtml(description ?: "", HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+
+private fun getAuthors(authors: List<String>?) =
+    if (authors.isNullOrEmpty()) "" else authors.toString()
+
+private fun getCategories(categories: List<String>?) =
+    if (categories.isNullOrEmpty()) "" else categories.toString()
