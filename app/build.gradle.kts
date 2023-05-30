@@ -177,4 +177,7 @@ dependencies {
     // Constraint layout compose
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
+    // Compose runtime dependency for collectAsStateWithLifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
+
 }
