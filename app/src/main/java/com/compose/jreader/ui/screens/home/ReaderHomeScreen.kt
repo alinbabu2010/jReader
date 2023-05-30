@@ -11,7 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.compose.jreader.R
 import com.compose.jreader.data.model.BookUi
 import com.compose.jreader.ui.components.ListCard
@@ -43,7 +44,7 @@ fun ReaderHomeScreen(
 ) {
 
     homeViewModel.getAllBooks()
-    val uiState = homeViewModel.listOfBooks.collectAsState().value
+    val uiState by homeViewModel.listOfBooks.collectAsStateWithLifecycle()
 
     Scaffold(topBar = {
         ReaderAppBar(

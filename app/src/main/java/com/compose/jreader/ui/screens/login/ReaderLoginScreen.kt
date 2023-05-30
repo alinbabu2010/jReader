@@ -21,7 +21,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.compose.jreader.R
 import com.compose.jreader.ui.components.EmailInput
 import com.compose.jreader.ui.components.PasswordInput
@@ -65,7 +65,7 @@ fun ReaderLoginScreen(
         mutableStateOf(true)
     }
 
-    val uiState = loginViewModel.loginUiState.collectAsState().value
+    val uiState by loginViewModel.loginUiState.collectAsStateWithLifecycle()
 
 
     Surface(modifier = Modifier.fillMaxSize()) {
