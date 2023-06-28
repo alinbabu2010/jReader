@@ -1,3 +1,3 @@
 # jReader
-Android book reader app bulit using Jetpack compose and Jetpack components
+Android book reader app built using Jetpack compose and Jetpack components
 
