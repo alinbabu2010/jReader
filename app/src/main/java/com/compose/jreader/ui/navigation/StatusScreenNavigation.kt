@@ -7,7 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import com.compose.jreader.ui.screens.home.HomeViewModel
 import com.compose.jreader.ui.screens.login.ReaderLoginViewModel
 import com.compose.jreader.ui.screens.status.StatusScreen
-import com.google.accompanist.navigation.animation.composable
+import androidx.navigation.compose.composable
 
 @OptIn(ExperimentalAnimationApi::class)
 internal fun NavGraphBuilder.statusScreen(

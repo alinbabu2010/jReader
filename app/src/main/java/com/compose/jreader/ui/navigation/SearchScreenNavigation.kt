@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.compose.jreader.ui.screens.search.ReaderBookSearchScreen
 import com.compose.jreader.ui.screens.search.SearchViewModel
-import com.google.accompanist.navigation.animation.composable
+import androidx.navigation.compose.composable
 
 @OptIn(ExperimentalAnimationApi::class)
 internal fun NavGraphBuilder.searchScreen(

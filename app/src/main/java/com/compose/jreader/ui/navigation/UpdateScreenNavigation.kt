@@ -10,7 +10,7 @@ import androidx.navigation.navArgument
 import com.compose.jreader.ui.screens.update.ReaderBookUpdateScreen
 import com.compose.jreader.ui.screens.update.UpdateViewModel
 import com.compose.jreader.utils.Constants
-import com.google.accompanist.navigation.animation.composable
+import androidx.navigation.compose.composable
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 internal fun NavGraphBuilder.updateScreen(

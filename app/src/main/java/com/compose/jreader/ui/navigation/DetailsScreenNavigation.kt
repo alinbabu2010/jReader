@@ -9,7 +9,7 @@ import androidx.navigation.navArgument
 import com.compose.jreader.ui.screens.details.BookDetailsScreen
 import com.compose.jreader.ui.screens.details.DetailsViewModel
 import com.compose.jreader.utils.Constants
-import com.google.accompanist.navigation.animation.composable
+import androidx.navigation.compose.composable
 
 @OptIn(ExperimentalAnimationApi::class)
 internal fun NavGraphBuilder.detailsScreen(

@@ -1,24 +1,24 @@
 package com.compose.jreader.ui.navigation
 
-import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
 @Composable
 fun ReaderNavigation() {
 
-    val navController = rememberAnimatedNavController()
+    val navController = rememberNavController()
     val animationTime = 1000
 
-    AnimatedNavHost(
+    NavHost(
         navController = navController,
         startDestination = ReaderScreens.SplashScreen.name,
         enterTransition = {
@@ -29,7 +29,7 @@ fun ReaderNavigation() {
         },
         popEnterTransition = {
             slideIntoContainer(
-                AnimatedContentScope.SlideDirection.End,
+                AnimatedContentTransitionScope.SlideDirection.End,
                 animationSpec = tween(durationMillis = animationTime)
             )
         },

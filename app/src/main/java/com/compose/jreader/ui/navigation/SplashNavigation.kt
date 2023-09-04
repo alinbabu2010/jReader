@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import com.compose.jreader.ui.screens.login.ReaderLoginViewModel
 import com.compose.jreader.ui.screens.splash.ReaderSplashScreen
-import com.google.accompanist.navigation.animation.composable
+import androidx.navigation.compose.composable
 
 @OptIn(ExperimentalAnimationApi::class)
 internal fun NavGraphBuilder.splashScreen(
